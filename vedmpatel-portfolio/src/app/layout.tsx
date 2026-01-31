@@ -28,19 +28,20 @@ const geistMono = Geist_Mono({
  */
 export const metadata: Metadata = {
   title: "Ved Patel | Software Developer",
-  description: "Honours Computer Science student at Ontario Tech University. Full-stack developer passionate about building elegant solutions.",
+  description:
+    "Honours Computer Science student at Ontario Tech University. Full-stack developer passionate about building elegant solutions.",
 };
 
 /**
  * Root Layout Component
- * 
+ *
  * Wraps all pages with:
  * - HTML document structure
  * - Font CSS variables
  * - Dark theme styling
  * - Navigation (Navbar)
  * - Footer
- * 
+ *
  * @param children - Page content to render
  */
 export default function RootLayout({
@@ -50,7 +51,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark scroll-smooth">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-900 text-slate-100`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-900 text-slate-100`}
+      >
         <Navbar />
         <main>{children}</main>
         <Footer />

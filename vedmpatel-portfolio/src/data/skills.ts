@@ -8,8 +8,8 @@
  * Skill category interface
  */
 export interface SkillCategory {
-    category: string;
-    skills: { name: string }[];
+  category: string;
+  skills: { name: string }[];
 }
 
 /**
@@ -17,44 +17,42 @@ export interface SkillCategory {
  * Each category contains an array of related technical skills
  */
 export const skillCategories: SkillCategory[] = [
-    {
-        category: 'Frontend',
-        skills: [
-            { name: 'React' },
-            { name: 'Next.js' },
-            { name: 'TypeScript' },
-            { name: 'TailwindCSS' },
-            { name: 'Framer Motion' },
-        ],
-    },
-    {
-        category: 'Backend',
-        skills: [
-            { name: 'Node.js' },
-            { name: 'Python' },
-            { name: 'PostgreSQL' },
-            { name: 'MongoDB' },
-            { name: 'GraphQL' },
-        ],
-    },
-    {
-        category: 'DevOps & Tools',
-        skills: [
-            { name: 'Docker' },
-            { name: 'AWS' },
-            { name: 'Git' },
-            { name: 'CI/CD' },
-            { name: 'Vercel' },
-        ],
-    },
-    {
-        category: 'AI & Data',
-        skills: [
-            { name: 'PyTorch' },
-            { name: 'TensorFlow' },
-            { name: 'Pandas' },
-            { name: 'OpenAI API' },
-            { name: 'LangChain' },
-        ],
-    },
+  {
+    category: "Frontend",
+    skills: [
+      { name: "React" },
+      { name: "Next.js" },
+      { name: "TypeScript" },
+      { name: "TailwindCSS" },
+      { name: "Framer Motion" },
+    ],
+  },
+  {
+    category: "Backend",
+    skills: [
+      { name: "Node.js" },
+      { name: "Python" },
+      { name: "PostgreSQL" },
+      { name: "Flask" }
+    ],
+  },
+  {
+    category: "DevOps & Tools",
+    skills: [
+      { name: "Docker" },
+      { name: "GitHub" },
+      { name: "Git" },
+    ],
+  },
+  {
+    category: "AI & Data",
+    skills: [
+      { name: "PyTorch" },
+      { name: "TensorFlow" },
+      { name: "Pandas" },
+      { name: "NumPy" },
+      { name: "OpenAI API" },
+      { name: "LangChain" },
+    ],
+  },
 ];
