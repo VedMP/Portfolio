@@ -1,0 +1,64 @@
+/**
+ * @file globals.css
+ * @description Global CSS styles for the portfolio website.
+ * Contains CSS custom properties, Tailwind theme configuration,
+ * and base styling for the dark theme.
+ */
+
+@import "tailwindcss";
+
+/* ============================================
+   CSS Custom Properties (Design Tokens)
+   ============================================ */
+:root {
+  /* Background colors */
+  --background: #0f172a;
+  --foreground: #f8fafc;
+
+  /* Accent colors for gradient effects */
+  --accent-primary: #3b82f6;
+  --accent-secondary: #8b5cf6;
+}
+
+/* ============================================
+   Tailwind Theme Extension
+   Maps CSS variables to Tailwind utilities
+   ============================================ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+/* ============================================
+   Base Styles
+   ============================================ */
+
+/* Enable smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Base body styling */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: system-ui, -apple-system, sans-serif;
+  overflow-x: hidden;
+}
+
+/* ============================================
+   Utility Classes
+   ============================================ */
+
+/**
+ * Gradient text effect
+ * Creates a blue-to-purple gradient on text elements
+ */
+.gradient-text {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
