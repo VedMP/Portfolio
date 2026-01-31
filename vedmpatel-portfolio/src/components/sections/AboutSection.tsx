@@ -44,10 +44,10 @@ export default function AboutSection() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
               About <span className="gradient-text">Me</span>
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
               A passionate developer with a drive for creating impactful
               solutions
             </p>
@@ -63,24 +63,32 @@ export default function AboutSection() {
               viewport={{ once: true }}
             >
               {/* Bio paragraphs */}
-              <div className="space-y-6 text-slate-300 leading-relaxed">
+              <div className="space-y-6 text-slate-600 dark:text-slate-300 leading-relaxed">
                 <p>
-                  I&apos;m{" "}
-                  <span className="text-white font-semibold">Ved Patel</span>,
-                  an Honours Computer Science student at{" "}
-                  <span className="text-blue-400 font-medium">
-                    Ontario Tech University
-                  </span>
-                  . My journey in tech started with a curiosity about how
-                  software shapes our daily lives.
+                  I&apos;m <span className="text-slate-900 dark:text-white font-semibold">Ved Patel</span>,
+                  an Honours Computer Science student at
+                  <span className="text-blue-500 dark:text-blue-400 font-medium"> Ontario Tech University</span>.
+                  I have consistently achieved <span className="text-slate-900 dark:text-white">President&apos;s List</span> status,
+                  maintaining a <span className="text-slate-900 dark:text-white">3.97 GPA</span> while focusing on
+                  the engineering challenges of modern AI.
                 </p>
+
                 <p>
-                  I specialize in full-stack development, working with modern
-                  frameworks like React, Next.js, and Node.js. I&apos;m particularly
-                  interested in creating user-centric experiences.
+                  My technical focus is on <span className="text-slate-900 dark:text-white font-medium">Generative AI Engineering</span>.
+                  I have architected <span className="text-slate-900 dark:text-white">Retrieval-Augmented Generation (RAG)</span> pipelines
+                  using <span className="text-blue-500 dark:text-blue-300">Python</span>,
+                  <span className="text-blue-500 dark:text-blue-300">Watsonx.ai</span>, and
+                  <span className="text-blue-500 dark:text-blue-300">ChromaDB</span> to solve reliability issues like LLM hallucinations.
+                  I am also actively exploring agentic workflows to bridge natural language and structured data.
+                </p>
+
+                <p>
+                  Beyond AI, I have a strong foundation in systems and data.
+                  I have experience optimizing legacy <span className="text-blue-500 dark:text-blue-300">C++</span> code for performance
+                  and utilizing <span className="text-blue-500 dark:text-blue-300">SQL</span> and <span className="text-blue-500 dark:text-blue-300">Pandas </span>
+                  to derive insights from datasets.
                 </p>
               </div>
-
               {/* Stats grid */}
               <div className="grid grid-cols-3 gap-4 mt-8">
                 {stats.map((stat, index) => (
@@ -90,12 +98,12 @@ export default function AboutSection() {
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: index * 0.1 }}
                     viewport={{ once: true }}
-                    className="text-center p-4 rounded-xl bg-slate-800/50 border border-slate-700/50"
+                    className="text-center p-4 rounded-xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 shadow-sm dark:shadow-none"
                   >
                     <div className="text-2xl font-bold gradient-text">
                       {stat.value}
                     </div>
-                    <div className="text-sm text-slate-400 mt-1">
+                    <div className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                       {stat.label}
                     </div>
                   </motion.div>
@@ -118,16 +126,16 @@ export default function AboutSection() {
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.4, delay: categoryIndex * 0.1 }}
                   viewport={{ once: true }}
-                  className="p-6 rounded-xl bg-slate-800/30 border border-slate-700/50"
+                  className="p-6 rounded-xl bg-white dark:bg-slate-800/30 border border-slate-200 dark:border-slate-700/50 shadow-sm dark:shadow-none"
                 >
-                  <h3 className="text-lg font-semibold text-white mb-4">
+                  <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
                     {category.category}
                   </h3>
                   <div className="flex flex-wrap gap-2">
                     {category.skills.map((skill) => (
                       <span
                         key={skill.name}
-                        className="px-3 py-1.5 text-sm rounded-lg bg-slate-700/50 text-slate-300 border border-slate-600/50"
+                        className="px-3 py-1.5 text-sm rounded-lg bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600/50"
                       >
                         {skill.name}
                       </span>

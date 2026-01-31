@@ -68,7 +68,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4"
+            className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-slate-900 dark:text-white"
           >
             Hi, I&apos;m <span className="gradient-text">Ved Patel</span>
           </motion.h1>
@@ -78,7 +78,7 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-xl sm:text-2xl text-slate-400 mb-6"
+            className="text-xl sm:text-2xl text-slate-600 dark:text-slate-400 mb-6"
           >
             Software Developer & CS Student
           </motion.h2>
@@ -88,11 +88,13 @@ export default function HeroSection() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-lg text-slate-400 max-w-2xl mx-auto mb-10"
+            className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10"
           >
-            Passionate about building elegant solutions to complex problems. I
-            specialize in full-stack development, creating performant and
-            user-centric applications with modern technologies.
+            Passionate about engineering reliable AI systems and scalable infrastructure.
+            I specialize in <span className="text-white font-medium">Generative AI</span> and
+            <span className="text-white font-medium"> Systems Engineering</span>,
+            focusing on architecting RAG pipelines, reducing model hallucinations, and
+            optimizing performance with low-level languages like C++.
           </motion.p>
 
           {/* Call-to-action buttons */}
@@ -124,7 +126,7 @@ export default function HeroSection() {
                 href={social.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-xl bg-slate-800/50 border border-slate-700/50 text-slate-400 hover:text-white hover:border-slate-600 transition-all"
+                className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-600 transition-all"
                 aria-label={`Visit ${social.name}`}
               >
                 <social.icon className="w-5 h-5" />
@@ -140,7 +142,7 @@ export default function HeroSection() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-500 hover:text-slate-300 transition-colors"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
         aria-label="Scroll to About section"
       >
         <span className="text-sm">Scroll to explore</span>

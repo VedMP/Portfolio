@@ -51,14 +51,14 @@ export default function Button({
 }: ButtonProps) {
   // Base styles applied to all buttons
   const baseStyles =
-    "inline-flex items-center justify-center gap-2 font-medium rounded-full transition-all duration-200";
+    "inline-flex items-center justify-center gap-2 font-medium rounded-full transition-all duration-200 outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-slate-900";
 
   // Variant-specific styles
   const variants = {
     primary:
-      "bg-blue-500 text-white hover:bg-blue-400 shadow-lg shadow-blue-500/25",
+      "bg-blue-600 dark:bg-blue-500 text-white hover:bg-blue-700 dark:hover:bg-blue-400 shadow-lg shadow-blue-500/25",
     secondary:
-      "bg-slate-800 text-slate-100 border border-slate-700 hover:bg-slate-700 hover:border-slate-600",
+      "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 border border-slate-200 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700 hover:border-slate-300 dark:hover:border-slate-600",
   };
 
   // Size-specific styles

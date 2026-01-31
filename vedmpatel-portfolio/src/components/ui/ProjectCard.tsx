@@ -36,22 +36,22 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="group relative rounded-2xl bg-slate-800/50 border border-slate-700/50 overflow-hidden hover:border-slate-600 transition-all duration-300"
+      className="group relative rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 overflow-hidden hover:border-slate-400 dark:hover:border-slate-600 transition-all duration-300 shadow-sm dark:shadow-none"
     >
       {/* Project image placeholder with gradient background */}
-      <div className="aspect-video bg-gradient-to-br from-blue-500/20 to-violet-500/20 flex items-center justify-center">
+      <div className="aspect-video bg-gradient-to-br from-blue-500/10 to-violet-500/10 dark:from-blue-500/20 dark:to-violet-500/20 flex items-center justify-center">
         <span className="text-4xl">🚀</span>
       </div>
 
       {/* Project content */}
       <div className="p-6">
         {/* Title */}
-        <h3 className="text-lg font-semibold text-white mb-2">
+        <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
           {project.title}
         </h3>
 
         {/* Description (truncated to 2 lines) */}
-        <p className="text-sm text-slate-400 mb-4 line-clamp-2">
+        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-2">
           {project.description}
         </p>
 
@@ -60,7 +60,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           {project.tags.slice(0, 3).map((tag) => (
             <span
               key={tag}
-              className="px-2 py-1 text-xs rounded-md bg-slate-700/50 text-slate-300"
+              className="px-2 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300"
             >
               {tag}
             </span>
@@ -75,7 +75,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               href={project.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg bg-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+              className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               aria-label="View on GitHub"
             >
               <Github className="w-4 h-4" />
@@ -88,7 +88,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               href={project.live}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-2 rounded-lg bg-slate-700/50 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+              className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
               aria-label="View live demo"
             >
               <ExternalLink className="w-4 h-4" />

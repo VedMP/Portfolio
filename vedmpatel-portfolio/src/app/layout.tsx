@@ -44,19 +44,41 @@ export const metadata: Metadata = {
  *
  * @param children - Page content to render
  */
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { AccessibilityProvider } from "@/components/providers/AccessibilityProvider";
+import AccessibilityFilters from "@/components/providers/AccessibilityFilters";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark scroll-smooth">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-slate-900 text-slate-100`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
-        <main>{children}</main>
-        <Footer />
+        <a
+          href="#main-content"
+          className="fixed top-4 left-4 z-[100] -translate-y-[150%] rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white transition-transform focus:translate-y-0"
+        >
+          Skip to content
+        </a>
+        <AccessibilityProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AccessibilityFilters />
+            <Navbar />
+            <main id="main-content" className="flex-grow">
+              {children}
+            </main>
+            <Footer />
+          </ThemeProvider>
+        </AccessibilityProvider>
       </body>
     </html>
   );

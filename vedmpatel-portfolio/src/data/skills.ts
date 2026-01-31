@@ -18,41 +18,46 @@ export interface SkillCategory {
  */
 export const skillCategories: SkillCategory[] = [
   {
-    category: "Frontend",
+    category: "Languages",
     skills: [
-      { name: "React" },
-      { name: "Next.js" },
-      { name: "TypeScript" },
-      { name: "TailwindCSS" },
-      { name: "Framer Motion" },
+      { name: "CSS3" },
+      { name: "C++" },
+      { name: "HTML5" },
+      { name: "JavaScript" },
+      { name: "Java" },
+      { name: "Python" },
+      { name: "SQL" },
     ],
   },
   {
-    category: "Backend",
+    category: "AI & Data Engineering",
     skills: [
-      { name: "Node.js" },
-      { name: "Python" },
-      { name: "PostgreSQL" },
-      { name: "Flask" }
+      { name: "ChromaDB" },
+      { name: "Keras" },
+      { name: "LangChain" },
+      { name: "NumPy" },
+      { name: "Pandas" },
+      { name: "PyTorch" },
+      { name: "Scikit-learn" },
+      { name: "TensorFlow" },
+      { name: "OpenAI API" },
+      { name: "Watsonx.ai" }
     ],
   },
   {
     category: "DevOps & Tools",
     skills: [
       { name: "Docker" },
-      { name: "GitHub" },
+      { name: "Linux" },
       { name: "Git" },
+      { name: "GitHub" },
     ],
   },
   {
-    category: "AI & Data",
+    category: "Frameworks & UI",
     skills: [
-      { name: "PyTorch" },
-      { name: "TensorFlow" },
-      { name: "Pandas" },
-      { name: "NumPy" },
-      { name: "OpenAI API" },
-      { name: "LangChain" },
+      { name: "Gradio" },
+      { name: "Flask" },
     ],
-  },
+  }
 ];

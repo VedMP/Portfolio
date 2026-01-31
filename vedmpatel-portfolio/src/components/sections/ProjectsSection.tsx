@@ -36,7 +36,7 @@ export default function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="relative w-full py-24 md:py-32 bg-slate-900/50"
+      className="relative w-full py-24 md:py-32 bg-slate-50 dark:bg-slate-900/50"
     >
       {/* Container with 20px padding from edges */}
       <div
@@ -52,10 +52,10 @@ export default function ProjectsSection() {
             viewport={{ once: true }}
             className="text-center mb-12"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
               Featured <span className="gradient-text">Projects</span>
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
               Technical case studies showcasing my skills and passion for
               development
             </p>
@@ -73,11 +73,10 @@ export default function ProjectsSection() {
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  activeCategory === category
-                    ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
-                    : "bg-slate-800 text-slate-400 hover:text-white border border-slate-700"
-                }`}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === category
+                    ? "bg-blue-600 dark:bg-blue-500 text-white shadow-lg shadow-blue-500/30"
+                    : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none"
+                  }`}
                 aria-pressed={activeCategory === category}
               >
                 {category.charAt(0).toUpperCase() + category.slice(1)}

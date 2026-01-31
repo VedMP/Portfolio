@@ -44,23 +44,23 @@ const footerLinks = [
  */
 export default function Footer() {
   return (
-    <footer className="relative border-t border-slate-800 bg-slate-900/50">
+    <footer className="relative border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-900/50">
       <div className="max-w-6xl mx-auto px-6 py-12">
         {/* Three-column grid layout */}
         <div className="grid md:grid-cols-3 gap-8 mb-8">
           {/* Brand column */}
           <div>
-            <Link href="/" className="text-xl font-bold text-white">
-              Ved<span className="text-blue-400">.</span>
+            <Link href="/" className="text-xl font-bold text-slate-900 dark:text-white">
+              Ved<span className="text-blue-500 dark:text-blue-400">.</span>
             </Link>
-            <p className="mt-3 text-sm text-slate-400">
+            <p className="mt-3 text-sm text-slate-600 dark:text-slate-400">
               Building elegant solutions to complex problems.
             </p>
           </div>
 
           {/* Quick links column */}
           <div>
-            <h3 className="text-sm font-semibold text-white mb-4">
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">
               Quick Links
             </h3>
             <ul className="space-y-2">
@@ -68,7 +68,7 @@ export default function Footer() {
                 <li key={link.name}>
                   <Link
                     href={link.href}
-                    className="text-sm text-slate-400 hover:text-white transition-colors"
+                    className="text-sm text-slate-600 dark:text-slate-400 hover:text-blue-600 dark:hover:text-white transition-colors"
                   >
                     {link.name}
                   </Link>
@@ -79,7 +79,7 @@ export default function Footer() {
 
           {/* Social links column */}
           <div>
-            <h3 className="text-sm font-semibold text-white mb-4">Connect</h3>
+            <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Connect</h3>
             <div className="flex gap-3">
               {socialLinks.map((social) => (
                 <a
@@ -87,7 +87,7 @@ export default function Footer() {
                   href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-slate-800 text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+                  className="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white hover:bg-slate-700 dark:hover:bg-slate-700 transition-colors"
                   aria-label={`Follow on ${social.name}`}
                 >
                   <social.icon className="w-5 h-5" />
@@ -98,11 +98,11 @@ export default function Footer() {
         </div>
 
         {/* Copyright section */}
-        <div className="pt-8 border-t border-slate-800 text-center">
+        <div className="pt-8 border-t border-slate-200 dark:border-slate-800 text-center">
           <p className="text-sm text-slate-500 flex items-center justify-center gap-1">
             Made with <Heart className="w-4 h-4 text-red-500" /> by Ved Patel
           </p>
-          <p className="text-xs text-slate-600 mt-2">
+          <p className="text-xs text-slate-500 dark:text-slate-600 mt-2">
             © {new Date().getFullYear()} All rights reserved.
           </p>
         </div>

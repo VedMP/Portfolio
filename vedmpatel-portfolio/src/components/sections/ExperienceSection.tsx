@@ -37,10 +37,10 @@ export default function ExperienceSection() {
             viewport={{ once: true }}
             className="text-center mb-16"
           >
-            <h2 className="text-3xl sm:text-4xl font-bold mb-4">
+            <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
               Experience & <span className="gradient-text">Education</span>
             </h2>
-            <p className="text-slate-400 max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
               My professional journey and academic background
             </p>
           </motion.div>
@@ -48,10 +48,10 @@ export default function ExperienceSection() {
           {/* Work Experience section */}
           <div className="mb-16">
             <div className="flex items-center gap-3 mb-8">
-              <div className="p-2 rounded-lg bg-blue-500/20">
-                <Briefcase className="w-5 h-5 text-blue-400" />
+              <div className="p-2 rounded-lg bg-blue-500/10 dark:bg-blue-500/20">
+                <Briefcase className="w-5 h-5 text-blue-500 dark:text-blue-400" />
               </div>
-              <h3 className="text-xl font-semibold text-white">
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
                 Work Experience
               </h3>
             </div>
@@ -70,10 +70,10 @@ export default function ExperienceSection() {
           {/* Education section */}
           <div>
             <div className="flex items-center gap-3 mb-8">
-              <div className="p-2 rounded-lg bg-violet-500/20">
-                <GraduationCap className="w-5 h-5 text-violet-400" />
+              <div className="p-2 rounded-lg bg-violet-500/10 dark:bg-violet-500/20">
+                <GraduationCap className="w-5 h-5 text-violet-500 dark:text-violet-400" />
               </div>
-              <h3 className="text-xl font-semibold text-white">Education</h3>
+              <h3 className="text-xl font-semibold text-slate-900 dark:text-white">Education</h3>
             </div>
             <div className="space-y-6">
               {education.map((exp, index) => (
@@ -110,7 +110,7 @@ function TimelineCard({
   index: number;
   color: "blue" | "violet";
 }) {
-  const textColor = color === "blue" ? "text-blue-400" : "text-violet-400";
+  const textColor = color === "blue" ? "text-blue-500 dark:text-blue-400" : "text-violet-500 dark:text-violet-400";
 
   return (
     <motion.div
@@ -118,12 +118,12 @@ function TimelineCard({
       whileInView={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
       viewport={{ once: true }}
-      className="p-6 rounded-xl bg-slate-800/50 border border-slate-700/50"
+      className="p-6 rounded-xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 shadow-sm dark:shadow-none"
     >
       {/* Header with role and status badge */}
       <div className="flex flex-wrap items-start justify-between gap-2 mb-2">
         <div>
-          <h4 className="text-lg font-semibold text-white">
+          <h4 className="text-lg font-semibold text-slate-900 dark:text-white">
             {experience.role}
           </h4>
           <a
@@ -136,18 +136,17 @@ function TimelineCard({
           </a>
         </div>
         <span
-          className={`px-3 py-1 text-xs font-medium rounded-full ${
-            experience.endDate === "Present"
-              ? "bg-green-500/20 text-green-400"
-              : "bg-slate-700 text-slate-400"
-          }`}
+          className={`px-3 py-1 text-xs font-medium rounded-full ${experience.endDate === "Present"
+              ? "bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400"
+              : "bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400"
+            }`}
         >
           {experience.endDate === "Present" ? "Current" : experience.endDate}
         </span>
       </div>
 
       {/* Date and location metadata */}
-      <div className="flex flex-wrap items-center gap-4 text-sm text-slate-400 mb-4">
+      <div className="flex flex-wrap items-center gap-4 text-sm text-slate-500 dark:text-slate-400 mb-4">
         <span className="flex items-center gap-1">
           <Calendar className="w-4 h-4" />
           {experience.startDate} - {experience.endDate}
@@ -161,8 +160,8 @@ function TimelineCard({
       {/* Description bullet points */}
       <ul className="space-y-2 mb-4">
         {experience.description.map((item, i) => (
-          <li key={i} className="flex items-start gap-2 text-sm text-slate-300">
-            <span className="text-blue-400 mt-1">•</span>
+          <li key={i} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-300">
+            <span className="text-blue-500 dark:text-blue-400 mt-1">•</span>
             {item}
           </li>
         ))}
@@ -173,7 +172,7 @@ function TimelineCard({
         {experience.technologies.map((tech) => (
           <span
             key={tech}
-            className="px-2 py-1 text-xs rounded-md bg-slate-700/50 text-slate-400"
+            className="px-2 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400"
           >
             {tech}
           </span>
