@@ -38,27 +38,33 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
         const frameId = requestAnimationFrame(() => {
             // Remove all previous filter classes/styles
             root.style.filter = "none";
-            root.style.willChange = "auto";
             root.classList.remove("accessibility-filter-active");
 
             if (mode !== "none") {
-                // Use native CSS filters for better performance where possible
+                // Use CSS-only filters for maximum performance
+                // These are GPU-accelerated and much lighter than SVG filters
                 let filterValue = "";
 
                 switch (mode) {
+                    case "protanopia":
+                        // Red-blind: shift hues and reduce red saturation
+                        filterValue = "sepia(20%) saturate(120%) hue-rotate(-10deg)";
+                        break;
+                    case "deuteranopia":
+                        // Green-blind: shift hues toward yellow/blue
+                        filterValue = "sepia(30%) saturate(110%) hue-rotate(20deg)";
+                        break;
+                    case "tritanopia":
+                        // Blue-blind: shift toward red/green spectrum
+                        filterValue = "sepia(40%) saturate(130%) hue-rotate(-30deg)";
+                        break;
                     case "achromatopsia":
-                        // Native CSS grayscale is much faster than SVG filter
+                        // Monochromacy: complete grayscale
                         filterValue = "grayscale(100%)";
                         break;
                     case "high-contrast":
-                        // Native CSS contrast is faster than SVG
-                        filterValue = "contrast(1.2) brightness(1.1)";
-                        break;
-                    default:
-                        // Color blindness simulations still need SVG matrix transforms
-                        // Add will-change hint for GPU acceleration
-                        root.style.willChange = "filter";
-                        filterValue = `url(#${mode})`;
+                        // High contrast mode
+                        filterValue = "contrast(1.3) brightness(1.05)";
                         break;
                 }
 
