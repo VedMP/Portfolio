@@ -34,19 +34,46 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
     useEffect(() => {
         const root = document.documentElement;
 
-        // Remove all previous filter classes/styles
-        root.style.filter = "none";
+        // Use requestAnimationFrame for smoother filter transitions on mobile
+        const frameId = requestAnimationFrame(() => {
+            // Remove all previous filter classes/styles
+            root.style.filter = "none";
+            root.style.willChange = "auto";
+            root.classList.remove("accessibility-filter-active");
 
-        if (mode !== "none") {
-            // For high contrast, we might want to toggle a class instead/also
-            // But for color blindness, SVG filters are best
-            root.style.filter = `url(#${mode})`;
+            if (mode !== "none") {
+                // Use native CSS filters for better performance where possible
+                let filterValue = "";
 
-            // Save to local storage
-            localStorage.setItem("accessibility-mode", mode);
-        } else {
-            localStorage.removeItem("accessibility-mode");
-        }
+                switch (mode) {
+                    case "achromatopsia":
+                        // Native CSS grayscale is much faster than SVG filter
+                        filterValue = "grayscale(100%)";
+                        break;
+                    case "high-contrast":
+                        // Native CSS contrast is faster than SVG
+                        filterValue = "contrast(1.2) brightness(1.1)";
+                        break;
+                    default:
+                        // Color blindness simulations still need SVG matrix transforms
+                        // Add will-change hint for GPU acceleration
+                        root.style.willChange = "filter";
+                        filterValue = `url(#${mode})`;
+                        break;
+                }
+
+                root.style.filter = filterValue;
+                root.classList.add("accessibility-filter-active");
+
+                // Save to local storage
+                localStorage.setItem("accessibility-mode", mode);
+            } else {
+                localStorage.removeItem("accessibility-mode");
+            }
+        });
+
+        // Cleanup on unmount or mode change
+        return () => cancelAnimationFrame(frameId);
     }, [mode]);
 
     return (

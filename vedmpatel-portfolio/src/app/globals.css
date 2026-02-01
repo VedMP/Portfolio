@@ -103,3 +103,27 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
 }
+
+/* ============================================
+   Accessibility Filter Performance
+   ============================================ */
+
+/**
+ * Base transition for smooth filter switching
+ * Applied to html element for filter transitions
+ */
+html {
+  transition: filter 0.2s ease-out;
+}
+
+/**
+ * GPU acceleration for accessibility filters
+ * Uses transform: translateZ(0) to promote to GPU layer
+ * This significantly improves filter performance on mobile
+ */
+.accessibility-filter-active {
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}

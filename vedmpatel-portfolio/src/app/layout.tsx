@@ -11,16 +11,18 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-// Configure Geist Sans font
+// Configure Geist Sans font with display swap for faster text rendering
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
+  display: "swap", // Show fallback font immediately, swap when loaded
 });
 
 // Configure Geist Mono font for code blocks
 const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 /**
