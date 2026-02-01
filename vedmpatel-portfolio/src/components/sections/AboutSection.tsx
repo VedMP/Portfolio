@@ -8,6 +8,7 @@
 
 import { motion } from "framer-motion";
 import { skillCategories } from "@/data/skills";
+import Image from "next/image";
 
 /**
  * Statistics configuration for the stats grid
@@ -42,15 +43,32 @@ export default function AboutSection() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
-            className="text-center mb-16"
+            className="text-center mb-12"
           >
             <h2 className="text-3xl sm:text-4xl font-bold mb-4 text-slate-900 dark:text-white">
               About <span className="gradient-text">Me</span>
             </h2>
-            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
+            <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-8">
               A passionate developer with a drive for creating impactful
               solutions
             </p>
+
+            {/* Profile Photo */}
+            <div className="relative w-60 h-60 mx-auto">
+              {/* Gradient border ring */}
+              <div className="absolute inset-0 rounded-full bg-gradient-to-br from-blue-500 to-violet-500 p-1">
+                <div className="w-full h-full rounded-full bg-white dark:bg-slate-900 flex items-center justify-center overflow-hidden">
+                  <Image
+                    src="/ProfilePhoto.JPG"
+                    alt="Ved Patel"
+                    width={240}
+                    height={240}
+                    className="object-cover w-full h-full"
+                    priority
+                  />
+                </div>
+              </div>
+            </div>
           </motion.div>
 
           {/* Two-column content grid */}

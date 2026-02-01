@@ -7,7 +7,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, Send, Copy, Check } from "lucide-react";
+import { Mail, Github, Linkedin, Send, Copy, Check, FileText, Download } from "lucide-react";
 import { useState } from "react";
 import Button from "@/components/ui/Button";
 
@@ -152,8 +152,21 @@ export default function ContactSection() {
               <Mail className="w-5 h-5" />
               Send Email
             </Button>
-            <Button href="/resume.pdf" variant="secondary" size="lg">
-              Download Resume
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => window.open('/Ved_Patel_Resume.pdf', '_blank', 'noopener,noreferrer')}
+            >
+              <Download className="w-5 h-5" />
+              Resume
+            </Button>
+            <Button
+              variant="secondary"
+              size="lg"
+              onClick={() => window.open('/Ved_Patel_Transcript.pdf', '_blank', 'noopener,noreferrer')}
+            >
+              <FileText className="w-5 h-5" />
+              Transcript
             </Button>
           </motion.div>
 

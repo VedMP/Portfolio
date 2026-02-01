@@ -25,6 +25,10 @@ interface ButtonProps {
   onClick?: () => void;
   /** Additional CSS classes */
   className?: string;
+  /** Link target (e.g., "_blank" for new tab) */
+  target?: string;
+  /** Link rel attribute (e.g., "noopener noreferrer") */
+  rel?: string;
 }
 
 /**
@@ -48,6 +52,8 @@ export default function Button({
   size = "md",
   onClick,
   className = "",
+  target,
+  rel,
 }: ButtonProps) {
   // Base styles applied to all buttons
   const baseStyles =
@@ -70,7 +76,16 @@ export default function Button({
 
   const combinedStyles = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
 
-  // Render as Link if href is provided
+  // Render as native anchor if target="_blank" (for external links/files)
+  if (href && target === "_blank") {
+    return (
+      <a href={href} className={combinedStyles} target={target} rel={rel}>
+        {children}
+      </a>
+    );
+  }
+
+  // Render as Next.js Link for internal navigation
   if (href) {
     return (
       <Link href={href} className={combinedStyles}>

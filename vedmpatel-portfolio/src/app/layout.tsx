@@ -48,7 +48,6 @@ export const metadata: Metadata = {
  */
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { AccessibilityProvider } from "@/components/providers/AccessibilityProvider";
-import AccessibilityFilters from "@/components/providers/AccessibilityFilters";
 
 export default function RootLayout({
   children,
@@ -73,7 +72,6 @@ export default function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <AccessibilityFilters />
             <Navbar />
             <main id="main-content" className="flex-grow">
               {children}
