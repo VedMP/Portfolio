@@ -10,6 +10,12 @@ const nextConfig: NextConfig = {
   output: "export",
 
   /**
+   * Trailing Slash - Required for Cloudflare Pages
+   * Ensures proper routing for static sites
+   */
+  trailingSlash: true,
+
+  /**
    * Image Optimization
    * Must be disabled for static export unless using a loader
    */
