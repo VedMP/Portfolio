@@ -9,18 +9,15 @@
 import { motion } from "framer-motion";
 import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
 import Button from "@/components/ui/Button";
+import { EMAIL, SOCIAL_LINKS } from "@/data/contact";
 
 /**
  * Social media links configuration
  */
 const socialLinks = [
-  { name: "GitHub", icon: Github, url: "https://github.com/VedMP" },
-  {
-    name: "LinkedIn",
-    icon: Linkedin,
-    url: "https://www.linkedin.com/in/ved-patel-cs/",
-  },
-  { name: "Email", icon: Mail, url: "mailto:vedmpatel2005@gmail.com" },
+  { name: "GitHub", icon: Github, url: SOCIAL_LINKS.github },
+  { name: "LinkedIn", icon: Linkedin, url: SOCIAL_LINKS.linkedin },
+  { name: "Email", icon: Mail, url: `mailto:${EMAIL}` },
 ];
 
 /**
@@ -120,29 +117,32 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="flex items-center justify-center gap-4"
           >
-            {socialLinks.map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-600 transition-all"
-                aria-label={`Visit ${social.name}`}
-              >
-                <social.icon className="w-5 h-5" />
-              </a>
-            ))}
+            {socialLinks.map((social) => {
+              const isExternal = social.url.startsWith("http");
+              return (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  target={isExternal ? "_blank" : undefined}
+                  rel={isExternal ? "noopener noreferrer" : undefined}
+                  className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:border-slate-300 dark:hover:border-slate-600 transition-all"
+                  aria-label={`Visit ${social.name}`}
+                >
+                  <social.icon className="w-5 h-5" />
+                </a>
+              );
+            })}
           </motion.div>
         </div>
       </div>
 
-      {/* Animated scroll indicator */}
+      {/* Animated scroll indicator - hidden on mobile to prevent overlap */}
       <motion.a
         href="/about"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6, delay: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
+        className="hidden md:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300 transition-colors"
         aria-label="Scroll to About section"
       >
         <span className="text-sm">Scroll to explore</span>

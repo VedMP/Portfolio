@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  /**
+   * React Compiler for automatic optimizations
+   */
   reactCompiler: true,
 
   /**
@@ -21,6 +23,14 @@ const nextConfig: NextConfig = {
    */
   images: {
     unoptimized: true,
+  },
+
+  /**
+   * Performance Optimizations for faster compilation
+   */
+  experimental: {
+    // Enable parallel compilation for faster builds
+    webpackBuildWorker: true,
   },
 };
 

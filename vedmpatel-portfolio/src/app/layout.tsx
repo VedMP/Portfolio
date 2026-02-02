@@ -10,12 +10,14 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { ThemeProvider } from "@/components/providers/ThemeProvider";
+import { AccessibilityProvider } from "@/components/providers/AccessibilityProvider";
 
 // Configure Geist Sans font with display swap for faster text rendering
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
-  display: "swap", // Show fallback font immediately, swap when loaded
+  display: "swap",
 });
 
 // Configure Geist Mono font for code blocks
@@ -46,9 +48,6 @@ export const metadata: Metadata = {
  *
  * @param children - Page content to render
  */
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { AccessibilityProvider } from "@/components/providers/AccessibilityProvider";
-
 export default function RootLayout({
   children,
 }: Readonly<{

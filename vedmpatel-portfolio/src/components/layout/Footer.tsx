@@ -7,19 +7,16 @@
 
 import { Github, Linkedin, Twitter, Mail, Heart } from "lucide-react";
 import Link from "next/link";
+import { EMAIL, SOCIAL_LINKS } from "@/data/contact";
 
 /**
  * Social media links configuration
  */
 const socialLinks = [
-  { name: "GitHub", icon: Github, url: "https://github.com/VedMP" },
-  {
-    name: "LinkedIn",
-    icon: Linkedin,
-    url: "https://www.linkedin.com/in/ved-patel-cs/",
-  },
-  { name: "Twitter", icon: Twitter, url: "https://twitter.com" },
-  { name: "Email", icon: Mail, url: "mailto:vedmpatel2005@gmail.com" },
+  { name: "GitHub", icon: Github, url: SOCIAL_LINKS.github },
+  { name: "LinkedIn", icon: Linkedin, url: SOCIAL_LINKS.linkedin },
+  { name: "Twitter", icon: Twitter, url: SOCIAL_LINKS.twitter },
+  { name: "Email", icon: Mail, url: `mailto:${EMAIL}` },
 ];
 
 /**
@@ -81,18 +78,21 @@ export default function Footer() {
           <div>
             <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-4">Connect</h3>
             <div className="flex gap-3">
-              {socialLinks.map((social) => (
-                <a
-                  key={social.name}
-                  href={social.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white hover:bg-slate-700 dark:hover:bg-slate-700 transition-colors"
-                  aria-label={`Follow on ${social.name}`}
-                >
-                  <social.icon className="w-5 h-5" />
-                </a>
-              ))}
+              {socialLinks.map((social) => {
+                const isExternal = social.url.startsWith("http");
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noopener noreferrer" : undefined}
+                    className="p-2 rounded-lg bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-white hover:bg-slate-700 dark:hover:bg-slate-700 transition-colors"
+                    aria-label={`Follow on ${social.name}`}
+                  >
+                    <social.icon className="w-5 h-5" />
+                  </a>
+                );
+              })}
             </div>
           </div>
         </div>

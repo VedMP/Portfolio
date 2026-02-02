@@ -10,32 +10,16 @@ import { motion } from "framer-motion";
 import { Mail, Github, Linkedin, Send, Copy, Check, FileText, Download } from "lucide-react";
 import { useState } from "react";
 import Button from "@/components/ui/Button";
+import { EMAIL, SOCIAL_LINKS } from "@/data/contact";
 
 /**
  * Social media links for the contact section
  */
 const socialLinks = [
-  {
-    name: "GitHub (Professional)",
-    icon: Github,
-    url: "https://github.com/VedMP",
-  },
-  {
-    name: "GitHub (Academic)",
-    icon: Github,
-    url: "https://github.com/VedPatel169",
-  },
-  {
-    name: "LinkedIn",
-    icon: Linkedin,
-    url: "https://www.linkedin.com/in/ved-patel-cs/",
-  },
+  { name: "GitHub (Professional)", icon: Github, url: SOCIAL_LINKS.github },
+  { name: "GitHub (Academic)", icon: Github, url: SOCIAL_LINKS.githubAcademic },
+  { name: "LinkedIn", icon: Linkedin, url: SOCIAL_LINKS.linkedin },
 ];
-
-/**
- * Contact email address
- */
-const email = "vedmpatel2005@gmail.com";
 
 /**
  * ContactSection Component
@@ -54,7 +38,7 @@ export default function ContactSection() {
    * Copies email to clipboard and shows feedback
    */
   const copyEmail = async () => {
-    await navigator.clipboard.writeText(email);
+    await navigator.clipboard.writeText(EMAIL);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -123,7 +107,7 @@ export default function ContactSection() {
             <div className="inline-flex items-center gap-2 p-2 rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none">
               <div className="flex items-center gap-3 px-4 py-2">
                 <Mail className="w-5 h-5 text-blue-500 dark:text-blue-400" />
-                <span className="text-lg text-slate-800 dark:text-slate-200">{email}</span>
+                <span className="text-lg text-slate-800 dark:text-slate-200">{EMAIL}</span>
               </div>
               <button
                 onClick={copyEmail}
@@ -148,7 +132,7 @@ export default function ContactSection() {
             viewport={{ once: true }}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
           >
-            <Button href={`mailto:${email}`} size="lg">
+            <Button href={`mailto:${EMAIL}`} size="lg">
               <Mail className="w-5 h-5" />
               Send Email
             </Button>

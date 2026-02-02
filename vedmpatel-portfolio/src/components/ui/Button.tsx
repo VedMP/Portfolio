@@ -76,8 +76,11 @@ export default function Button({
 
   const combinedStyles = `${baseStyles} ${variants[variant]} ${sizes[size]} ${className}`;
 
-  // Render as native anchor if target="_blank" (for external links/files)
-  if (href && target === "_blank") {
+  // Check if href is an external protocol (mailto:, tel:, etc.)
+  const isExternalProtocol = href?.startsWith("mailto:") || href?.startsWith("tel:");
+
+  // Render as native anchor for external links, protocols (mailto:, tel:), or target="_blank"
+  if (href && (target === "_blank" || isExternalProtocol)) {
     return (
       <a href={href} className={combinedStyles} target={target} rel={rel}>
         {children}
