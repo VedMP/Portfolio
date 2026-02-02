@@ -14,7 +14,7 @@ import ProjectCard from "@/components/ui/ProjectCard";
 /**
  * Available filter categories
  */
-const categories = ["all", "frontend", "fullstack", "mobile", "ai"] as const;
+const categories = ["all", "Frontend", "Fullstack", "AI"] as const;
 
 /**
  * ProjectsSection Component
@@ -36,7 +36,7 @@ export default function ProjectsSection() {
   return (
     <section
       id="projects"
-      className="relative w-full py-24 md:py-32 bg-slate-50 dark:bg-slate-900/50"
+      className="relative w-full py-12 md:py-16 bg-slate-50 dark:bg-slate-900/50"
     >
       {/* Container with 20px padding from edges */}
       <div
@@ -74,8 +74,8 @@ export default function ProjectsSection() {
                 key={category}
                 onClick={() => setActiveCategory(category)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeCategory === category
-                    ? "bg-blue-600 dark:bg-blue-500 text-white shadow-lg shadow-blue-500/30"
-                    : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none"
+                  ? "bg-blue-600 dark:bg-blue-500 text-white shadow-lg shadow-blue-500/30"
+                  : "bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white border border-slate-200 dark:border-slate-700 shadow-sm dark:shadow-none"
                   }`}
                 aria-pressed={activeCategory === category}
               >

@@ -14,9 +14,9 @@ import Image from "next/image";
  * Statistics configuration for the stats grid
  */
 const stats = [
-  { value: "15+", label: "Projects" },
+  { value: "5+", label: "Projects" },
   { value: "3+", label: "Years Coding" },
-  { value: "5+", label: "Technologies" },
+  { value: "23+", label: "Technologies" },
 ];
 
 /**
@@ -30,7 +30,7 @@ const stats = [
  */
 export default function AboutSection() {
   return (
-    <section id="about" className="relative w-full py-24 md:py-32">
+    <section id="about" className="relative w-full py-12 md:py-16">
       {/* Container with 20px padding from edges */}
       <div
         className="w-full flex justify-center"
@@ -95,8 +95,8 @@ export default function AboutSection() {
                   My technical focus is on <span className="text-slate-900 dark:text-white font-medium">Generative AI Engineering</span>.
                   I have architected <span className="text-slate-900 dark:text-white">Retrieval-Augmented Generation (RAG)</span> pipelines
                   using <span className="text-blue-500 dark:text-blue-300">Python</span>,
-                  <span className="text-blue-500 dark:text-blue-300">Watsonx.ai</span>, and
-                  <span className="text-blue-500 dark:text-blue-300">ChromaDB</span> to solve reliability issues like LLM hallucinations.
+                  <span className="text-blue-500 dark:text-blue-300"> Watsonx.ai</span>, and
+                  <span className="text-blue-500 dark:text-blue-300"> ChromaDB</span> to solve reliability issues like LLM hallucinations.
                   I am also actively exploring agentic workflows to bridge natural language and structured data.
                 </p>
 

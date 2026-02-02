@@ -20,7 +20,7 @@ export interface Project {
   /** Technologies used in the project */
   tags: string[];
   /** Project category for filtering */
-  category: "frontend" | "fullstack" | "mobile" | "ai";
+  category: "Frontend" | "Fullstack" | "Mobile" | "AI";
   /** GitHub repository URL (optional) */
   github?: string;
   /** Live demo URL (optional) */
@@ -36,13 +36,13 @@ export interface Project {
 export const projects: Project[] = [
   {
     id: "1",
-    title: "AI Chat Application",
+    title: "Smart Document Assistant",
     description:
-      "A real-time chat application powered by OpenAI GPT-4 with conversation memory and multi-language support.",
+      "A smart document assistant that can answer questions about documents. Using LangChain and ChromaDB to store and retrieve document information. Using IBM watsonx.ai granite-3-2-8b-instruct LLM and slate-125m-english embedding model.",
     image: "/projects/chat-app.png",
-    tags: ["Next.js", "OpenAI", "TypeScript", "Tailwind"],
-    category: "ai",
-    github: "https://github.com/VedMP",
+    tags: ["IBM watsonx.ai", "Python", "Gradio", "LangChain"],
+    category: "AI",
+    github: "https://github.com/VedMP/Smart-Document-Assistant",
     live: "https://example.com",
     featured: true,
   },
@@ -53,7 +53,7 @@ export const projects: Project[] = [
       "Full-stack e-commerce solution with payment processing, inventory management, and analytics dashboard.",
     image: "/projects/ecommerce.png",
     tags: ["React", "Node.js", "PostgreSQL", "Stripe"],
-    category: "fullstack",
+    category: "Fullstack",
     github: "https://github.com/VedMP",
     featured: true,
   },
@@ -61,11 +61,11 @@ export const projects: Project[] = [
     id: "3",
     title: "Portfolio Website",
     description:
-      "Modern, responsive portfolio website built with Next.js and Framer Motion animations.",
+      "Modern, responsive portfolio website built with Next.js and Framer Motion animations. Utilzing Claude AI for code generation and design ideas.",
     image: "/projects/portfolio.png",
-    tags: ["Next.js", "Framer Motion", "TailwindCSS"],
-    category: "frontend",
-    github: "https://github.com/VedMP",
+    tags: ["Next.js", "Framer Motion", "TailwindCSS", "Claude AI"],
+    category: "Frontend",
+    github: "https://github.com/VedMP/Portfolio",
     live: "https://vedpatel.dev",
     featured: true,
   },

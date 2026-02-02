@@ -91,8 +91,8 @@ export default function HeroSection() {
             className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10"
           >
             Passionate about engineering reliable AI systems and scalable infrastructure.
-            I specialize in <span className="text-white font-medium">Generative AI</span> and
-            <span className="text-white font-medium"> Systems Engineering</span>,
+            I specialize in <span className="text-slate-900 dark:text-white font-medium">Generative AI</span> and
+            <span className="text-slate-900 dark:text-white font-medium"> Systems Engineering</span>,
             focusing on architecting RAG pipelines, reducing model hallucinations, and
             optimizing performance with low-level languages like C++.
           </motion.p>

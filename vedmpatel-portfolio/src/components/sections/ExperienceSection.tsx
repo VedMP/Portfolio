@@ -22,7 +22,7 @@ export default function ExperienceSection() {
   const education = experiences.filter((e) => e.type === "education");
 
   return (
-    <section id="experience" className="relative w-full py-24 md:py-32">
+    <section id="experience" className="relative w-full py-12 md:py-16">
       {/* Container with 20px padding from edges */}
       <div
         className="w-full flex justify-center"
@@ -137,8 +137,8 @@ function TimelineCard({
         </div>
         <span
           className={`px-3 py-1 text-xs font-medium rounded-full ${experience.endDate === "Present"
-              ? "bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400"
-              : "bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400"
+            ? "bg-green-500/10 dark:bg-green-500/20 text-green-600 dark:text-green-400"
+            : "bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400"
             }`}
         >
           {experience.endDate === "Present" ? "Current" : experience.endDate}
