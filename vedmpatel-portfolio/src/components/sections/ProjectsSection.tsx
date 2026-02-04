@@ -14,7 +14,7 @@ import ProjectCard from "@/components/ui/ProjectCard";
 /**
  * Available filter categories
  */
-const categories = ["all", "Frontend", "Fullstack", "AI"] as const;
+const categories = ["all", "Frontend", "Full Stack", "AI"] as const;
 
 /**
  * ProjectsSection Component

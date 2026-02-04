@@ -51,6 +51,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "Linux" },
       { name: "Git" },
       { name: "GitHub" },
+      { name: "Claude AI" }
     ],
   },
   {

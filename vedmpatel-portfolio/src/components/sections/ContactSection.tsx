@@ -7,7 +7,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, Send, Copy, Check, FileText, Download } from "lucide-react";
+import { Mail, Send, Copy, Check, FileText, Download } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import { useState } from "react";
 import Button from "@/components/ui/Button";
 import { EMAIL, SOCIAL_LINKS } from "@/data/contact";
@@ -16,9 +17,9 @@ import { EMAIL, SOCIAL_LINKS } from "@/data/contact";
  * Social media links for the contact section
  */
 const socialLinks = [
-  { name: "GitHub (Professional)", icon: Github, url: SOCIAL_LINKS.github },
-  { name: "GitHub (Academic)", icon: Github, url: SOCIAL_LINKS.githubAcademic },
-  { name: "LinkedIn", icon: Linkedin, url: SOCIAL_LINKS.linkedin },
+  { name: "GitHub (Professional)", icon: GithubIcon, url: SOCIAL_LINKS.github },
+  { name: "GitHub (Academic)", icon: GithubIcon, url: SOCIAL_LINKS.githubAcademic },
+  { name: "LinkedIn", icon: LinkedinIcon, url: SOCIAL_LINKS.linkedin },
 ];
 
 /**

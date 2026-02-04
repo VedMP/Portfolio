@@ -5,7 +5,8 @@
 
 "use client";
 
-import { Github, Linkedin, Twitter, Mail, Heart } from "lucide-react";
+import { Mail, Heart } from "lucide-react";
+import { GithubIcon, LinkedinIcon, XIcon } from "@/components/ui/SocialIcons";
 import Link from "next/link";
 import { EMAIL, SOCIAL_LINKS } from "@/data/contact";
 
@@ -13,9 +14,9 @@ import { EMAIL, SOCIAL_LINKS } from "@/data/contact";
  * Social media links configuration
  */
 const socialLinks = [
-  { name: "GitHub", icon: Github, url: SOCIAL_LINKS.github },
-  { name: "LinkedIn", icon: Linkedin, url: SOCIAL_LINKS.linkedin },
-  { name: "Twitter", icon: Twitter, url: SOCIAL_LINKS.twitter },
+  { name: "GitHub", icon: GithubIcon, url: SOCIAL_LINKS.github },
+  { name: "LinkedIn", icon: LinkedinIcon, url: SOCIAL_LINKS.linkedin },
+  { name: "X", icon: XIcon, url: SOCIAL_LINKS.twitter },
   { name: "Email", icon: Mail, url: `mailto:${EMAIL}` },
 ];
 

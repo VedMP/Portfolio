@@ -6,9 +6,12 @@
 
 "use client";
 
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { ExternalLink, Github } from "lucide-react";
+import { ExternalLink } from "lucide-react";
+import { GithubIcon } from "@/components/ui/SocialIcons";
 import { Project } from "@/lib/projects";
+import Image from "next/image";
 
 /**
  * ProjectCard component props
@@ -30,6 +33,9 @@ interface ProjectCardProps {
  * @param index - Used for staggered animation delays
  */
 export default function ProjectCard({ project, index }: ProjectCardProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -38,9 +44,20 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
       viewport={{ once: true }}
       className="group relative rounded-2xl bg-white dark:bg-slate-800/50 border border-slate-200 dark:border-slate-700/50 overflow-hidden hover:border-slate-400 dark:hover:border-slate-600 transition-all duration-300 shadow-sm dark:shadow-none"
     >
-      {/* Project image placeholder with gradient background */}
-      <div className="aspect-video bg-gradient-to-br from-blue-500/10 to-violet-500/10 dark:from-blue-500/20 dark:to-violet-500/20 flex items-center justify-center">
-        <span className="text-4xl">🚀</span>
+      {/* Project image or fallback placeholder */}
+      <div className="aspect-video bg-gradient-to-br from-blue-500/10 to-violet-500/10 dark:from-blue-500/20 dark:to-violet-500/20 flex items-center justify-center overflow-hidden">
+        {project.image && !imageError ? (
+          <Image
+            src={project.image}
+            alt={project.title}
+            width={400}
+            height={225}
+            className="object-cover w-full h-full"
+            onError={() => setImageError(true)}
+          />
+        ) : (
+          <span className="text-4xl">🚀</span>
+        )}
       </div>
 
       {/* Project content */}
@@ -50,14 +67,17 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           {project.title}
         </h3>
 
-        {/* Description (truncated to 2 lines) */}
-        <p className="text-sm text-slate-600 dark:text-slate-400 mb-4 line-clamp-2">
+        {/* Description (click to expand/collapse) */}
+        <p
+          onClick={() => setIsExpanded(!isExpanded)}
+          className={`text-sm text-slate-600 dark:text-slate-400 mb-4 cursor-pointer hover:text-slate-800 dark:hover:text-slate-300 transition-colors ${isExpanded ? "" : "line-clamp-2"}`}
+        >
           {project.description}
         </p>
 
-        {/* Technology tags (show up to 3) */}
+        {/* Technology tags */}
         <div className="flex flex-wrap gap-2 mb-4">
-          {project.tags.slice(0, 3).map((tag) => (
+          {project.tags.map((tag) => (
             <span
               key={tag}
               className="px-2 py-1 text-xs rounded-md bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300"
@@ -78,7 +98,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
               className="p-2 rounded-lg bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-400 hover:text-black dark:hover:text-white hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
               aria-label="View on GitHub"
             >
-              <Github className="w-4 h-4" />
+              <GithubIcon className="w-4 h-4" />
             </a>
           )}
 

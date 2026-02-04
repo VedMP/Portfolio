@@ -11,8 +11,8 @@
 export interface Experience {
   /** Unique identifier */
   id: string;
-  /** Type of experience: work or education */
-  type: "work" | "education";
+  /** Type of experience: work, education, or hackathon */
+  type: "work" | "education" | "hackathon";
   /** Job title or degree name */
   role: string;
   /** Company or institution name */
@@ -51,5 +51,21 @@ export const experiences: Experience[] = [
       "Relevant coursework: Data Structures, Agile Methodologies, Database Systems, Design and Analysis of Algorithms,",
     ],
     technologies: ["Java", "Python", "C++", "SQL", "Git", "GitHub", "PostgreSQL", "HTML", "CSS", "JavaScript", "React"]
+  },
+  {
+    id: "2",
+    type: "hackathon",
+    role: "HackHive Participant",
+    company: "Ontario Tech University CS Club",
+    companyUrl: "https://www.otucsclub.dev/",
+    location: "Oshawa, ON",
+    startDate: "Jan 23, 2026",
+    endDate: "Jan 25, 2026",
+    description: [
+      "Orchestrated the backend architecture for a multilingual learning platform, utilizing Flask to rapidly deploy a RESTful API and acting as the System Architect to direct AI-assisted code generation.",
+      "Engineered a Multi-Agent Verification Pipeline, instructing Claude AI to implement a \"Teacher-TA\" workflow where a secondary LangChain agent strictly validates grade-level accuracy before response delivery.",
+      "Streamlined model integration by utilizing an Abstract Base Class to centralize the initialization of educational parameters, reducing boilerplate code and ensuring consistent context injection across disparate AI providers.",
+    ],
+    technologies: ["Python", "GitHub", "HTML", "CSS", "JavaScript", "React", "OpenAI API", "LangChain", "Gemini API"]
   },
 ];

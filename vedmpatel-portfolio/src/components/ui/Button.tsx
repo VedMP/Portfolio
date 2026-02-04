@@ -99,7 +99,7 @@ export default function Button({
 
   // Render as button otherwise
   return (
-    <button onClick={onClick} className={combinedStyles}>
+    <button type="button" onClick={onClick} className={combinedStyles}>
       {children}
     </button>
   );

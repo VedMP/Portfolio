@@ -7,7 +7,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
+import { Mail, ChevronDown } from "lucide-react";
+import { GithubIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import Button from "@/components/ui/Button";
 import { EMAIL, SOCIAL_LINKS } from "@/data/contact";
 
@@ -15,8 +16,8 @@ import { EMAIL, SOCIAL_LINKS } from "@/data/contact";
  * Social media links configuration
  */
 const socialLinks = [
-  { name: "GitHub", icon: Github, url: SOCIAL_LINKS.github },
-  { name: "LinkedIn", icon: Linkedin, url: SOCIAL_LINKS.linkedin },
+  { name: "GitHub", icon: GithubIcon, url: SOCIAL_LINKS.github },
+  { name: "LinkedIn", icon: LinkedinIcon, url: SOCIAL_LINKS.linkedin },
   { name: "Email", icon: Mail, url: `mailto:${EMAIL}` },
 ];
 

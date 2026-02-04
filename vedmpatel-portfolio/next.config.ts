@@ -26,6 +26,12 @@ const nextConfig: NextConfig = {
   },
 
   /**
+   * Allowed Dev Origins - Required for future Next.js versions
+   * Allows cross-origin requests from local network during development
+   */
+  allowedDevOrigins: ["192.168.118.1"],
+
+  /**
    * Performance Optimizations for faster compilation
    */
   experimental: {

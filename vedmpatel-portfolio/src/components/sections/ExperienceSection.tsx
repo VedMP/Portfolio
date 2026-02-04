@@ -7,7 +7,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Briefcase, GraduationCap, Calendar, MapPin } from "lucide-react";
+import { Briefcase, GraduationCap, Calendar, MapPin, Trophy } from "lucide-react";
 import { experiences, Experience } from "@/data/experience";
 
 /**
@@ -17,8 +17,9 @@ import { experiences, Experience } from "@/data/experience";
  * Each category has its own timeline with animated cards.
  */
 export default function ExperienceSection() {
-  // Separate work and education entries
+  // Separate work, hackathon, and education entries
   const workExperience = experiences.filter((e) => e.type === "work");
+  const hackathons = experiences.filter((e) => e.type === "hackathon");
   const education = experiences.filter((e) => e.type === "education");
 
   return (
@@ -67,6 +68,30 @@ export default function ExperienceSection() {
             </div>
           </div>
 
+          {/* Hackathons section */}
+          {hackathons.length > 0 && (
+            <div className="mb-16">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="p-2 rounded-lg bg-amber-500/10 dark:bg-amber-500/20">
+                  <Trophy className="w-5 h-5 text-amber-500 dark:text-amber-400" />
+                </div>
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white">
+                  Hackathons
+                </h3>
+              </div>
+              <div className="space-y-6">
+                {hackathons.map((exp, index) => (
+                  <TimelineCard
+                    key={exp.id}
+                    experience={exp}
+                    index={index}
+                    color="amber"
+                  />
+                ))}
+              </div>
+            </div>
+          )}
+
           {/* Education section */}
           <div>
             <div className="flex items-center gap-3 mb-8">
@@ -99,7 +124,7 @@ export default function ExperienceSection() {
  *
  * @param experience - The experience data to display
  * @param index - Index for staggered animation delay
- * @param color - Color theme (blue for work, violet for education)
+ * @param color - Color theme (blue for work, amber for hackathons, violet for education)
  */
 function TimelineCard({
   experience,
@@ -108,9 +133,14 @@ function TimelineCard({
 }: {
   experience: Experience;
   index: number;
-  color: "blue" | "violet";
+  color: "blue" | "violet" | "amber";
 }) {
-  const textColor = color === "blue" ? "text-blue-500 dark:text-blue-400" : "text-violet-500 dark:text-violet-400";
+  const textColorMap = {
+    blue: "text-blue-500 dark:text-blue-400",
+    violet: "text-violet-500 dark:text-violet-400",
+    amber: "text-amber-500 dark:text-amber-400",
+  };
+  const textColor = textColorMap[color];
 
   return (
     <motion.div
