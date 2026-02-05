@@ -81,8 +81,22 @@ export default function Button({
 
   // Render as native anchor for external links, protocols (mailto:, tel:), or target="_blank"
   if (href && (target === "_blank" || isExternalProtocol)) {
+    // Security: Ensure target="_blank" has rel="noopener noreferrer"
+    let safeRel = rel;
+    if (target === "_blank") {
+      if (!safeRel) {
+        safeRel = "noopener noreferrer";
+      } else if (!safeRel.includes("noopener") || !safeRel.includes("noreferrer")) {
+        // If rel exists but is partial/unsafe, append missing parts or just overwrite?
+        // Safest default is to ensure both are present.
+        // For simplicity in this codebase, we'll default to the safe string if not fully specified.
+        if (!safeRel.includes("noopener")) safeRel += " noopener";
+        if (!safeRel.includes("noreferrer")) safeRel += " noreferrer";
+      }
+    }
+
     return (
-      <a href={href} className={combinedStyles} target={target} rel={rel}>
+      <a href={href} className={combinedStyles} target={target} rel={safeRel}>
         {children}
       </a>
     );

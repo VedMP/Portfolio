@@ -55,7 +55,7 @@ export const experiences: Experience[] = [
   {
     id: "2",
     type: "hackathon",
-    role: "HackHive Participant",
+    role: "HackHive 2026 Participant",
     company: "Ontario Tech University CS Club",
     companyUrl: "https://www.otucsclub.dev/",
     location: "Oshawa, ON",

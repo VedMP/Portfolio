@@ -14,7 +14,7 @@ import Image from "next/image";
  * Statistics configuration for the stats grid
  */
 const stats = [
-  { value: "5+", label: "Projects" },
+  { value: "3+", label: "Projects" },
   { value: "3+", label: "Years Coding" },
   { value: "23+", label: "Technologies" },
 ];

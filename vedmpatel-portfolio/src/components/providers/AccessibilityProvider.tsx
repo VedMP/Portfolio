@@ -24,10 +24,10 @@ export function AccessibilityProvider({ children }: { children: ReactNode }) {
 
     // Load saved preference on mount
     useEffect(() => {
-        const savedMode = localStorage.getItem("accessibility-mode") as AccessibilityMode;
-        if (savedMode) {
-            setMode(savedMode);
-        }
+        // const savedMode = localStorage.getItem("accessibility-mode") as AccessibilityMode;
+        // if (savedMode) {
+        //     setMode(savedMode);
+        // }
     }, []);
 
     // Apply filter to body when mode changes

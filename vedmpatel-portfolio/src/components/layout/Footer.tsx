@@ -14,7 +14,8 @@ import { EMAIL, SOCIAL_LINKS } from "@/data/contact";
  * Social media links configuration
  */
 const socialLinks = [
-  { name: "GitHub", icon: GithubIcon, url: SOCIAL_LINKS.github },
+  { name: "GitHub (Professional)", icon: GithubIcon, url: SOCIAL_LINKS.github },
+  { name: "GitHub (Academic)", icon: GithubIcon, url: SOCIAL_LINKS.githubAcademic },
   { name: "LinkedIn", icon: LinkedinIcon, url: SOCIAL_LINKS.linkedin },
   { name: "X", icon: XIcon, url: SOCIAL_LINKS.twitter },
   { name: "Email", icon: Mail, url: `mailto:${EMAIL}` },

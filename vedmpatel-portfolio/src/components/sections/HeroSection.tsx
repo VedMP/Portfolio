@@ -16,7 +16,8 @@ import { EMAIL, SOCIAL_LINKS } from "@/data/contact";
  * Social media links configuration
  */
 const socialLinks = [
-  { name: "GitHub", icon: GithubIcon, url: SOCIAL_LINKS.github },
+  { name: "GitHub (Professional)", icon: GithubIcon, url: SOCIAL_LINKS.github },
+  { name: "GitHub (Academic)", icon: GithubIcon, url: SOCIAL_LINKS.githubAcademic },
   { name: "LinkedIn", icon: LinkedinIcon, url: SOCIAL_LINKS.linkedin },
   { name: "Email", icon: Mail, url: `mailto:${EMAIL}` },
 ];
@@ -78,7 +79,7 @@ export default function HeroSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
             className="text-xl sm:text-2xl text-slate-600 dark:text-slate-400 mb-6"
           >
-            Software Developer & CS Student
+            AI and ML Developer & CS Student
           </motion.h2>
 
           {/* Description paragraph */}
@@ -92,7 +93,7 @@ export default function HeroSection() {
             I specialize in <span className="text-slate-900 dark:text-white font-medium">Generative AI</span> and
             <span className="text-slate-900 dark:text-white font-medium"> Systems Engineering</span>,
             focusing on architecting RAG pipelines, reducing model hallucinations, and
-            optimizing performance with low-level languages like C++.
+            building AI powered solutions.
           </motion.p>
 
           {/* Call-to-action buttons */}

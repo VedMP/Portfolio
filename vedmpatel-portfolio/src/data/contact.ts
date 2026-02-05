@@ -11,6 +11,12 @@
 export const EMAIL = "vedmpatel2005@gmail.com";
 
 /**
+ * Primary contact phone number
+ * Used in: ContactSection
+ */
+export const PHONE = "+1 647-771-7973";
+
+/**
  * Social media profile URLs
  */
 export const SOCIAL_LINKS = {
