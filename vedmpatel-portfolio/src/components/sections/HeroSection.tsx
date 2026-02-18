@@ -6,7 +6,7 @@
 
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import { Mail, ChevronDown } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import Button from "@/components/ui/Button";
@@ -21,6 +21,21 @@ const socialLinks = [
   { name: "LinkedIn", icon: LinkedinIcon, url: SOCIAL_LINKS.linkedin },
   { name: "Email", icon: Mail, url: `mailto:${EMAIL}` },
 ];
+
+/**
+ * Shared stagger variants for hero content items.
+ * Each item passes its stagger position via the `custom` prop.
+ * Using shared variants instead of repeating identical initial/animate/transition
+ * props on every element reduces JSX verbosity and keeps timings in one place.
+ */
+const fadeUpVariants: Variants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: (delay: number = 0) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, delay },
+  }),
+};
 
 /**
  * HeroSection Component
@@ -43,17 +58,15 @@ export default function HeroSection() {
         <div className="absolute bottom-1/4 -right-1/4 w-96 h-96 bg-violet-500/10 rounded-full blur-3xl" />
       </div>
 
-      {/* Content container with 20px padding */}
-      <div
-        className="relative z-10 w-full flex justify-center"
-        style={{ paddingLeft: "20px", paddingRight: "20px" }}
-      >
+      {/* Content container */}
+      <div className="relative z-10 w-full flex justify-center px-5">
         <div className="w-full max-w-4xl text-center">
           {/* Availability status badge */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
+            custom={0}
             className="mb-6 flex justify-center"
           >
             <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-green-500/10 border border-green-500/20 text-green-400 text-sm">
@@ -64,9 +77,10 @@ export default function HeroSection() {
 
           {/* Name heading */}
           <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
+            custom={0.1}
             className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 text-slate-900 dark:text-white"
           >
             Hi, I&apos;m <span className="gradient-text">Ved Patel</span>
@@ -74,19 +88,21 @@ export default function HeroSection() {
 
           {/* Role subtitle */}
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
+            custom={0.2}
             className="text-xl sm:text-2xl text-slate-600 dark:text-slate-400 mb-6"
           >
-            AI and ML Developer & CS Student
+            AI and ML Developer &amp; CS Student
           </motion.h2>
 
           {/* Description paragraph */}
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
+            custom={0.3}
             className="text-lg text-slate-600 dark:text-slate-400 max-w-2xl mx-auto mb-10"
           >
             Passionate about engineering reliable AI systems and scalable infrastructure.
@@ -98,9 +114,10 @@ export default function HeroSection() {
 
           {/* Call-to-action buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
+            custom={0.4}
             className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12"
           >
             <Button href="/projects" size="lg">
@@ -114,9 +131,10 @@ export default function HeroSection() {
 
           {/* Social media icons */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
+            variants={fadeUpVariants}
+            initial="hidden"
+            animate="visible"
+            custom={0.5}
             className="flex items-center justify-center gap-4"
           >
             {socialLinks.map((social) => {

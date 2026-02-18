@@ -30,6 +30,10 @@ const navLinks = [
  * - Changes appearance when scrolled (adds background blur)
  * - Includes a mobile hamburger menu
  * - Features smooth animations using Framer Motion
+ *
+ * Performance note: the scroll handler is wrapped in requestAnimationFrame
+ * to throttle updates and the listener uses { passive: true } so the browser
+ * can optimise scrolling without waiting to see if preventDefault() is called.
  */
 export default function Navbar() {
   // Track scroll position for styling changes
@@ -39,11 +43,23 @@ export default function Navbar() {
 
   // Add scroll listener on mount
   useEffect(() => {
+    let rafId: number;
+
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      // Cancel any pending frame before scheduling a new one (throttle)
+      cancelAnimationFrame(rafId);
+      rafId = requestAnimationFrame(() => {
+        setIsScrolled(window.scrollY > 50);
+      });
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    // passive: true lets the browser scroll-optimise without waiting for
+    // preventDefault() — eliminates the "non-passive event listener" warning
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      cancelAnimationFrame(rafId);
+    };
   }, []);
 
   return (

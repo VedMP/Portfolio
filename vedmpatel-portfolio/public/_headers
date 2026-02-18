@@ -1,8 +1,48 @@
 /*
-  X-DNS-Prefetch-Control: on
+  # ─── Transport & Origin ─────────────────────────────────────────────────────
+  # HSTS: 2-year max-age, include subdomains, request browser preload-list inclusion
   Strict-Transport-Security: max-age=63072000; includeSubDomains; preload
-  X-Frame-Options: SAMEORIGIN
+
+  # Block all mixed (HTTP) sub-resources even when served over HTTPS
+  X-DNS-Prefetch-Control: on
+
+  # ─── Framing & Content-Type ─────────────────────────────────────────────────
+  # Prevent this page from being iframed by ANY origin (also enforced in CSP via frame-ancestors)
+  X-Frame-Options: DENY
+
+  # Prevent MIME-type sniffing (disables content-type confusion attacks)
   X-Content-Type-Options: nosniff
-  Referrer-Policy: origin-when-cross-origin
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://ajax.cloudflare.com https://static.cloudflareinsights.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com;
-  Permissions-Policy: camera=(), microphone=(), geolocation=()
+
+  # Block Adobe Flash / Acrobat from loading cross-domain policy files from this origin
+  X-Permitted-Cross-Domain-Policies: none
+
+  # ─── Referrer ───────────────────────────────────────────────────────────────
+  # Send full URL for same-origin; only origin (no path) for cross-origin navigations
+  # Matches the modern browser default and OWASP recommendation
+  Referrer-Policy: strict-origin-when-cross-origin
+
+  # ─── Cross-Origin Isolation (Spectre mitigations) ───────────────────────────
+  # Prevents cross-origin windows / tabs from accessing window.opener on this page
+  # (mitigates reverse-tabnapping and Spectre side-channel attacks)
+  Cross-Origin-Opener-Policy: same-origin
+
+  # Requires all sub-resources to opt in to cross-origin loading (enables COOP isolation)
+  Cross-Origin-Embedder-Policy: require-corp
+
+  # Prevents other origins from loading resources from this site via <img>, fetch, etc.
+  Cross-Origin-Resource-Policy: same-origin
+
+  # ─── Content Security Policy ────────────────────────────────────────────────
+  # NOTE: 'unsafe-inline' on script-src is required because Next.js static export
+  # injects inline <script> tags for React hydration. Removing it would break the site.
+  # The risk is compensated by:
+  #   - object-src 'none'  → blocks Flash/plugin-based XSS escalation
+  #   - base-uri 'self'    → blocks <base> tag injection (prevents relative URL hijacking)
+  #   - frame-ancestors 'none' → prevents clickjacking (supersedes X-Frame-Options)
+  #   - form-action 'none' → no forms exist; any injected form submission is blocked
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://ajax.cloudflare.com https://static.cloudflareinsights.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests; block-all-mixed-content
+
+  # ─── Permissions Policy ─────────────────────────────────────────────────────
+  # Explicitly deny access to all sensitive browser APIs this site does not use.
+  # interest-cohort=() opts out of Google's FLoC/Topics API tracking.
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=(), bluetooth=(), accelerometer=(), gyroscope=(), magnetometer=(), ambient-light-sensor=(), interest-cohort=()

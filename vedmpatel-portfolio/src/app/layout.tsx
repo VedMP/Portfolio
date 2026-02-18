@@ -5,7 +5,7 @@
  * global layout components (Navbar, Footer) for all pages.
  */
 
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
@@ -34,6 +34,19 @@ export const metadata: Metadata = {
   title: "Ved Patel | Software Developer",
   description:
     "Honours Computer Science student at Ontario Tech University. Full-stack developer passionate about building elegant solutions.",
+};
+
+/**
+ * Viewport configuration (separated per Next.js 14+ best practice)
+ * Prevents deprecation warnings and enables proper viewport metadata.
+ */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#0f172a" },
+  ],
 };
 
 /**

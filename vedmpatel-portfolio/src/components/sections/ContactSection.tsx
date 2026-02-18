@@ -9,7 +9,7 @@
 import { motion } from "framer-motion";
 import { Mail, Send, Copy, Check, FileText, Download, Phone } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Button from "@/components/ui/Button";
 import { EMAIL, PHONE, SOCIAL_LINKS } from "@/data/contact";
 
@@ -35,14 +35,26 @@ const socialLinks = [
 export default function ContactSection() {
   // Track whether email was copied to clipboard
   const [copied, setCopied] = useState(false);
+  // Hold the setTimeout ID so we can clear it on unmount (prevents memory-leak
+  // warning if the user navigates away before the 2-second reset fires)
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Clear any pending timeout when the component unmounts
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
 
   /**
-   * Copies email to clipboard and shows feedback
+   * Copies email to clipboard and shows feedback for 2 seconds.
    */
   const copyEmail = async () => {
     await navigator.clipboard.writeText(EMAIL);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    // Clear any existing timer before starting a new one
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    timeoutRef.current = setTimeout(() => setCopied(false), 2000);
   };
 
   return (
@@ -55,10 +67,7 @@ export default function ContactSection() {
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-blue-500/10 rounded-full blur-3xl" />
 
       {/* Container with 20px padding from edges */}
-      <div
-        className="relative w-full flex justify-center"
-        style={{ paddingLeft: "20px", paddingRight: "20px" }}
-      >
+      <div className="relative w-full flex justify-center px-5">
         <div className="w-full max-w-3xl text-center">
           {/* Section badge */}
           <motion.div

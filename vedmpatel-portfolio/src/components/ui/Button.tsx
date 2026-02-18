@@ -2,9 +2,11 @@
  * @file Button.tsx
  * @description Reusable button component with multiple variants and sizes.
  * Supports both link-style and click-style buttons.
+ *
+ * Server Component — no hooks or browser APIs are used here, so "use client"
+ * is not needed. The onClick prop is valid in a Server Component; the client
+ * boundary is only introduced where event handlers are actually wired up.
  */
-
-"use client";
 
 import Link from "next/link";
 import { ReactNode } from "react";
@@ -86,10 +88,7 @@ export default function Button({
     if (target === "_blank") {
       if (!safeRel) {
         safeRel = "noopener noreferrer";
-      } else if (!safeRel.includes("noopener") || !safeRel.includes("noreferrer")) {
-        // If rel exists but is partial/unsafe, append missing parts or just overwrite?
-        // Safest default is to ensure both are present.
-        // For simplicity in this codebase, we'll default to the safe string if not fully specified.
+      } else {
         if (!safeRel.includes("noopener")) safeRel += " noopener";
         if (!safeRel.includes("noreferrer")) safeRel += " noreferrer";
       }

@@ -24,11 +24,8 @@ export default function ExperienceSection() {
 
   return (
     <section id="experience" className="relative w-full py-12 md:py-16">
-      {/* Container with 20px padding from edges */}
-      <div
-        className="w-full flex justify-center"
-        style={{ paddingLeft: "20px", paddingRight: "20px" }}
-      >
+      {/* Container with 20px horizontal padding */}
+      <div className="w-full flex justify-center px-5">
         <div className="w-full max-w-4xl">
           {/* Section header */}
           <motion.div

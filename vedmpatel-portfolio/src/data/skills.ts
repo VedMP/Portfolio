@@ -9,7 +9,8 @@
  */
 export interface SkillCategory {
   category: string;
-  skills: { name: string }[];
+  /** Flat string array — each entry is just the skill name */
+  skills: string[];
 }
 
 /**
@@ -19,46 +20,29 @@ export interface SkillCategory {
 export const skillCategories: SkillCategory[] = [
   {
     category: "Languages",
-    skills: [
-      { name: "CSS3" },
-      { name: "C++" },
-      { name: "HTML5" },
-      { name: "JavaScript" },
-      { name: "Java" },
-      { name: "Python" },
-      { name: "SQL" },
-    ],
+    skills: ["CSS3", "C++", "HTML5", "JavaScript", "Java", "Python", "SQL"],
   },
   {
     category: "AI & Data Engineering",
     skills: [
-      { name: "ChromaDB" },
-      { name: "Keras" },
-      { name: "LangChain" },
-      { name: "NumPy" },
-      { name: "Pandas" },
-      { name: "PyTorch" },
-      { name: "Scikit-learn" },
-      { name: "TensorFlow" },
-      { name: "OpenAI API" },
-      { name: "Watsonx.ai" }
+      "ChromaDB",
+      "Keras",
+      "LangChain",
+      "NumPy",
+      "Pandas",
+      "PyTorch",
+      "Scikit-learn",
+      "TensorFlow",
+      "OpenAI API",
+      "Watsonx.ai",
     ],
   },
   {
     category: "DevOps & Tools",
-    skills: [
-      { name: "Docker" },
-      { name: "Linux" },
-      { name: "Git" },
-      { name: "GitHub" },
-      { name: "Claude AI" }
-    ],
+    skills: ["Docker", "Linux", "Git", "GitHub", "Claude AI"],
   },
   {
     category: "Frameworks & UI",
-    skills: [
-      { name: "Gradio" },
-      { name: "Flask" },
-    ],
-  }
+    skills: ["Gradio", "Flask"],
+  },
 ];

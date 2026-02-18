@@ -20,15 +20,14 @@ const AccessibilityContext = createContext<AccessibilityContextType | undefined>
 );
 
 export function AccessibilityProvider({ children }: { children: ReactNode }) {
-    const [mode, setMode] = useState<AccessibilityMode>("none");
-
-    // Load saved preference on mount
-    useEffect(() => {
-        // const savedMode = localStorage.getItem("accessibility-mode") as AccessibilityMode;
-        // if (savedMode) {
-        //     setMode(savedMode);
-        // }
-    }, []);
+    // Lazy initializer: read localStorage once before first render.
+    // This avoids the `react-hooks/set-state-in-effect` pattern (calling setState
+    // synchronously inside an effect body causes an extra cascading render).
+    const [mode, setMode] = useState<AccessibilityMode>(() => {
+        if (typeof window === "undefined") return "none";
+        const saved = localStorage.getItem("accessibility-mode") as AccessibilityMode | null;
+        return (saved && saved !== "none") ? saved : "none";
+    });
 
     // Apply filter to body when mode changes
     useEffect(() => {

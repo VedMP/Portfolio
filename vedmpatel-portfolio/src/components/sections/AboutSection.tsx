@@ -31,11 +31,8 @@ const stats = [
 export default function AboutSection() {
   return (
     <section id="about" className="relative w-full py-12 md:py-16">
-      {/* Container with 20px padding from edges */}
-      <div
-        className="w-full flex justify-center"
-        style={{ paddingLeft: "20px", paddingRight: "20px" }}
-      >
+      {/* Container with 20px horizontal padding */}
+      <div className="w-full flex justify-center px-5">
         <div className="w-full max-w-6xl">
           {/* Section header */}
           <motion.div
@@ -150,12 +147,13 @@ export default function AboutSection() {
                     {category.category}
                   </h3>
                   <div className="flex flex-wrap gap-2">
+                    {/* skills is now string[] — no .name lookup needed */}
                     {category.skills.map((skill) => (
                       <span
-                        key={skill.name}
+                        key={skill}
                         className="px-3 py-1.5 text-sm rounded-lg bg-slate-100 dark:bg-slate-700/50 text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-600/50"
                       >
-                        {skill.name}
+                        {skill}
                       </span>
                     ))}
                   </div>

@@ -18,6 +18,16 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
 
   /**
+   * Compress responses with gzip/brotli
+   */
+  compress: true,
+
+  /**
+   * Remove X-Powered-By header for security + minor response size reduction
+   */
+  poweredByHeader: false,
+
+  /**
    * Image Optimization
    * Must be disabled for static export unless using a loader
    */
@@ -30,14 +40,6 @@ const nextConfig: NextConfig = {
    * Allows cross-origin requests from local network during development
    */
   allowedDevOrigins: ["192.168.118.1"],
-
-  /**
-   * Performance Optimizations for faster compilation
-   */
-  experimental: {
-    // Enable parallel compilation for faster builds
-    webpackBuildWorker: true,
-  },
 };
 
 export default nextConfig;

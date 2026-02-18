@@ -38,11 +38,8 @@ export default function ProjectsSection() {
       id="projects"
       className="relative w-full py-12 md:py-16 bg-slate-50 dark:bg-slate-900/50"
     >
-      {/* Container with 20px padding from edges */}
-      <div
-        className="w-full flex justify-center"
-        style={{ paddingLeft: "20px", paddingRight: "20px" }}
-      >
+      {/* Container with 20px horizontal padding */}
+      <div className="w-full flex justify-center px-5">
         <div className="w-full max-w-6xl">
           {/* Section header */}
           <motion.div

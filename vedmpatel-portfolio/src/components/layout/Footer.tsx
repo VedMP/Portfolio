@@ -1,9 +1,11 @@
 /**
  * @file Footer.tsx
  * @description Footer component with brand info, quick links, and social media links.
+ *
+ * Server Component — no hooks or browser APIs used, so "use client" is not needed.
+ * This keeps Footer out of the client JS bundle and computes the copyright year
+ * at build time (correct for a static export).
  */
-
-"use client";
 
 import { Mail, Heart } from "lucide-react";
 import { GithubIcon, LinkedinIcon, XIcon } from "@/components/ui/SocialIcons";
