@@ -90,18 +90,21 @@ export default function AboutSection() {
 
                 <p>
                   My technical focus is on <span className="text-slate-900 dark:text-white font-medium">Generative AI Engineering</span>.
-                  I have architected <span className="text-slate-900 dark:text-white">Retrieval-Augmented Generation (RAG)</span> pipelines
-                  using <span className="text-blue-500 dark:text-blue-300">Python</span>,
-                  <span className="text-blue-500 dark:text-blue-300"> Watsonx.ai</span>, and
-                  <span className="text-blue-500 dark:text-blue-300"> ChromaDB</span> to solve reliability issues like LLM hallucinations.
-                  I am also actively exploring agentic workflows to bridge natural language and structured data.
+                  I architect <span className="text-slate-900 dark:text-white">Retrieval-Augmented Generation (RAG)</span> pipelines
+                  and orchestrate complex LLM interactions using{" "}
+                  <span className="text-blue-500 dark:text-blue-300">LangChain</span>,{" "}
+                  <span className="text-blue-500 dark:text-blue-300">Python</span>,{" "}
+                  <span className="text-blue-500 dark:text-blue-300">Watsonx.ai</span>, and{" "}
+                  <span className="text-blue-500 dark:text-blue-300">ChromaDB</span> to mitigate hallucination risks.
+                  I am also actively developing agentic workflows to seamlessly bridge natural language and structured data environments.
                 </p>
 
                 <p>
-                  Beyond AI, I have a strong foundation in systems and data.
-                  I have experience optimizing legacy <span className="text-blue-500 dark:text-blue-300">C++</span> code for performance
-                  and utilizing <span className="text-blue-500 dark:text-blue-300">SQL</span> and <span className="text-blue-500 dark:text-blue-300">Pandas </span>
-                  to derive insights from datasets.
+                  Beyond AI, I have a solid foundation in backend systems and data engineering.
+                  I leverage <span className="text-blue-500 dark:text-blue-300">Python</span>,{" "}
+                  <span className="text-blue-500 dark:text-blue-300">SQL</span>, and{" "}
+                  <span className="text-blue-500 dark:text-blue-300">Pandas</span> to build robust data pipelines,
+                  process complex datasets, and extract actionable insights to support data-intensive applications.
                 </p>
               </div>
               {/* Stats grid */}

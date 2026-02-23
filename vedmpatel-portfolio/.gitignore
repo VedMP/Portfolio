@@ -42,3 +42,9 @@ next-env.d.ts
 
 # readme
 README.md
+
+# temporary audit & lint output files
+audit.txt
+lint*.txt
+lint*.log
+lint*.json

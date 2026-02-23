@@ -60,10 +60,10 @@ export const projects: Project[] = [
     id: "3",
     title: "Portfolio Website",
     description:
-      "A high-performance personal portfolio engineered with Next.js and Framer Motion for fluid, responsive UX. Leveraged an AI-Native development workflow (Claude 3.5 Sonnet) to accelerate component prototyping and optimize Tailwind CSS implementation, demonstrating a modern approach to rapid frontend engineering.",
+      "A responsive portfolio entirely generated and iterated through prompt engineering. Directed Claude 3.5 Sonnet to architect, design, and build a Next.js application, demonstrating the ability to successfully leverage AI orchestration to deploy complex web systems without prior frontend framework experience.",
     image: "/projects/Portfolio.png",
-    tags: ["Next.js", "Framer Motion", "TailwindCSS", "Claude AI"],
-    category: "Frontend",
+    tags: ["Claude 3.5 Sonnet", "Prompt Engineering", "AI Orchestration", "Rapid Prototyping"],
+    category: "AI",
     github: "https://github.com/VedMP/Portfolio",
     featured: true,
   },
