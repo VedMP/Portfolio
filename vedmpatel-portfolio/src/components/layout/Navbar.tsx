@@ -2,14 +2,10 @@
 
 import { useState, useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
-import { Terminal, Menu, X, Sun, Moon, FileText } from "lucide-react";
+import { Menu, X, Sun, Moon, FileText } from "lucide-react";
 import { useTheme } from "next-themes";
 import AccessibilityDropdown from "@/components/ui/AccessibilityDropdown";
 import { PERSONAL_INFO } from "@/core/data";
-
-interface NavbarProps {
-  onOpenTerminal: () => void;
-}
 
 const emptySubscribe = () => () => {};
 
@@ -30,7 +26,7 @@ const NAV_LINKS = [
   { name: "Contact", href: "#contact" },
 ];
 
-export default function Navbar({ onOpenTerminal }: NavbarProps) {
+export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -48,7 +44,7 @@ export default function Navbar({ onOpenTerminal }: NavbarProps) {
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-200 ${
         isScrolled
-          ? "bg-white/90 dark:bg-slate-950/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm"
+          ? "bg-white/95 dark:bg-slate-950/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm"
           : "bg-transparent"
       }`}
     >
@@ -77,17 +73,6 @@ export default function Navbar({ onOpenTerminal }: NavbarProps) {
 
         {/* Right Action Icons & Toggles */}
         <div className="flex items-center gap-2.5">
-          {/* Terminal Launcher */}
-          <button
-            onClick={onOpenTerminal}
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:border-sky-500/50 transition-colors"
-            title="Launch Interactive Terminal (Ctrl + K)"
-          >
-            <Terminal className="w-3.5 h-3.5 text-sky-500" />
-            <span>Terminal</span>
-            <kbd className="text-[10px] text-slate-400">⌘K</kbd>
-          </button>
-
           {/* Theme Toggle */}
           {mounted && (
             <button
@@ -107,7 +92,7 @@ export default function Navbar({ onOpenTerminal }: NavbarProps) {
             href={PERSONAL_INFO.resumePath}
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-900 dark:bg-white text-white dark:text-slate-950 hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium bg-slate-900 dark:bg-white text-white dark:text-slate-950 hover:opacity-90 transition-opacity shadow-sm"
           >
             <FileText className="w-3.5 h-3.5" />
             <span>Resume</span>
@@ -141,16 +126,13 @@ export default function Navbar({ onOpenTerminal }: NavbarProps) {
           </div>
 
           <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
-            <button
-              onClick={() => {
-                setIsMobileOpen(false);
-                onOpenTerminal();
-              }}
-              className="inline-flex items-center gap-1.5 text-xs font-mono text-sky-600 dark:text-sky-400"
+            <a
+              href="#contact"
+              onClick={() => setIsMobileOpen(false)}
+              className="text-xs font-mono text-sky-600 dark:text-sky-400 font-medium"
             >
-              <Terminal className="w-4 h-4" />
-              <span>Launch Terminal Console</span>
-            </button>
+              Get In Touch →
+            </a>
             <a
               href={PERSONAL_INFO.resumePath}
               target="_blank"

@@ -1,15 +1,11 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Terminal, ArrowDown, FileText } from "lucide-react";
+import { Mail, ArrowDown, FileText, Send } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import { PERSONAL_INFO } from "@/core/data";
 
-interface HeroProps {
-  onOpenTerminal: () => void;
-}
-
-export default function Hero({ onOpenTerminal }: HeroProps) {
+export default function Hero() {
   return (
     <section className="relative w-full min-h-[90vh] flex flex-col justify-center items-center pt-24 pb-16 px-6 overflow-hidden bg-grid-pattern">
       {/* Background ambient light */}
@@ -78,17 +74,13 @@ export default function Hero({ onOpenTerminal }: HeroProps) {
             <ArrowDown className="w-4 h-4" />
           </a>
 
-          <button
-            onClick={onOpenTerminal}
-            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-mono text-xs hover:border-slate-400 dark:hover:border-slate-500 transition-all"
-            title="Launch Interactive Terminal (Ctrl + K)"
+          <a
+            href="#contact"
+            className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 font-medium text-sm hover:border-slate-400 dark:hover:border-slate-500 transition-all"
           >
-            <Terminal className="w-4 h-4 text-sky-500" />
-            <span>Terminal console</span>
-            <kbd className="px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-700 text-[10px] text-slate-500 dark:text-slate-400">
-              Ctrl+K
-            </kbd>
-          </button>
+            <Send className="w-4 h-4 text-sky-500" />
+            <span>Get In Touch</span>
+          </a>
 
           <a
             href={PERSONAL_INFO.resumePath}

@@ -13,8 +13,7 @@ A production-grade, durable personal engineering portfolio built with Next.js 16
 ## ✨ Architectural Features
 
 - **Interactive Systems Architecture Visualizer**: Step-by-step visual pipeline explorer demonstrating dense vector RAG and Multi-Agent Teacher-TA verification loops.
-- **Interactive Command Terminal (`Ctrl + K`)**: Fully accessible keyboard-navigable terminal console allowing recruiters and engineers to run shell commands (`help`, `bio`, `gpa`, `skills`, `projects`, `telemetry`).
-- **Cloudflare Pages Edge Functions**: Serverless edge backend (`/functions/api/contact` & `/functions/api/telemetry`) providing rate-limited contact intake and real-time edge colocation telemetry without breaking static export (`output: "export"`).
+- **Cloudflare Pages Edge Functions**: Serverless edge backend (`/functions/api/contact`) providing rate-limited, honeypot-protected contact intake without breaking static export (`output: "export"`).
 - **High-Contrast & WCAG AAA Accessibility**: Non-destructive, zero-stacking-context contrast and vision accessibility modes ensuring zero subpixel font blur and smooth 60fps scrolling.
 - **Strict Content Security Policy (CSP)**: Hardened headers with HSTS, COOP, CORP, Nosniff, and granular script allowances.
 - **100% Factual Ground Truth**: Strictly represents verified academic standing (3.97 GPA @ Ontario Tech University, 4-time President's / Dean's List) and verified capstone / hackathon engineering architectures.
@@ -27,8 +26,7 @@ A production-grade, durable personal engineering portfolio built with Next.js 16
 vedmpatel-portfolio/
 ├── functions/                    # Cloudflare Pages Edge Functions (Backend Scope)
 │   └── api/
-│       ├── contact.ts            # Rate-limited, honeypot-protected contact endpoint
-│       └── telemetry.ts          # Edge colocation PoP & protocol reporting
+│       └── contact.ts            # Rate-limited, honeypot-protected contact endpoint
 ├── public/                       # Static assets, transcripts, and headers
 │   ├── _headers                  # Strict CSP & security policies
 │   ├── Ved_Patel_Resume.pdf      # Official resume

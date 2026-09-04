@@ -125,14 +125,14 @@ export const PROJECTS: Project[] = [
     problem:
       "Standard portfolio templates rely on heavy client-side SPAs with high bundle weight, zero security hardening, and no serverless edge API capabilities.",
     solution:
-      "Engineered a high-performance, statically exported Next.js 16 and React 19 application coupled with Cloudflare Pages Functions for edge execution, strict Content Security Policies (CSP), zero-layout-shift design tokens, and an accessible command palette terminal.",
+      "Engineered a high-performance, statically exported Next.js 16 and React 19 application coupled with Cloudflare Pages Functions for serverless contact intake, strict Content Security Policies (CSP), and zero-layout-shift design tokens.",
     architecture: {
       pipeline: [
         "Next.js 16 Turbopack Static Export (output: export)",
         "Cloudflare Edge Network Global Caching & Sub-50ms TTFB",
-        "Cloudflare Pages Functions (/functions/api/contact & telemetry)",
+        "Cloudflare Pages Functions (/functions/api/contact)",
         "Hardened HTTP Headers (HSTS, CSP, COOP, CORP, Nosniff)",
-        "Command Palette Engine for Keyboard-First Exploration",
+        "Semantic Feature Scopes & Strict TypeScript Data Contracts",
       ],
       keyDecisions: [
         "Decoupled static frontend from edge functions to achieve 100/100 performance scores without server hosting overhead",

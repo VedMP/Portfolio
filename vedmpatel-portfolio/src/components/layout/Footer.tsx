@@ -1,12 +1,8 @@
-import { Heart, Terminal, Shield } from "lucide-react";
+import { Heart, Shield } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import { PERSONAL_INFO } from "@/core/data";
 
-interface FooterProps {
-  onOpenTerminal?: () => void;
-}
-
-export default function Footer({ onOpenTerminal }: FooterProps) {
+export default function Footer() {
   return (
     <footer className="relative w-full border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 py-12 px-6">
       <div className="max-w-6xl mx-auto">
@@ -37,18 +33,8 @@ export default function Footer({ onOpenTerminal }: FooterProps) {
               <li><a href="#architecture" className="hover:text-sky-500 transition-colors">Architecture Visualizer</a></li>
               <li><a href="#experience" className="hover:text-sky-500 transition-colors">Education &amp; Sprints</a></li>
               <li><a href="#skills" className="hover:text-sky-500 transition-colors">Technology Stack</a></li>
+              <li><a href="#about" className="hover:text-sky-500 transition-colors">About Ved</a></li>
               <li><a href="#contact" className="hover:text-sky-500 transition-colors">Direct Contact</a></li>
-              {onOpenTerminal && (
-                <li>
-                  <button
-                    onClick={onOpenTerminal}
-                    className="hover:text-sky-500 transition-colors inline-flex items-center gap-1.5 text-left"
-                  >
-                    <Terminal className="w-3 h-3 text-sky-500" />
-                    <span>Terminal Console</span>
-                  </button>
-                </li>
-              )}
             </ul>
           </div>
 

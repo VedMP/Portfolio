@@ -58,13 +58,3 @@ export interface ContactSubmissionPayload {
   message: string;
   honeypot?: string;
 }
-
-export interface EdgeTelemetry {
-  colo: string;
-  country: string;
-  city?: string;
-  asn?: number;
-  httpProtocol?: string;
-  tlsVersion?: string;
-  timestamp: string;
-}
