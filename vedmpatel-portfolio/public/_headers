@@ -39,8 +39,8 @@
   #   - object-src 'none'  → blocks Flash/plugin-based XSS escalation
   #   - base-uri 'self'    → blocks <base> tag injection (prevents relative URL hijacking)
   #   - frame-ancestors 'none' → prevents clickjacking (supersedes X-Frame-Options)
-  #   - form-action 'none' → no forms exist; any injected form submission is blocked
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://ajax.cloudflare.com https://static.cloudflareinsights.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'none'; frame-ancestors 'none'; upgrade-insecure-requests; block-all-mixed-content
+  #   - form-action 'self' → allows form submission within same-origin
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://ajax.cloudflare.com https://static.cloudflareinsights.com https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' blob: data:; font-src 'self' data:; connect-src 'self' https://cloudflareinsights.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests; block-all-mixed-content
 
   # ─── Permissions Policy ─────────────────────────────────────────────────────
   # Explicitly deny access to all sensitive browser APIs this site does not use.
