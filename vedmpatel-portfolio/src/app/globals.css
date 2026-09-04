@@ -1,129 +1,164 @@
 /**
  * @file globals.css
- * @description Global CSS styles for the portfolio website.
- * Contains CSS custom properties, Tailwind theme configuration,
- * and base styling for the dark theme.
+ * @description Global CSS design tokens and base styles for Ved Patel's portfolio.
+ * Engineered with Tailwind CSS v4, semantic tokens, and zero-stacking-context accessibility.
  */
 
 @import "tailwindcss";
 
 /* ============================================
-   CSS Custom Properties (Design Tokens)
+   Design Tokens (Light / Dark Themes)
    ============================================ */
 :root {
-  /* Default to Light Mode */
-  --background: #ffffff;
-  --foreground: #0f172a;
-  /* Slate 900 */
+  --background: #fafbfc;
+  --foreground: #090d16;
 
-  /* UI Colors */
-  --card: #f8fafc;
-  /* Slate 50 */
-  --card-foreground: #0f172a;
+  /* Card & Surface Tokens */
+  --surface: #ffffff;
+  --surface-hover: #f1f4f9;
+  --surface-active: #e2e8f0;
   --border: #e2e8f0;
-  /* Slate 200 */
+  --border-subtle: #edf2f7;
 
-  --muted: #f1f5f9;
-  /* Slate 100 */
-  --muted-foreground: #64748b;
-  /* Slate 500 */
+  /* Typography Colors */
+  --text-primary: #090d16;
+  --text-secondary: #4a5568;
+  --text-muted: #718096;
 
-  /* Accent colors */
-  --accent-primary: #2563eb;
-  /* Blue 600 for light mode contrast */
-  --accent-secondary: #7c3aed;
-  /* Violet 600 */
+  /* Engineering Accents */
+  --accent-primary: #0284c7; /* Sky 600 */
+  --accent-primary-hover: #0369a1;
+  --accent-secondary: #4f46e5; /* Indigo 600 */
+  --accent-glow: rgba(2, 132, 199, 0.12);
+
+  /* Code & Terminal Tokens */
+  --code-bg: #0f172a;
+  --code-fg: #f8fafc;
+  --code-border: #334155;
+  --code-accent: #38bdf8;
 }
 
-/* Dark Mode Overrides */
 .dark {
-  --background: #0f172a;
-  /* Slate 900 */
+  --background: #090d16;
   --foreground: #f8fafc;
-  /* Slate 50 */
 
-  --card: #1e293b;
-  /* Slate 800 */
-  --card-foreground: #f8fafc;
-  --border: #334155;
-  /* Slate 700 */
+  /* Card & Surface Tokens */
+  --surface: #0f172a;
+  --surface-hover: #1e293b;
+  --surface-active: #334155;
+  --border: #1e293b;
+  --border-subtle: #172033;
 
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  /* Slate 400 */
+  /* Typography Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
 
-  --accent-primary: #3b82f6;
-  /* Blue 500 */
-  --accent-secondary: #8b5cf6;
-  /* Violet 500 */
+  /* Engineering Accents */
+  --accent-primary: #38bdf8; /* Sky 400 */
+  --accent-primary-hover: #7dd3fc;
+  --accent-secondary: #818cf8; /* Indigo 400 */
+  --accent-glow: rgba(56, 189, 248, 0.15);
+
+  /* Code & Terminal Tokens */
+  --code-bg: #030712;
+  --code-fg: #f8fafc;
+  --code-border: #1f2937;
+  --code-accent: #38bdf8;
+}
+
+/* High-Contrast Mode Override (Non-destructive, zero-stacking-context) */
+[data-contrast="high"] {
+  --background: #000000 !important;
+  --foreground: #ffffff !important;
+  --surface: #0a0a0a !important;
+  --surface-hover: #171717 !important;
+  --border: #ffffff !important;
+  --border-subtle: #ffffff !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #e5e5e5 !important;
+  --text-muted: #d4d4d4 !important;
+  --accent-primary: #38bdf8 !important;
+  --code-bg: #000000 !important;
+  --code-fg: #ffffff !important;
+  --code-border: #ffffff !important;
+}
+
+/* Monochromatic Mode Override */
+[data-vision="achromatopsia"] {
+  filter: grayscale(100%);
 }
 
 /* ============================================
-   Tailwind Theme Extension
-   Maps CSS variables to Tailwind utilities
+   Tailwind Theme Mapping
    ============================================ */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-surface: var(--surface);
+  --color-border: var(--border);
+  --font-sans: var(--font-geist-sans, system-ui, -apple-system, sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
 }
 
 /* ============================================
-   Base Styles
+   Base Typography & Utility Classes
    ============================================ */
-
-/* Enable smooth scrolling for anchor links */
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 5rem;
 }
 
-/* Base body styling */
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family:
-    system-ui,
-    -apple-system,
-    sans-serif;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* ============================================
-   Utility Classes
-   ============================================ */
-
-/**
- * Gradient text effect
- * Creates a blue-to-purple gradient on text elements
- */
-.gradient-text {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+/* Subtle Engineering Grid Background */
+.bg-grid-pattern {
+  background-size: 32px 32px;
+  background-image: 
+    linear-gradient(to right, rgba(148, 163, 184, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.05) 1px, transparent 1px);
 }
 
-/* ============================================
-   Accessibility Filter Performance
-   ============================================ */
-
-/**
- * Base transition for smooth filter switching
- * Applied to html element for filter transitions
- */
-html {
-  transition: filter 0.2s ease-out;
+.dark .bg-grid-pattern {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
 }
 
-/**
- * GPU acceleration for accessibility filters
- * Uses transform: translateZ(0) to promote to GPU layer
- * This significantly improves filter performance on mobile
- */
-.accessibility-filter-active {
-  transform: translateZ(0);
-  -webkit-transform: translateZ(0);
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
+/* Precision Tech Glow */
+.tech-border-glow {
+  position: relative;
+}
+
+.tech-border-glow::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(56, 189, 248, 0.3), rgba(79, 70, 229, 0.1), transparent);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

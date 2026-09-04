@@ -1,14 +1,20 @@
-/**
- * @file contact/page.tsx
- * @description Contact page route - displays the Contact section as a standalone page.
- */
+import Link from "next/link";
+import Contact from "@/components/features/Contact";
 
-import ContactSection from "@/components/sections/ContactSection";
-
-/**
- * Contact Page
- * Renders the Contact section component at the /contact route.
- */
 export default function ContactPage() {
-  return <ContactSection />;
+  return (
+    <div className="pt-16 pb-12 min-h-screen flex flex-col justify-between">
+      <div>
+        <div className="max-w-5xl mx-auto px-6 pt-6">
+          <Link
+            href="/"
+            className="inline-flex items-center gap-1.5 text-xs font-mono text-sky-600 dark:text-sky-400 hover:underline"
+          >
+            <span>← Return to Overview</span>
+          </Link>
+        </div>
+        <Contact />
+      </div>
+    </div>
+  );
 }

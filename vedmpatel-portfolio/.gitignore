@@ -40,8 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# readme
-README.md
 
 # temporary audit & lint output files
 audit.txt
