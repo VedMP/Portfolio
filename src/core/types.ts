@@ -14,6 +14,25 @@ export interface ProjectArchitectureSpec {
   backendFramework?: string;
 }
 
+export interface ProjectTradeoff {
+  decision: string;
+  rationale: string;
+  alternativeConsidered: string;
+}
+
+export interface ProjectCodeSnippet {
+  title: string;
+  language: string;
+  code: string;
+  description: string;
+}
+
+export interface ProjectMetric {
+  label: string;
+  value: string;
+  detail?: string;
+}
+
 export interface Project {
   id: string;
   slug: string;
@@ -29,6 +48,9 @@ export interface Project {
   liveUrl?: string;
   featured: boolean;
   image: string;
+  codeSnippet?: ProjectCodeSnippet;
+  tradeoffs?: ProjectTradeoff[];
+  metrics?: ProjectMetric[];
 }
 
 export type ExperienceType = "education" | "hackathon" | "work";

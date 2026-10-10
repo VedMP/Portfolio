@@ -1,0 +1,16 @@
+/* TEAM */
+  Engineer: Ved Patel
+  Role: AI Systems & Software Engineering
+  Education: Honours Bachelor of Science in Computer Science, Ontario Tech University (3.97 GPA)
+  Location: Oshawa / Greater Toronto Area, Ontario, Canada
+  Site: https://vedmpatel.me
+  GitHub: https://github.com/VedMP
+  LinkedIn: https://www.linkedin.com/in/ved-patel-cs/
+
+/* SITE */
+  Standards: HTML5, CSS3, ECMAScript 2026, Schema.org JSON-LD, WCAG 2.1 AAA
+  Framework: Next.js 16 (App Router & Turbopack), React 19
+  Styling: Tailwind CSS v4
+  Typography: Geist Sans & Geist Mono
+  Edge Host: Cloudflare Pages & V8 Edge Functions
+  Security: Strict Content Security Policy, HSTS, Nosniff, COOP, CORP

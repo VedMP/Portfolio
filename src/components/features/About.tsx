@@ -6,7 +6,7 @@ import { PERSONAL_INFO } from "@/core/data";
 
 export default function About() {
   return (
-    <section id="about" className="relative w-full py-20 px-6 border-t border-slate-200 dark:border-slate-800">
+    <section id="about" className="relative w-full py-20 px-6 border-t border-slate-200 dark:border-white/10">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="max-w-3xl mb-14">
@@ -25,7 +25,7 @@ export default function About() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10 items-start">
           {/* Left Column: Photo & Academic Pill */}
           <div className="flex flex-col items-center md:items-start space-y-4">
-            <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-2xl overflow-hidden border-2 border-slate-200 dark:border-slate-800 shadow-md">
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-2xl overflow-hidden border-2 border-slate-200 dark:border-white/10 shadow-md">
               <Image
                 src="/ProfilePhoto.JPG"
                 alt={PERSONAL_INFO.name}
@@ -36,13 +36,16 @@ export default function About() {
               />
             </div>
 
-            <div className="w-full max-w-[224px] p-3 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/60 text-center md:text-left space-y-1">
+            <div className="w-full max-w-[224px] p-3.5 rounded-xl bg-sky-50 dark:bg-sky-950/40 border border-sky-200 dark:border-sky-800/60 text-center md:text-left space-y-1">
               <div className="text-[11px] font-mono text-sky-700 dark:text-sky-300 font-semibold flex items-center justify-center md:justify-start gap-1">
                 <Award className="w-3.5 h-3.5" />
                 <span>President&apos;s / Dean&apos;s List</span>
               </div>
               <div className="text-xs font-mono text-slate-700 dark:text-slate-300">
                 Cumulative GPA: <span className="font-bold text-sky-600 dark:text-sky-400">{PERSONAL_INFO.gpa}</span>
+              </div>
+              <div className="text-[10px] font-mono text-slate-500 dark:text-slate-400">
+                Ontario Tech University
               </div>
             </div>
           </div>
@@ -71,16 +74,16 @@ export default function About() {
             </p>
 
             {/* Factual Pillars Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4">
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 flex items-start gap-2.5">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-emerald-500 mt-0.5 shrink-0" />
                 <div className="text-xs">
                   <div className="font-semibold text-slate-900 dark:text-white">Algorithms &amp; Data Structures</div>
-                  <div className="text-slate-500 dark:text-slate-400 mt-0.5">Rigorous coursework in computational complexity and optimization.</div>
+                  <div className="text-slate-500 dark:text-slate-400 mt-0.5">Rigorous coursework in computational complexity, graph algorithms, and optimization.</div>
                 </div>
               </div>
 
-              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-800 flex items-start gap-2.5">
+              <div className="p-3.5 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10 flex items-start gap-2.5">
                 <Terminal className="w-4 h-4 text-sky-500 mt-0.5 shrink-0" />
                 <div className="text-xs">
                   <div className="font-semibold text-slate-900 dark:text-white">Systems &amp; Architecture</div>

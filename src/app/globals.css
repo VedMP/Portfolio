@@ -1,0 +1,246 @@
+/**
+ * @file globals.css
+ * @description Global CSS design tokens, base typography, and print engine for Ved Patel's portfolio.
+ * Engineered with Tailwind CSS v4, Linear/Vercel-inspired dark/light aesthetics, and 60fps mobile GPU rendering.
+ */
+
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ============================================
+   Design Tokens (Linear / Vercel Systems Aesthetic)
+   ============================================ */
+:root {
+  --background: #fafbfc;
+  --foreground: #090d16;
+
+  /* Card & Surface Tokens */
+  --surface: #ffffff;
+  --surface-hover: #f1f5f9;
+  --surface-active: #e2e8f0;
+  --surface-muted: #f8fafc;
+  --border: #e2e8f0;
+  --border-subtle: #edf2f7;
+
+  /* Typography Colors */
+  --text-primary: #090d16;
+  --text-secondary: #334155;
+  --text-muted: #64748b;
+
+  /* Engineering Accents */
+  --accent-primary: #0284c7; /* Sky 600 */
+  --accent-primary-hover: #0369a1;
+  --accent-secondary: #4f46e5; /* Indigo 600 */
+  --accent-glow: rgba(2, 132, 199, 0.12);
+  --success: #10b981;
+
+  /* Code & Terminal Tokens */
+  --code-bg: #0f172a;
+  --code-fg: #f8fafc;
+  --code-border: #334155;
+  --code-accent: #38bdf8;
+}
+
+.dark {
+  --background: #080c14;
+  --foreground: #f8fafc;
+
+  /* Card & Surface Tokens */
+  --surface: #0f1422;
+  --surface-hover: #161e31;
+  --surface-active: #1f2a44;
+  --surface-muted: #0b101c;
+  --border: rgba(255, 255, 255, 0.08);
+  --border-subtle: rgba(255, 255, 255, 0.04);
+
+  /* Typography Colors */
+  --text-primary: #f8fafc;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+
+  /* Engineering Accents */
+  --accent-primary: #38bdf8; /* Sky 400 */
+  --accent-primary-hover: #7dd3fc;
+  --accent-secondary: #818cf8; /* Indigo 400 */
+  --accent-glow: rgba(56, 189, 248, 0.15);
+  --success: #34d399;
+
+  /* Code & Terminal Tokens */
+  --code-bg: #030712;
+  --code-fg: #f8fafc;
+  --code-border: rgba(255, 255, 255, 0.1);
+  --code-accent: #38bdf8;
+}
+
+/* High-Contrast Mode Override (WCAG AAA non-destructive) */
+[data-contrast="high"] {
+  --background: #000000 !important;
+  --foreground: #ffffff !important;
+  --surface: #050505 !important;
+  --surface-hover: #1a1a1a !important;
+  --border: #ffffff !important;
+  --border-subtle: #ffffff !important;
+  --text-primary: #ffffff !important;
+  --text-secondary: #e2e8f0 !important;
+  --text-muted: #cbd5e1 !important;
+  --accent-primary: #38bdf8 !important;
+  --code-bg: #000000 !important;
+  --code-fg: #ffffff !important;
+  --code-border: #ffffff !important;
+}
+
+/* Color Vision Accessibility */
+[data-vision="achromatopsia"] {
+  filter: grayscale(100%);
+}
+
+/* ============================================
+   Tailwind Theme Mapping
+   ============================================ */
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-muted: var(--surface-muted);
+  --color-border: var(--border);
+  --font-sans: var(--font-geist-sans, system-ui, -apple-system, sans-serif);
+  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
+}
+
+/* ============================================
+   Base Typography & Hardware Accelerated Utility
+   ============================================ */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+  background-color: var(--background);
+  color: var(--foreground);
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Engineering Micro-Grid (GPU-accelerated, lightweight) */
+.engineering-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+}
+
+.dark .engineering-grid {
+  background-image: 
+    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+}
+
+/* Precision Hairline Glow on Hover */
+.hairline-card {
+  position: relative;
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.hairline-card:hover {
+  transform: translateY(-2px);
+}
+
+@media (hover: none) {
+  .hairline-card:hover {
+    transform: none;
+  }
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.3);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.5);
+}
+
+/* Accessibility: Respect Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ============================================
+   ATS-Optimized Print Stylesheet (@media print)
+   ============================================ */
+@media print {
+  /* Hide all web-specific UI elements */
+  header,
+  nav,
+  footer,
+  #command-menu,
+  .no-print,
+  button,
+  .print-hide {
+    display: none !important;
+  }
+
+  body, html {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+    line-height: 1.4 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  a {
+    color: #000000 !important;
+    text-decoration: underline !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .print-page-break {
+    page-break-before: always;
+  }
+
+  /* Unfold details for print */
+  .line-clamp-3,
+  .line-clamp-2 {
+    -webkit-line-clamp: unset !important;
+    display: block !important;
+  }
+}
+
+.print-only {
+  display: none;
+}

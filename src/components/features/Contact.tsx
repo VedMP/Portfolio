@@ -1,9 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Mail, Send, Copy, Check, FileText, Download, Phone, AlertCircle, CheckCircle2 } from "lucide-react";
+import { Mail, Send, Copy, Check, FileText, Download, Phone, AlertCircle, CheckCircle2, UserCheck } from "lucide-react";
 import { GithubIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
 import { PERSONAL_INFO } from "@/core/data";
+import { useToast } from "@/components/ui/Toast";
 
 export default function Contact() {
   const [copied, setCopied] = useState(false);
@@ -11,15 +12,43 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
   const [errorMessage, setErrorMessage] = useState("");
+  const { toast } = useToast();
 
   const copyEmail = async () => {
     try {
       await navigator.clipboard.writeText(PERSONAL_INFO.email);
       setCopied(true);
+      toast("Email copied to clipboard!");
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Fallback
+      toast("Failed to copy email", "error");
     }
+  };
+
+  const handleDownloadVCard = () => {
+    const vCardData = [
+      "BEGIN:VCARD",
+      "VERSION:3.0",
+      `FN:${PERSONAL_INFO.name}`,
+      `TITLE:${PERSONAL_INFO.headline}`,
+      `ORG:${PERSONAL_INFO.institution}`,
+      `EMAIL;TYPE=INTERNET,PREF:${PERSONAL_INFO.email}`,
+      `TEL;TYPE=CELL:${PERSONAL_INFO.phone}`,
+      `URL:https://vedmpatel.me`,
+      `NOTE:Honours CS student (3.97 GPA). Specializing in RAG & Multi-Agent systems.`,
+      "END:VCARD",
+    ].join("\r\n");
+
+    const blob = new Blob([vCardData], { type: "text/vcard;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.setAttribute("download", "Ved_Patel_Contact.vcf");
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    toast("Downloaded contact card (.vcf)");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -40,21 +69,21 @@ export default function Contact() {
       if (res.ok && data.success) {
         setSubmitStatus("success");
         setFormData({ name: "", email: "", message: "", honeypot: "" });
+        toast("Message dispatched successfully!");
       } else {
         setSubmitStatus("error");
         setErrorMessage(data.error || "Unable to dispatch message at this time.");
       }
     } catch {
-      // Fallback: If edge function fails or local, offer direct mailto fallback
       setSubmitStatus("error");
-      setErrorMessage("Could not reach edge API. Please use direct email link below.");
+      setErrorMessage("Could not reach edge API. Please use the direct email link below.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
   return (
-    <section id="contact" className="relative w-full py-20 px-6 border-t border-slate-200 dark:border-slate-800">
+    <section id="contact" className="relative w-full py-20 px-6 border-t border-slate-200 dark:border-white/10">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="max-w-3xl mb-14 text-center mx-auto">
@@ -66,14 +95,14 @@ export default function Contact() {
             Get In Touch
           </h2>
           <p className="text-base text-slate-600 dark:text-slate-400">
-            Open to discussing AI systems engineering opportunities, co-op/internship roles, and technical collaborations.
+            Open to discussing AI systems engineering opportunities, co-op / internship roles, and technical collaborations.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-10 items-start">
           {/* Left Column: Direct Coordinates */}
           <div className="lg:col-span-2 space-y-6">
-            <div className="p-6 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm space-y-4">
+            <div className="hairline-card p-6 rounded-2xl bg-white dark:bg-[#0f1422] border border-slate-200 dark:border-white/10 shadow-sm space-y-4">
               <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">
                 Contact Coordinates
               </h3>
@@ -81,13 +110,13 @@ export default function Contact() {
               {/* Email with quick copy */}
               <div>
                 <div className="text-xs font-mono text-slate-500 dark:text-slate-400 mb-1">Email Address</div>
-                <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+                <div className="flex items-center justify-between p-2 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-200 dark:border-white/10">
                   <span className="text-xs font-mono text-slate-800 dark:text-slate-200 truncate mr-2">
                     {PERSONAL_INFO.email}
                   </span>
                   <button
                     onClick={copyEmail}
-                    className="p-1.5 rounded-lg bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-300 hover:text-sky-600 transition-colors shrink-0"
+                    className="p-1.5 rounded-lg bg-white dark:bg-white/10 text-slate-600 dark:text-slate-300 hover:text-sky-600 transition-colors shrink-0"
                     title="Copy email to clipboard"
                   >
                     {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
@@ -107,8 +136,8 @@ export default function Contact() {
                 </a>
               </div>
 
-              {/* Academic Transcript & Resume */}
-              <div className="pt-3 border-t border-slate-100 dark:border-slate-800 flex flex-col gap-2">
+              {/* Academic Transcript & Resume & vCard */}
+              <div className="pt-3 border-t border-slate-100 dark:border-white/10 flex flex-col gap-2">
                 <a
                   href={PERSONAL_INFO.resumePath}
                   target="_blank"
@@ -118,20 +147,29 @@ export default function Contact() {
                   <Download className="w-3.5 h-3.5" />
                   <span>Download Resume (PDF)</span>
                 </a>
+
                 <a
                   href={PERSONAL_INFO.transcriptPath}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 font-medium text-xs hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 font-medium text-xs hover:bg-slate-50 dark:hover:bg-white/10 transition-colors"
                 >
                   <FileText className="w-3.5 h-3.5" />
                   <span>Official Transcript (3.97 GPA)</span>
                 </a>
+
+                <button
+                  onClick={handleDownloadVCard}
+                  className="inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 text-slate-700 dark:text-slate-300 font-medium text-xs hover:bg-slate-50 dark:hover:bg-white/10 transition-colors"
+                >
+                  <UserCheck className="w-3.5 h-3.5" />
+                  <span>Download Contact Card (.vcf)</span>
+                </button>
               </div>
             </div>
 
             {/* Socials card */}
-            <div className="p-4 rounded-xl bg-slate-50 dark:bg-slate-900/60 border border-slate-200 dark:border-slate-800 flex items-center justify-around">
+            <div className="p-4 rounded-xl bg-slate-50 dark:bg-[#0f1422] border border-slate-200 dark:border-white/10 flex items-center justify-around">
               <a
                 href={PERSONAL_INFO.socials.github}
                 target="_blank"
@@ -171,12 +209,12 @@ export default function Contact() {
           </div>
 
           {/* Right Column: Interactive Edge Form */}
-          <div className="lg:col-span-3 p-6 md:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+          <div className="hairline-card lg:col-span-3 p-6 md:p-8 rounded-2xl bg-white dark:bg-[#0f1422] border border-slate-200 dark:border-white/10 shadow-sm">
             <h3 className="text-base font-bold text-slate-900 dark:text-white mb-1">
               Send Direct Message
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">
-              Routed through Cloudflare Pages Functions edge API endpoint.
+              Routed through Cloudflare Pages Functions serverless edge API endpoint.
             </p>
 
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -203,7 +241,7 @@ export default function Contact() {
                   placeholder="e.g. Alex Chen"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 font-sans transition-colors"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 font-sans transition-colors"
                 />
               </div>
 
@@ -217,7 +255,7 @@ export default function Contact() {
                   placeholder="alex@company.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 font-sans transition-colors"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 font-sans transition-colors"
                 />
               </div>
 
@@ -231,7 +269,7 @@ export default function Contact() {
                   placeholder="Hi Ved, I'd like to discuss an AI Engineering role or collaborate on..."
                   value={formData.message}
                   onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-slate-900 dark:text-white text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 font-sans transition-colors resize-none"
+                  className="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-white/5 text-slate-900 dark:text-white text-sm outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500 font-sans transition-colors resize-none"
                 />
               </div>
 

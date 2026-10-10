@@ -1,11 +1,11 @@
 "use client";
 
-import { GraduationCap, Trophy, Calendar, MapPin, ExternalLink, Award } from "lucide-react";
-import { EXPERIENCES } from "@/core/data";
+import { GraduationCap, Trophy, Calendar, MapPin, ExternalLink, Award, FileText } from "lucide-react";
+import { EXPERIENCES, PERSONAL_INFO } from "@/core/data";
 
 export default function Experience() {
   return (
-    <section id="experience" className="relative w-full py-20 px-6 border-t border-slate-200 dark:border-slate-800 bg-slate-50/40 dark:bg-slate-900/20">
+    <section id="experience" className="relative w-full py-20 px-6 border-t border-slate-200 dark:border-white/10 bg-slate-50/40 dark:bg-black/20">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <div className="max-w-3xl mb-14">
@@ -17,22 +17,24 @@ export default function Experience() {
             Education &amp; Experience
           </h2>
           <p className="text-base text-slate-600 dark:text-slate-400">
-            A rigorous academic foundation paired with competitive hackathon architecture sprints.
+            A rigorous 3.97 GPA academic foundation in core computer science paired with competitive hackathon architecture sprints.
           </p>
         </div>
 
         {/* Timeline Items */}
-        <div className="space-y-8 relative before:absolute before:inset-0 before:left-6 md:before:left-8 before:w-0.5 before:bg-slate-200 dark:before:bg-slate-800 before:z-0">
+        <div className="space-y-8 relative before:absolute before:inset-0 before:left-6 md:before:left-8 before:w-0.5 before:bg-slate-200 dark:before:border-white/10 before:z-0">
           {EXPERIENCES.map((item) => {
             const isEducation = item.type === "education";
             return (
               <div key={item.id} className="relative z-10 flex items-start gap-4 md:gap-6">
                 {/* Timeline Icon Badge */}
-                <div className={`shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center border shadow-sm ${
-                  isEducation
-                    ? "bg-sky-500/10 border-sky-500/30 text-sky-600 dark:text-sky-400"
-                    : "bg-indigo-500/10 border-indigo-500/30 text-indigo-600 dark:text-indigo-400"
-                }`}>
+                <div
+                  className={`shrink-0 w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center border shadow-sm ${
+                    isEducation
+                      ? "bg-sky-500/10 border-sky-500/30 text-sky-600 dark:text-sky-400"
+                      : "bg-indigo-500/10 border-indigo-500/30 text-indigo-600 dark:text-indigo-400"
+                  }`}
+                >
                   {isEducation ? (
                     <GraduationCap className="w-6 h-6" />
                   ) : (
@@ -41,7 +43,7 @@ export default function Experience() {
                 </div>
 
                 {/* Card Content */}
-                <div className="flex-1 p-6 md:p-8 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-sm">
+                <div className="hairline-card flex-1 p-6 md:p-8 rounded-2xl bg-white dark:bg-[#0f1422] border border-slate-200 dark:border-white/10 shadow-sm">
                   <div className="flex flex-wrap items-start justify-between gap-3 mb-3">
                     <div>
                       <div className="flex items-center gap-2 mb-1">
@@ -49,7 +51,7 @@ export default function Experience() {
                           {isEducation ? "Academic Program" : "Hackathon Sprint"}
                         </span>
                         {item.metrics && (
-                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                          <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-mono font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
                             <Award className="w-3 h-3" />
                             {item.metrics}
                           </span>
@@ -93,12 +95,33 @@ export default function Experience() {
                     ))}
                   </ul>
 
+                  {/* Verified Credentials Pills */}
+                  {isEducation && (
+                    <div className="mb-6 p-3 rounded-xl bg-slate-50 dark:bg-white/5 border border-slate-100 dark:border-white/5 flex flex-wrap items-center justify-between gap-3">
+                      <div className="text-xs font-mono text-slate-600 dark:text-slate-300">
+                        <span className="font-semibold text-slate-900 dark:text-white">Verified Standing: </span>
+                        <span>{PERSONAL_INFO.academicStanding}</span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <a
+                          href={PERSONAL_INFO.transcriptPath}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono font-medium bg-sky-500/10 text-sky-700 dark:text-sky-300 border border-sky-500/20 hover:bg-sky-500/20 transition-colors"
+                        >
+                          <FileText className="w-3.5 h-3.5" />
+                          <span>Official Transcript (PDF)</span>
+                        </a>
+                      </div>
+                    </div>
+                  )}
+
                   {/* Skills Tagged */}
-                  <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-100 dark:border-slate-800">
+                  <div className="flex flex-wrap gap-1.5 pt-4 border-t border-slate-100 dark:border-white/10">
                     {item.skills.map((skill) => (
                       <span
                         key={skill}
-                        className="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400"
+                        className="px-2.5 py-0.5 rounded-md text-[11px] font-mono bg-slate-100 dark:bg-white/5 text-slate-600 dark:text-slate-400 border border-slate-200 dark:border-white/10"
                       >
                         {skill}
                       </span>
