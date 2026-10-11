@@ -3,7 +3,7 @@
 import { ArrowUpRight } from "lucide-react";
 import { PERSONAL_INFO } from "@/core/data";
 
-export default function Hero({ onOpenCommandMenu }: { onOpenCommandMenu?: () => void }) {
+export default function Hero() {
   return (
     <section className="pt-6 sm:pt-10 pb-16 border-b border-border">
       <div className="space-y-8">
@@ -131,16 +131,6 @@ export default function Hero({ onOpenCommandMenu }: { onOpenCommandMenu?: () => 
             <span>{PERSONAL_INFO.email}</span>
             <ArrowUpRight className="w-3 h-3" />
           </a>
-
-          {onOpenCommandMenu && (
-            <button
-              onClick={onOpenCommandMenu}
-              className="human-link text-neutral-400 hover:text-foreground inline-flex items-center gap-1 cursor-pointer"
-              title="Open command palette (⌘K)"
-            >
-              <span>⌘K Actions</span>
-            </button>
-          )}
         </div>
       </div>
     </section>

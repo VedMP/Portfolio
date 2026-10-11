@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
-import { Sun, Moon, Command, Menu, X } from "lucide-react";
+import { Sun, Moon, Menu, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import AccessibilityDropdown from "@/components/ui/AccessibilityDropdown";
 import { PERSONAL_INFO } from "@/core/data";
@@ -25,7 +25,7 @@ const NAV_LINKS = [
   { name: "Contact", href: "#contact" },
 ];
 
-export default function Navbar({ onOpenCommandMenu }: { onOpenCommandMenu?: () => void }) {
+export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme, setTheme } = useTheme();
@@ -57,7 +57,7 @@ export default function Navbar({ onOpenCommandMenu }: { onOpenCommandMenu?: () =
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-5 text-xs text-neutral-500 dark:text-neutral-400">
+        <nav className="hidden md:flex items-center gap-6 text-xs text-neutral-500 dark:text-neutral-400">
           {NAV_LINKS.map((link) => (
             <a
               key={link.name}
@@ -79,22 +79,10 @@ export default function Navbar({ onOpenCommandMenu }: { onOpenCommandMenu?: () =
 
         {/* Actions */}
         <div className="flex items-center gap-1.5">
-          {onOpenCommandMenu && (
-            <button
-              onClick={onOpenCommandMenu}
-              className="hidden sm:inline-flex items-center gap-1 px-2 py-1 rounded text-[11px] font-mono text-neutral-500 dark:text-neutral-400 hover:text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
-              title="Open command palette (⌘K)"
-              aria-label="Command palette"
-            >
-              <Command className="w-3 h-3" />
-              <span>K</span>
-            </button>
-          )}
-
           {mounted && (
             <button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-1.5 rounded text-neutral-500 dark:text-neutral-400 hover:text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors"
+              className="p-1.5 rounded text-neutral-500 dark:text-neutral-400 hover:text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
               aria-label="Toggle theme"
             >
               {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
@@ -105,7 +93,7 @@ export default function Navbar({ onOpenCommandMenu }: { onOpenCommandMenu?: () =
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-1.5 md:hidden text-neutral-500 hover:text-foreground"
+            className="p-1.5 md:hidden text-neutral-500 hover:text-foreground cursor-pointer"
             aria-label="Toggle mobile menu"
           >
             {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}

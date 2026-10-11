@@ -9,7 +9,6 @@ import About from "@/components/features/About";
 import Contact from "@/components/features/Contact";
 
 export default function HomePage({
-  onOpenCommandMenu,
   selectedProjectId,
   onClearSelectedProject,
 }: {
@@ -19,7 +18,7 @@ export default function HomePage({
 }) {
   return (
     <div className="flex flex-col w-full">
-      <Hero onOpenCommandMenu={onOpenCommandMenu} />
+      <Hero />
       <PipelineVisualizer />
       <Projects
         selectedProjectId={selectedProjectId}
