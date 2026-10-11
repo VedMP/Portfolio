@@ -243,7 +243,7 @@ export default function Contact() {
               <input
                 type="text"
                 required
-                placeholder="Alex Chen"
+                placeholder={PERSONAL_INFO.name}
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                 className="w-full px-3.5 py-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 text-sm outline-none focus:border-neutral-500 font-sans transition-colors"
@@ -257,7 +257,7 @@ export default function Contact() {
               <input
                 type="email"
                 required
-                placeholder="alex@company.com"
+                placeholder={PERSONAL_INFO.email}
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full px-3.5 py-2.5 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-950 text-neutral-900 dark:text-neutral-100 text-sm outline-none focus:border-neutral-500 font-sans transition-colors"
