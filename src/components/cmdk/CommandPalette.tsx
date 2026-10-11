@@ -61,7 +61,7 @@ export default function CommandPalette({
     {
       id: "nav-projects",
       category: "Navigation",
-      label: "Jump to Technical Projects",
+      label: "Jump to Case Studies",
       detail: "#projects",
       icon: Code2,
       action: () => scrollToSection("projects"),
@@ -77,7 +77,7 @@ export default function CommandPalette({
     {
       id: "nav-exp",
       category: "Navigation",
-      label: "Jump to Education & Milestones",
+      label: "Jump to Education & Sprints",
       detail: "#experience",
       icon: GraduationCap,
       action: () => scrollToSection("experience"),
@@ -85,7 +85,7 @@ export default function CommandPalette({
     {
       id: "nav-skills",
       category: "Navigation",
-      label: "Jump to Skills & Technology Stack",
+      label: "Jump to Capabilities & Stack",
       detail: "#skills",
       icon: Cpu,
       action: () => scrollToSection("skills"),
@@ -155,7 +155,7 @@ export default function CommandPalette({
       action: async () => {
         try {
           await navigator.clipboard.writeText(PERSONAL_INFO.email);
-          toast("Email copied to clipboard!");
+          toast("Email copied to clipboard");
         } catch {
           toast("Failed to copy email", "error");
         }
@@ -176,14 +176,14 @@ export default function CommandPalette({
               text: "Check out Ved Patel's systems engineering portfolio (3.97 GPA Honours CS @ Ontario Tech).",
               url: "https://vedmpatel.me",
             });
-            toast("Profile shared!");
+            toast("Profile shared");
           } catch {
             // Dismissed
           }
         } else {
           try {
             await navigator.clipboard.writeText("https://vedmpatel.me");
-            toast("Portfolio link copied to clipboard!");
+            toast("Portfolio link copied to clipboard");
           } catch {
             toast("Could not copy link", "error");
           }
@@ -317,37 +317,37 @@ export default function CommandPalette({
 
   return (
     <div
-      className="fixed inset-0 z-[110] flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-150"
+      className="fixed inset-0 z-50 flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/40 backdrop-blur-xs animate-in fade-in duration-100"
       onClick={onClose}
     >
       <div
-        className="w-full max-w-xl rounded-2xl bg-white dark:bg-[#0f1422] border border-slate-200 dark:border-white/10 shadow-2xl overflow-hidden flex flex-col max-h-[80vh] text-left"
+        className="w-full max-w-xl rounded-lg bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 shadow-xl overflow-hidden flex flex-col max-h-[80vh] text-left"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Search Input Bar */}
-        <div className="flex items-center px-4 py-3.5 border-b border-slate-200 dark:border-white/10 gap-3">
-          <Search className="w-4 h-4 text-slate-400 shrink-0" />
+        <div className="flex items-center px-4 py-3 border-b border-neutral-200 dark:border-neutral-800 gap-3">
+          <Search className="w-4 h-4 text-neutral-400 shrink-0" />
           <input
             ref={inputRef}
             type="text"
-            placeholder="Type a command or search (e.g. Projects, Resume, Email, RAG)..."
+            placeholder="Type a command or search..."
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
               setSelectedIndex(0);
             }}
-            className="w-full bg-transparent text-sm text-slate-900 dark:text-white placeholder:text-slate-400 outline-none font-sans"
+            className="w-full bg-transparent text-sm text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-400 outline-none font-sans"
           />
-          <kbd className="hidden sm:inline-block px-2 py-0.5 text-[10px] font-mono rounded bg-slate-100 dark:bg-white/10 text-slate-500 dark:text-slate-400">
+          <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-mono rounded bg-neutral-100 dark:bg-neutral-800 text-neutral-500">
             ESC
           </kbd>
         </div>
 
         {/* Results List */}
-        <div ref={listRef} className="overflow-y-auto p-2 divide-y divide-slate-100 dark:divide-white/5">
+        <div ref={listRef} className="overflow-y-auto p-1.5 divide-y divide-neutral-100 dark:divide-neutral-800/40">
           {filteredCommands.length === 0 ? (
-            <div className="py-8 text-center text-xs font-mono text-slate-400">
-              No matching commands found.
+            <div className="py-8 text-center text-xs font-mono text-neutral-400">
+              No matching commands.
             </div>
           ) : (
             filteredCommands.map((cmd, idx) => {
@@ -358,33 +358,33 @@ export default function CommandPalette({
                   key={cmd.id}
                   onClick={() => cmd.action()}
                   onMouseEnter={() => setSelectedIndex(idx)}
-                  className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl text-left transition-colors ${
+                  className={`w-full flex items-center justify-between px-3 py-2 rounded text-left transition-colors ${
                     isSelected
-                      ? "bg-sky-50 dark:bg-sky-950/40 text-sky-900 dark:text-sky-200"
-                      : "text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-white/5"
+                      ? "bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100"
+                      : "text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800/50"
                   }`}
                 >
                   <div className="flex items-center gap-3 min-w-0">
                     <div
-                      className={`p-1.5 rounded-lg border ${
+                      className={`p-1.5 rounded ${
                         isSelected
-                          ? "bg-sky-500 text-white border-sky-400"
-                          : "bg-slate-100 dark:bg-white/5 text-slate-500 dark:text-slate-400 border-slate-200 dark:border-white/10"
+                          ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900"
+                          : "bg-neutral-100 dark:bg-neutral-800 text-neutral-500"
                       }`}
                     >
-                      <Icon className="w-4 h-4" />
+                      <Icon className="w-3.5 h-3.5" />
                     </div>
                     <div className="min-w-0">
                       <div className="text-xs font-medium font-sans truncate">{cmd.label}</div>
                       {cmd.detail && (
-                        <div className="text-[11px] font-mono text-slate-400 dark:text-slate-500 truncate">
+                        <div className="text-[11px] font-mono text-neutral-400 truncate">
                           {cmd.detail}
                         </div>
                       )}
                     </div>
                   </div>
 
-                  <span className="text-[10px] font-mono text-slate-400 dark:text-slate-500 shrink-0 uppercase ml-2">
+                  <span className="text-[10px] font-mono text-neutral-400 shrink-0 uppercase ml-2">
                     {cmd.category}
                   </span>
                 </button>
@@ -394,7 +394,7 @@ export default function CommandPalette({
         </div>
 
         {/* Keyboard hints footer */}
-        <div className="px-4 py-2 border-t border-slate-100 dark:border-white/10 bg-slate-50/50 dark:bg-black/20 flex items-center justify-between text-[11px] font-mono text-slate-400">
+        <div className="px-4 py-2 border-t border-neutral-100 dark:border-neutral-800 bg-neutral-50/50 dark:bg-neutral-900/50 flex items-center justify-between text-[11px] font-mono text-neutral-400">
           <div className="flex items-center gap-3">
             <span>↑↓ to navigate</span>
             <span>↵ to select</span>

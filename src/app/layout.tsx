@@ -1,7 +1,7 @@
 /**
  * @file layout.tsx
- * @description Root layout component for Ved Patel's portfolio.
- * Engineered for SEO, Schema.org JSON-LD microdata, OpenGraph cards, and Core Web Vitals.
+ * @description Root layout component for Ved Patel's personal portfolio.
+ * Engineered with high typographic craft, Schema.org JSON-LD microdata, and Core Web Vitals.
  */
 
 import type { Metadata, Viewport } from "next";
@@ -27,9 +27,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ved Patel | AI Systems & Generative Engineering",
+  title: "Ved Patel — Computer Science & Systems",
   description:
-    "Honours Computer Science student (3.97 GPA, 4x Dean's List) at Ontario Tech University. Specializing in RAG architectures, multi-agent validation loops, and resilient edge systems.",
+    "Honours Computer Science student (3.97 GPA) at Ontario Tech University. Specializing in RAG pipeline engineering, multi-agent validation loops, and systems architecture.",
   metadataBase: new URL("https://vedmpatel.me"),
   authors: [{ name: "Ved Patel", url: "https://vedmpatel.me" }],
   creator: "Ved Patel",
@@ -41,6 +41,7 @@ export const metadata: Metadata = {
     "Ved Patel",
     "Ontario Tech University",
     "Computer Science",
+    "Systems Engineer",
     "Generative AI",
     "RAG",
     "LangChain",
@@ -48,48 +49,36 @@ export const metadata: Metadata = {
     "watsonx.ai",
     "Multi-Agent Systems",
     "Software Engineer",
-    "AI Systems Engineer",
-    "Edge Architecture",
-    "Cloudflare Pages",
   ],
   openGraph: {
-    title: "Ved Patel | AI Systems & Generative Engineering",
+    title: "Ved Patel — Computer Science & Systems",
     description:
-      "Honours Computer Science student (3.97 GPA, 4x Dean's List) at Ontario Tech University. Specializing in RAG architectures, multi-agent validation loops, and resilient edge systems.",
+      "Honours Computer Science student (3.97 GPA) at Ontario Tech University. Specializing in RAG pipeline engineering, multi-agent validation loops, and systems architecture.",
     url: "https://vedmpatel.me",
-    siteName: "Ved Patel Engineering Portfolio",
+    siteName: "Ved Patel",
     locale: "en_US",
     type: "profile",
     firstName: "Ved",
     lastName: "Patel",
-    gender: "male",
-    username: "VedMP",
     images: [
       {
         url: "/ProfilePhoto.JPG",
         width: 800,
         height: 800,
-        alt: "Ved Patel — AI Systems & Software Engineer",
+        alt: "Ved Patel",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ved Patel | AI Systems & Generative Engineering",
+    title: "Ved Patel — Computer Science & Systems",
     description:
-      "Honours Computer Science student (3.97 GPA, 4x Dean's List) at Ontario Tech University. Specializing in RAG architectures, multi-agent validation loops, and edge systems.",
+      "Honours Computer Science student (3.97 GPA) at Ontario Tech University. Specializing in RAG pipeline engineering, multi-agent validation loops, and systems architecture.",
     images: ["/ProfilePhoto.JPG"],
   },
   robots: {
     index: true,
     follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      "max-video-preview": -1,
-      "max-image-preview": "large",
-      "max-snippet": -1,
-    },
   },
 };
 
@@ -98,8 +87,8 @@ export const viewport: Viewport = {
   initialScale: 1,
   maximumScale: 5,
   themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#fafbfc" },
-    { media: "(prefers-color-scheme: dark)", color: "#080c14" },
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#111111" },
   ],
 };
 
@@ -115,7 +104,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Schema.org Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
@@ -130,13 +118,13 @@ export default function RootLayout({
         />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased min-h-screen flex flex-col bg-background text-foreground engineering-grid`}
+        className={`${geistSans.variable} ${geistMono.variable} font-sans antialiased min-h-screen bg-background text-foreground selection:bg-neutral-200 dark:selection:bg-neutral-800`}
       >
         <a
           href="#main-content"
-          className="fixed top-4 left-4 z-[100] -translate-y-[200%] rounded-lg bg-sky-600 px-4 py-2 text-xs font-mono font-medium text-white transition-transform focus:translate-y-0 shadow-lg"
+          className="fixed top-4 left-4 z-[100] -translate-y-[200%] rounded bg-black dark:bg-white px-3 py-1.5 text-xs font-mono font-medium text-white dark:text-black transition-transform focus:translate-y-0"
         >
-          Skip to main content
+          Skip to content
         </a>
         <AccessibilityProvider>
           <ThemeProvider

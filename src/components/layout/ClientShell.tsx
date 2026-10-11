@@ -13,12 +13,10 @@ export default function ClientShell({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Cmd+K or Ctrl+K
       if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
         e.preventDefault();
         setIsCommandOpen((prev) => !prev);
       }
-      // Slash key when not typing in an input
       if (
         e.key === "/" &&
         !isCommandOpen &&
@@ -36,15 +34,16 @@ export default function ClientShell({ children }: { children: ReactNode }) {
 
   const handleSelectProject = (projectId: string) => {
     setSelectedProjectId(projectId);
-    window.location.hash = "projects";
+    const el = document.getElementById(`project-${projectId}`) || document.getElementById("projects");
+    if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <ToastProvider>
-      <div className="flex flex-col min-h-screen">
+      <div className="min-h-screen flex flex-col justify-between">
         <Navbar onOpenCommandMenu={() => setIsCommandOpen(true)} />
 
-        <main id="main-content" className="flex-grow">
+        <main id="main-content" className="flex-1 max-w-3xl w-full mx-auto px-6 pt-24 pb-20">
           {isValidElement(children)
             ? cloneElement(children as React.ReactElement<{
                 onOpenCommandMenu?: () => void;
@@ -60,14 +59,12 @@ export default function ClientShell({ children }: { children: ReactNode }) {
 
         <Footer />
 
-        {/* Global Command Palette */}
         <CommandPalette
           isOpen={isCommandOpen}
           onClose={() => setIsCommandOpen(false)}
           onSelectProject={handleSelectProject}
         />
 
-        {/* ATS-Optimized Print Resume view */}
         <PrintResumeView />
       </div>
     </ToastProvider>

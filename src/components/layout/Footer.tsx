@@ -1,129 +1,51 @@
-import { Shield, Printer, ExternalLink } from "lucide-react";
-import { GithubIcon, LinkedinIcon } from "@/components/ui/SocialIcons";
+"use client";
+
+import { Printer, ArrowUpRight } from "lucide-react";
 import { PERSONAL_INFO } from "@/core/data";
 
 export default function Footer() {
   return (
-    <footer className="relative w-full border-t border-slate-200 dark:border-white/10 bg-slate-50 dark:bg-black/40 py-12 px-6">
-      <div className="max-w-6xl mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
-          {/* Brand & Mission */}
-          <div className="md:col-span-2 space-y-3">
-            <div className="font-mono text-sm font-bold text-slate-900 dark:text-white flex items-center gap-1.5">
-              <span className="text-sky-500 font-extrabold">~/</span>
-              <span>ved.patel</span>
-            </div>
-            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 max-w-md leading-relaxed">
-              Honours Computer Science student (3.97 GPA, 4x Dean&apos;s List) at Ontario Tech University.
-              Architecting dense vector RAG pipelines, multi-agent validation loops, and resilient edge systems.
-            </p>
-            <div className="flex items-center gap-2 text-xs font-mono text-emerald-600 dark:text-emerald-400">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              <span>Edge Deployment: Cloudflare Pages (vedmpatel.me)</span>
-            </div>
+    <footer className="w-full py-12 border-t border-neutral-200 dark:border-neutral-800 text-xs font-mono text-neutral-500 dark:text-neutral-400">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+        <div>
+          <div className="text-neutral-900 dark:text-neutral-100 font-medium">
+            Ved Patel
           </div>
-
-          {/* Quick Navigation */}
-          <div>
-            <div className="text-xs font-mono font-semibold uppercase text-slate-400 mb-3 tracking-wider">
-              Navigation
-            </div>
-            <ul className="space-y-2 text-xs font-mono text-slate-600 dark:text-slate-300">
-              <li><a href="#architecture" className="hover:text-sky-500 transition-colors">Architecture Visualizer</a></li>
-              <li><a href="#projects" className="hover:text-sky-500 transition-colors">Case Studies</a></li>
-              <li><a href="#experience" className="hover:text-sky-500 transition-colors">Education &amp; Sprints</a></li>
-              <li><a href="#skills" className="hover:text-sky-500 transition-colors">Technology Stack</a></li>
-              <li><a href="#about" className="hover:text-sky-500 transition-colors">About Ved</a></li>
-              <li><a href="#contact" className="hover:text-sky-500 transition-colors">Direct Contact</a></li>
-            </ul>
-          </div>
-
-          {/* Verified Social Channels */}
-          <div>
-            <div className="text-xs font-mono font-semibold uppercase text-slate-400 mb-3 tracking-wider">
-              Coordinates &amp; Docs
-            </div>
-            <ul className="space-y-2 text-xs font-mono text-slate-600 dark:text-slate-300">
-              <li>
-                <a
-                  href={PERSONAL_INFO.socials.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-sky-500 transition-colors"
-                >
-                  <GithubIcon className="w-3.5 h-3.5" />
-                  <span>GitHub (Professional)</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={PERSONAL_INFO.socials.githubAcademic}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-sky-500 transition-colors"
-                >
-                  <GithubIcon className="w-3.5 h-3.5" />
-                  <span>GitHub (Academic)</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={PERSONAL_INFO.socials.linkedin}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-sky-500 transition-colors"
-                >
-                  <LinkedinIcon className="w-3.5 h-3.5" />
-                  <span>LinkedIn Profile</span>
-                </a>
-              </li>
-              <li>
-                <a
-                  href={PERSONAL_INFO.resumePath}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-sky-500 transition-colors"
-                >
-                  <span>Official Resume (PDF)</span>
-                  <ExternalLink className="w-3 h-3 text-slate-400" />
-                </a>
-              </li>
-              <li>
-                <a
-                  href={PERSONAL_INFO.transcriptPath}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-2 hover:text-sky-500 transition-colors"
-                >
-                  <span>Academic Transcript (3.97 GPA)</span>
-                  <ExternalLink className="w-3 h-3 text-slate-400" />
-                </a>
-              </li>
-            </ul>
+          <div className="text-[11px] text-neutral-400 dark:text-neutral-500">
+            Honours B.Sc. Computer Science • Ontario Tech University (3.97 GPA)
           </div>
         </div>
 
-        {/* Bottom Bar */}
-        <div className="pt-8 border-t border-slate-200 dark:border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-mono text-slate-500 dark:text-slate-400">
-          <div>
-            <span>Ved Patel • Honours Computer Science @ Ontario Tech University</span>
-          </div>
+        <div className="flex items-center gap-4 text-xs">
+          <button
+            onClick={() => window.print()}
+            className="inline-flex items-center gap-1.5 text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors"
+            title="Print ATS-Friendly One-Page Resume"
+          >
+            <Printer className="w-3.5 h-3.5" />
+            <span>Print ATS Resume</span>
+          </button>
 
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => window.print()}
-              className="inline-flex items-center gap-1.5 text-slate-500 hover:text-slate-900 dark:hover:text-white transition-colors"
-              title="Print ATS-Optimized Resume"
-            >
-              <Printer className="w-3.5 h-3.5 text-sky-500" />
-              <span>Print ATS Resume</span>
-            </button>
-            <span className="flex items-center gap-1">
-              <Shield className="w-3.5 h-3.5 text-sky-500" />
-              <span>Strict CSP Hardened</span>
-            </span>
-            <span>© {new Date().getFullYear()} Ved Patel</span>
-          </div>
+          <span className="text-neutral-300 dark:text-neutral-700">•</span>
+
+          <a
+            href={PERSONAL_INFO.resumePath}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-colors"
+          >
+            <span>Resume (PDF)</span>
+            <ArrowUpRight className="w-3 h-3 opacity-60" />
+          </a>
+        </div>
+      </div>
+
+      <div className="pt-4 border-t border-neutral-200/60 dark:border-neutral-800/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[11px] text-neutral-400 dark:text-neutral-500">
+        <div>
+          Deployed to Edge via Cloudflare Pages • Static Export Next.js 16
+        </div>
+        <div>
+          © {new Date().getFullYear()} Ved Patel. Built for engineering rigor.
         </div>
       </div>
     </footer>

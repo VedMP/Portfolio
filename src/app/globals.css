@@ -1,7 +1,7 @@
 /**
  * @file globals.css
- * @description Global CSS design tokens, base typography, and print engine for Ved Patel's portfolio.
- * Engineered with Tailwind CSS v4, Linear/Vercel-inspired dark/light aesthetics, and 60fps mobile GPU rendering.
+ * @description Human-crafted design system, refined typography, and ATS print engine for Ved Patel.
+ * Zero AI-slop textures. No grid backgrounds. Clean, editorial, high-contrast typography.
  */
 
 @import "tailwindcss";
@@ -9,88 +9,80 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 /* ============================================
-   Design Tokens (Linear / Vercel Systems Aesthetic)
+   Refined Neutral Design Tokens
+   Warm, editorial, human craft inspired by Paco Coursey & Lee Robinson.
    ============================================ */
 :root {
-  --background: #fafbfc;
-  --foreground: #090d16;
+  --background: #ffffff;
+  --foreground: #111111;
 
-  /* Card & Surface Tokens */
+  /* Surfaces & Borders */
   --surface: #ffffff;
-  --surface-hover: #f1f5f9;
-  --surface-active: #e2e8f0;
-  --surface-muted: #f8fafc;
-  --border: #e2e8f0;
-  --border-subtle: #edf2f7;
+  --surface-subtle: #f8f8f8;
+  --surface-hover: #f3f3f3;
+  --border: #e5e5e5;
+  --border-subtle: #f0f0f0;
 
-  /* Typography Colors */
-  --text-primary: #090d16;
-  --text-secondary: #334155;
-  --text-muted: #64748b;
+  /* Typography */
+  --text-primary: #111111;
+  --text-secondary: #525252;
+  --text-muted: #737373;
 
-  /* Engineering Accents */
-  --accent-primary: #0284c7; /* Sky 600 */
-  --accent-primary-hover: #0369a1;
-  --accent-secondary: #4f46e5; /* Indigo 600 */
-  --accent-glow: rgba(2, 132, 199, 0.12);
-  --success: #10b981;
+  /* Restrained Accents */
+  --accent: #171717;
+  --accent-link: #0969da;
+  --success: #16a34a;
 
-  /* Code & Terminal Tokens */
-  --code-bg: #0f172a;
-  --code-fg: #f8fafc;
-  --code-border: #334155;
-  --code-accent: #38bdf8;
+  /* Code Blocks */
+  --code-bg: #f6f8fa;
+  --code-fg: #1f2328;
+  --code-border: #d0d7de;
 }
 
 .dark {
-  --background: #080c14;
-  --foreground: #f8fafc;
+  --background: #111111;
+  --foreground: #ededed;
 
-  /* Card & Surface Tokens */
-  --surface: #0f1422;
-  --surface-hover: #161e31;
-  --surface-active: #1f2a44;
-  --surface-muted: #0b101c;
-  --border: rgba(255, 255, 255, 0.08);
-  --border-subtle: rgba(255, 255, 255, 0.04);
+  /* Surfaces & Borders */
+  --surface: #171717;
+  --surface-subtle: #1c1c1c;
+  --surface-hover: #222222;
+  --border: #262626;
+  --border-subtle: #1e1e1e;
 
-  /* Typography Colors */
-  --text-primary: #f8fafc;
-  --text-secondary: #94a3b8;
-  --text-muted: #64748b;
+  /* Typography */
+  --text-primary: #ededed;
+  --text-secondary: #a3a3a3;
+  --text-muted: #737373;
 
-  /* Engineering Accents */
-  --accent-primary: #38bdf8; /* Sky 400 */
-  --accent-primary-hover: #7dd3fc;
-  --accent-secondary: #818cf8; /* Indigo 400 */
-  --accent-glow: rgba(56, 189, 248, 0.15);
-  --success: #34d399;
+  /* Restrained Accents */
+  --accent: #ffffff;
+  --accent-link: #58a6ff;
+  --success: #22c55e;
 
-  /* Code & Terminal Tokens */
-  --code-bg: #030712;
-  --code-fg: #f8fafc;
-  --code-border: rgba(255, 255, 255, 0.1);
-  --code-accent: #38bdf8;
+  /* Code Blocks */
+  --code-bg: #161616;
+  --code-fg: #e6edf3;
+  --code-border: #2b2b2b;
 }
 
 /* High-Contrast Mode Override (WCAG AAA non-destructive) */
 [data-contrast="high"] {
   --background: #000000 !important;
   --foreground: #ffffff !important;
-  --surface: #050505 !important;
-  --surface-hover: #1a1a1a !important;
+  --surface: #0a0a0a !important;
+  --surface-subtle: #141414 !important;
+  --surface-hover: #1f1f1f !important;
   --border: #ffffff !important;
   --border-subtle: #ffffff !important;
   --text-primary: #ffffff !important;
-  --text-secondary: #e2e8f0 !important;
-  --text-muted: #cbd5e1 !important;
-  --accent-primary: #38bdf8 !important;
+  --text-secondary: #e5e5e5 !important;
+  --text-muted: #cccccc !important;
   --code-bg: #000000 !important;
   --code-fg: #ffffff !important;
   --code-border: #ffffff !important;
 }
 
-/* Color Vision Accessibility */
 [data-vision="achromatopsia"] {
   filter: grayscale(100%);
 }
@@ -102,19 +94,20 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-surface: var(--surface);
+  --color-surface-subtle: var(--surface-subtle);
   --color-surface-hover: var(--surface-hover);
-  --color-surface-muted: var(--surface-muted);
   --color-border: var(--border);
-  --font-sans: var(--font-geist-sans, system-ui, -apple-system, sans-serif);
+  --color-border-subtle: var(--border-subtle);
+  --font-sans: var(--font-geist-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif);
   --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace);
 }
 
 /* ============================================
-   Base Typography & Hardware Accelerated Utility
+   Base Typography & Smooth Scrolling
    ============================================ */
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5.5rem;
+  scroll-padding-top: 5rem;
   background-color: var(--background);
   color: var(--foreground);
   overflow-x: hidden;
@@ -130,41 +123,32 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Engineering Micro-Grid (GPU-accelerated, lightweight) */
-.engineering-grid {
-  background-size: 40px 40px;
-  background-image: 
-    linear-gradient(to right, rgba(148, 163, 184, 0.08) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+/* Editorial Links */
+.human-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--border);
+  text-underline-offset: 3px;
+  transition: text-decoration-color 0.15s ease, color 0.15s ease;
 }
 
-.dark .engineering-grid {
-  background-image: 
-    linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+.human-link:hover {
+  text-decoration-color: var(--foreground);
 }
 
-/* Precision Hairline Glow on Hover */
-.hairline-card {
-  position: relative;
-  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
+/* Subtle Interactive Row */
+.editorial-row {
+  transition: background-color 0.15s ease;
 }
 
-.hairline-card:hover {
-  transform: translateY(-2px);
+.editorial-row:hover {
+  background-color: var(--surface-hover);
 }
 
-@media (hover: none) {
-  .hairline-card:hover {
-    transform: none;
-  }
-}
-
-/* Custom Scrollbar */
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -172,19 +156,15 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(148, 163, 184, 0.3);
-  border-radius: 4px;
-}
-
-.dark ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(115, 115, 115, 0.25);
+  border-radius: 3px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(148, 163, 184, 0.5);
+  background: rgba(115, 115, 115, 0.45);
 }
 
-/* Accessibility: Respect Reduced Motion */
+/* Accessibility: Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   *,
   ::before,
@@ -200,7 +180,6 @@ body {
    ATS-Optimized Print Stylesheet (@media print)
    ============================================ */
 @media print {
-  /* Hide all web-specific UI elements */
   header,
   nav,
   footer,
@@ -214,8 +193,8 @@ body {
   body, html {
     background: #ffffff !important;
     color: #000000 !important;
-    font-size: 11pt !important;
-    line-height: 1.4 !important;
+    font-size: 10pt !important;
+    line-height: 1.35 !important;
     padding: 0 !important;
     margin: 0 !important;
   }
@@ -231,13 +210,6 @@ body {
 
   .print-page-break {
     page-break-before: always;
-  }
-
-  /* Unfold details for print */
-  .line-clamp-3,
-  .line-clamp-2 {
-    -webkit-line-clamp: unset !important;
-    display: block !important;
   }
 }
 
