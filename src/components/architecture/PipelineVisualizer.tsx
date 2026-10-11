@@ -16,7 +16,7 @@ interface PipelineStage {
 const RAG_STAGES: PipelineStage[] = [
   {
     id: "chunk",
-    name: "01. Semantic Chunking",
+    name: "Semantic Chunking",
     component: "LangChain Recursive Splitter",
     contract: "PDF / Markdown → 500-token chunks with 50-token overlap",
     description: "Splits enterprise documentation along natural paragraph and sentence boundaries to avoid amputating technical definitions mid-clause.",
@@ -24,7 +24,7 @@ const RAG_STAGES: PipelineStage[] = [
   },
   {
     id: "embed",
-    name: "02. Dense Embedding",
+    name: "Dense Embedding",
     component: "IBM Slate-125m-English",
     contract: "Chunk Text → 768-dimensional float32 vector tensor",
     description: "Transforms text into dense embedding vectors calibrated specifically for English technical documentation and technical query matching.",
@@ -32,7 +32,7 @@ const RAG_STAGES: PipelineStage[] = [
   },
   {
     id: "vectorstore",
-    name: "03. Local Vector Retrieval",
+    name: "Local Vector Retrieval",
     component: "ChromaDB (Local Cosine Index)",
     contract: "Query Vector → Top-k (k=4) relevant passages",
     description: "Persistent on-disk vector database performing nearest-neighbor cosine similarity search directly inside the application process.",
@@ -40,7 +40,7 @@ const RAG_STAGES: PipelineStage[] = [
   },
   {
     id: "grounding",
-    name: "04. Grounded Prompt Assembly",
+    name: "Grounded Prompt Assembly",
     component: "LangChain PromptTemplate",
     contract: "Top-4 Chunks + User Question → Strict Grounding Context",
     description: "Assembles context into a constrained instruction prompt. The prompt strictly instructs the LLM to only cite facts present in the retrieved passages.",
@@ -48,7 +48,7 @@ const RAG_STAGES: PipelineStage[] = [
   },
   {
     id: "inference",
-    name: "05. Model Inference",
+    name: "Model Inference",
     component: "watsonx.ai Granite-3-2-8b-instruct",
     contract: "Constrained Prompt → Verified Answer with Citations",
     description: "Instruction-tuned enterprise LLM generates concise, factually grounded answers with line-level source provenance.",
@@ -59,7 +59,7 @@ const RAG_STAGES: PipelineStage[] = [
 const MULTI_AGENT_STAGES: PipelineStage[] = [
   {
     id: "gateway",
-    name: "01. Flask REST Gateway",
+    name: "Flask REST Gateway",
     component: "Python Flask / REST Dispatcher",
     contract: "HTTP Client Request → Sanitized CEFR Level Parameters",
     description: "Ingests client learning requests, validates proficiency levels (A1 to C2), and routes to the agent orchestration pipeline.",
@@ -67,7 +67,7 @@ const MULTI_AGENT_STAGES: PipelineStage[] = [
   },
   {
     id: "abc",
-    name: "02. Provider Abstraction",
+    name: "Provider Abstraction",
     component: "Python Abstract Base Class (abc.ABC)",
     contract: "BaseLLMProvider Interface → OpenAI / Gemini Drivers",
     description: "Decouples pedagogical prompt logic from vendor SDKs, wrapping model initialization inside a unified class interface.",
@@ -75,7 +75,7 @@ const MULTI_AGENT_STAGES: PipelineStage[] = [
   },
   {
     id: "teacher",
-    name: "03. Primary Instructor Agent",
+    name: "Primary Instructor Agent",
     component: "LangChain Curriculum Generator",
     contract: "Level & Topic Specs → Draft Learning Module",
     description: "Generates tailored conversational scenarios, cultural notes, and targeted vocabulary drills for the student's target language.",
@@ -83,7 +83,7 @@ const MULTI_AGENT_STAGES: PipelineStage[] = [
   },
   {
     id: "ta",
-    name: "04. TA Auditor Agent",
+    name: "TA Auditor Agent",
     component: "LangChain Quality Barrier",
     contract: "Draft Module → Grammar & Level Compliance Audit",
     description: "A secondary automated Teaching Assistant agent independently reviews the drafted lesson for grammatical precision and grade-level vocabulary fit.",
@@ -91,7 +91,7 @@ const MULTI_AGENT_STAGES: PipelineStage[] = [
   },
   {
     id: "delivery",
-    name: "05. Verified Delivery",
+    name: "Verified Delivery",
     component: "JSON Response Contract",
     contract: "Audited Payload → React Client Delivery",
     description: "Delivers only multi-agent verified curriculum to the student with audit confidence tags.",
@@ -107,29 +107,32 @@ export default function PipelineVisualizer() {
   const activeStage = stages[selectedStageIndex] || stages[0];
 
   return (
-    <section id="architecture" className="py-14 border-b border-border">
+    <section id="architecture" className="py-16 sm:py-20 border-b border-border">
       <div className="space-y-8">
         {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
           <div>
-            <h2 className="text-xl font-semibold tracking-tight text-foreground mb-1">
-              Systems Architecture
+            <div className="font-mono text-xs uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-2">
+              01 / Architecture
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-serif font-normal tracking-tight text-foreground">
+              Systems Architecture Decomposition
             </h2>
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">
-              Interactive architectural decomposition of my core generative AI and agentic systems.
+            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+              Interactive data contract traces of my core generative AI and multi-agent systems. Click any stage to inspect the technical specification.
             </p>
           </div>
 
           {/* Mode Switcher */}
-          <div className="inline-flex rounded border border-border p-0.5 text-xs font-mono">
+          <div className="inline-flex rounded-lg border border-border p-1 text-xs font-mono shrink-0 bg-neutral-100/50 dark:bg-neutral-900/50">
             <button
               onClick={() => {
                 setMode("rag");
                 setSelectedStageIndex(0);
               }}
-              className={`px-3 py-1 rounded transition-colors ${
+              className={`px-3 py-1.5 rounded transition-colors ${
                 mode === "rag"
-                  ? "bg-foreground text-background font-medium"
+                  ? "bg-foreground text-background font-medium shadow-xs"
                   : "text-neutral-500 hover:text-foreground"
               }`}
             >
@@ -140,9 +143,9 @@ export default function PipelineVisualizer() {
                 setMode("multi-agent");
                 setSelectedStageIndex(0);
               }}
-              className={`px-3 py-1 rounded transition-colors ${
+              className={`px-3 py-1.5 rounded transition-colors ${
                 mode === "multi-agent"
-                  ? "bg-foreground text-background font-medium"
+                  ? "bg-foreground text-background font-medium shadow-xs"
                   : "text-neutral-500 hover:text-foreground"
               }`}
             >
@@ -151,25 +154,28 @@ export default function PipelineVisualizer() {
           </div>
         </div>
 
-        {/* Pipeline Step Selector (Human Horizontal Flow) */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
+        {/* Pipeline Step Selector */}
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
           {stages.map((stage, idx) => {
             const isSelected = idx === selectedStageIndex;
             return (
               <button
                 key={stage.id}
                 onClick={() => setSelectedStageIndex(idx)}
-                className={`p-3 rounded text-left transition-all border ${
+                className={`p-3.5 sm:p-4 rounded-lg text-left transition-all border ${
                   isSelected
-                    ? "border-foreground bg-surface-subtle font-medium"
+                    ? "border-foreground bg-neutral-100 dark:bg-neutral-900 font-medium ring-1 ring-foreground/20"
                     : "border-border hover:border-neutral-400 dark:hover:border-neutral-600 bg-background"
                 }`}
               >
-                <div className="text-[11px] font-mono text-neutral-400 dark:text-neutral-500 mb-1">
+                <div className="text-[11px] font-mono text-neutral-400 dark:text-neutral-500 mb-1.5">
                   0{idx + 1}
                 </div>
-                <div className="text-xs text-foreground tracking-tight line-clamp-1">
-                  {stage.name.replace(/^\d+\.\s*/, '')}
+                <div className="text-xs sm:text-sm text-foreground font-medium tracking-tight">
+                  {stage.name}
+                </div>
+                <div className="text-[11px] font-mono text-neutral-500 dark:text-neutral-400 mt-1 truncate">
+                  {stage.component}
                 </div>
               </button>
             );
@@ -177,47 +183,53 @@ export default function PipelineVisualizer() {
         </div>
 
         {/* Selected Stage Detail Card */}
-        <div className="p-6 rounded-lg border border-border bg-surface-subtle space-y-4">
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 border-b border-border pb-3">
+        <div className="p-6 sm:p-8 rounded-xl border border-border bg-neutral-50 dark:bg-neutral-900/40 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-border pb-4">
             <div>
-              <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">
-                Stage Detail
+              <span className="text-[11px] font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">
+                Stage 0{selectedStageIndex + 1} Specification
               </span>
-              <h3 className="text-base font-medium text-foreground mt-0.5">
+              <h3 className="text-lg sm:text-xl font-medium text-foreground mt-0.5">
                 {activeStage.name}
               </h3>
             </div>
-            <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400">
+            <div className="text-xs font-mono text-neutral-600 dark:text-neutral-300 px-2.5 py-1 rounded bg-neutral-200/60 dark:bg-neutral-800">
               {activeStage.component}
             </div>
           </div>
 
-          <div className="space-y-3 text-xs sm:text-sm">
-            <div>
-              <span className="font-mono text-neutral-400 dark:text-neutral-500 text-xs block mb-0.5">
-                Data Contract:
-              </span>
-              <p className="font-mono text-xs text-foreground bg-background p-2 rounded border border-border">
-                {activeStage.contract}
-              </p>
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 text-sm">
+            {/* Col 1: Contract & Role */}
+            <div className="md:col-span-6 space-y-4">
+              <div>
+                <span className="font-mono text-neutral-400 dark:text-neutral-500 text-xs uppercase tracking-wide block mb-1">
+                  Data Contract
+                </span>
+                <div className="font-mono text-xs text-foreground bg-background p-3 rounded-lg border border-border overflow-x-auto leading-relaxed">
+                  {activeStage.contract}
+                </div>
+              </div>
+
+              <div>
+                <span className="font-mono text-neutral-400 dark:text-neutral-500 text-xs uppercase tracking-wide block mb-1">
+                  Functional Role
+                </span>
+                <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed text-sm">
+                  {activeStage.description}
+                </p>
+              </div>
             </div>
 
-            <div>
-              <span className="font-mono text-neutral-400 dark:text-neutral-500 text-xs block mb-0.5">
-                Functional Role:
-              </span>
-              <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed">
-                {activeStage.description}
-              </p>
-            </div>
-
-            <div>
-              <span className="font-mono text-neutral-400 dark:text-neutral-500 text-xs block mb-0.5">
-                Architectural Rationale:
-              </span>
-              <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed">
-                {activeStage.decisionNote}
-              </p>
+            {/* Col 2: Architectural Rationale */}
+            <div className="md:col-span-6 space-y-4">
+              <div>
+                <span className="font-mono text-neutral-400 dark:text-neutral-500 text-xs uppercase tracking-wide block mb-1">
+                  Architectural Trade-Off &amp; Rationale
+                </span>
+                <div className="p-4 rounded-lg bg-background border border-border text-neutral-700 dark:text-neutral-300 leading-relaxed text-sm">
+                  {activeStage.decisionNote}
+                </div>
+              </div>
             </div>
           </div>
         </div>

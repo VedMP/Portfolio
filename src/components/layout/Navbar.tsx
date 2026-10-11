@@ -47,7 +47,7 @@ export default function Navbar({ onOpenCommandMenu }: { onOpenCommandMenu?: () =
           : "bg-transparent"
       }`}
     >
-      <div className="max-w-3xl mx-auto px-6 h-16 flex items-center justify-between">
+      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Name */}
         <Link
           href="/"

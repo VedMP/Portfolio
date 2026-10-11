@@ -6,35 +6,35 @@ import { PERSONAL_INFO } from "@/core/data";
 
 export default function About() {
   return (
-    <section id="about" className="w-full py-16 border-t border-neutral-200 dark:border-neutral-800">
+    <section id="about" className="w-full py-16 sm:py-20 border-t border-neutral-200 dark:border-neutral-800">
       {/* Editorial Header */}
-      <div className="mb-10">
+      <div className="mb-10 sm:mb-12">
         <div className="font-mono text-xs uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-2">
           04 / Background
         </div>
         <h2 className="text-2xl sm:text-3xl font-serif font-normal text-neutral-900 dark:text-neutral-100 tracking-tight">
           About Ved Patel
         </h2>
-        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed">
+        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-3xl">
           Honours Computer Science student at Ontario Tech University, focusing on deterministic retrieval systems, multi-agent validation, and systems engineering.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-start">
-        {/* Left Column: Portrait & Key Details */}
-        <div className="md:col-span-5 space-y-4">
-          <div className="relative aspect-4/5 w-full max-w-[280px] mx-auto md:mx-0 rounded overflow-hidden border border-neutral-200 dark:border-neutral-800 bg-neutral-100 dark:bg-neutral-900">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-start">
+        {/* Left Column: Color Portrait & Key Details */}
+        <div className="md:col-span-5 lg:col-span-4 space-y-4">
+          <div className="relative aspect-4/5 w-full max-w-[320px] mx-auto md:mx-0 rounded-lg overflow-hidden border border-neutral-200 dark:border-neutral-800 shadow-sm bg-neutral-100 dark:bg-neutral-900">
             <Image
               src="/ProfilePhoto.JPG"
               alt={PERSONAL_INFO.name}
               fill
-              sizes="(max-width: 768px) 280px, 280px"
-              className="object-cover object-center grayscale contrast-[1.05] hover:grayscale-0 transition-all duration-300"
+              sizes="(max-width: 768px) 320px, 320px"
+              className="object-cover object-center"
               priority
             />
           </div>
 
-          <div className="p-4 rounded bg-neutral-100/60 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800 text-xs font-mono space-y-2">
+          <div className="w-full max-w-[320px] p-4 rounded-lg bg-neutral-100/70 dark:bg-neutral-900/70 border border-neutral-200 dark:border-neutral-800 text-xs font-mono space-y-2">
             <div className="flex items-center gap-1.5 font-medium text-neutral-900 dark:text-neutral-100">
               <Award className="w-3.5 h-3.5 text-neutral-500" />
               <span>{PERSONAL_INFO.academicStanding}</span>
@@ -49,7 +49,7 @@ export default function About() {
         </div>
 
         {/* Right Column: Bio Narrative & Specifications */}
-        <div className="md:col-span-7 space-y-5 text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
+        <div className="md:col-span-7 lg:col-span-8 space-y-6 text-sm sm:text-base leading-relaxed text-neutral-700 dark:text-neutral-300">
           <p>
             I am currently pursuing an Honours Bachelor of Science in Computer Science at{" "}
             <strong className="font-medium text-neutral-900 dark:text-neutral-100">
@@ -83,23 +83,23 @@ export default function About() {
             <div className="font-mono text-xs uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-3">
               Academic &amp; Engineering Focus
             </div>
-            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-mono">
-              <div className="p-3 rounded bg-neutral-100/50 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800">
-                <dt className="text-neutral-400 mb-1">Algorithms &amp; Systems</dt>
-                <dd className="text-neutral-800 dark:text-neutral-200">
+            <dl className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-mono">
+              <div className="p-4 rounded-lg bg-neutral-100/50 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800">
+                <dt className="text-neutral-400 mb-1.5 uppercase tracking-wide text-[10px]">Algorithms &amp; Systems</dt>
+                <dd className="text-neutral-800 dark:text-neutral-200 text-xs leading-relaxed">
                   Data Structures, Algorithm Design &amp; Complexity, Operating Systems, Database Internals.
                 </dd>
               </div>
-              <div className="p-3 rounded bg-neutral-100/50 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800">
-                <dt className="text-neutral-400 mb-1">Architecture &amp; Edge</dt>
-                <dd className="text-neutral-800 dark:text-neutral-200">
+              <div className="p-4 rounded-lg bg-neutral-100/50 dark:bg-neutral-900/50 border border-neutral-200 dark:border-neutral-800">
+                <dt className="text-neutral-400 mb-1.5 uppercase tracking-wide text-[10px]">Architecture &amp; Edge</dt>
+                <dd className="text-neutral-800 dark:text-neutral-200 text-xs leading-relaxed">
                   Python Flask REST APIs, Next.js 16 Static Export, Cloudflare Pages V8 Edge Functions.
                 </dd>
               </div>
             </dl>
           </div>
 
-          <div className="pt-2 flex flex-wrap gap-4 text-xs font-mono">
+          <div className="pt-2 flex flex-wrap gap-5 text-xs font-mono">
             <a
               href={PERSONAL_INFO.resumePath}
               target="_blank"
