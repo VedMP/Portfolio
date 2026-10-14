@@ -15,7 +15,7 @@ export default function About() {
         <h2 className="text-2xl sm:text-3xl font-serif font-normal text-neutral-900 dark:text-neutral-100 tracking-tight">
           About Ved Patel
         </h2>
-        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-3xl">
+        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-4xl">
           Honours Computer Science student at Ontario Tech University, focusing on deterministic retrieval systems, multi-agent validation, and systems engineering.
         </p>
       </div>

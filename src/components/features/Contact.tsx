@@ -92,7 +92,7 @@ export default function Contact() {
         <h2 className="text-2xl sm:text-3xl font-serif font-normal text-neutral-900 dark:text-neutral-100 tracking-tight">
           Get In Touch
         </h2>
-        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
           Open to software engineering internships, co-op opportunities, and AI systems engineering discussions. Reach out directly or dispatch a note below.
         </p>
       </div>

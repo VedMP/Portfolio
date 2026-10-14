@@ -118,7 +118,7 @@ export default function PipelineVisualizer() {
             <h2 className="text-2xl sm:text-3xl font-serif font-normal tracking-tight text-foreground">
               Systems Architecture Decomposition
             </h2>
-            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
               Interactive data contract traces of my core generative AI and multi-agent systems. Click any stage to inspect the technical specification.
             </p>
           </div>

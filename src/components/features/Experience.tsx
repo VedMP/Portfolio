@@ -15,7 +15,7 @@ export default function Experience() {
           <h2 className="text-2xl sm:text-3xl font-serif font-normal tracking-tight text-foreground">
             Academic Foundation &amp; Experience
           </h2>
-          <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+          <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
             Continuous academic excellence at Ontario Tech University and rapid multi-agent system architecture sprints.
           </p>
         </div>

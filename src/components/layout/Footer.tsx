@@ -6,7 +6,7 @@ import { PERSONAL_INFO } from "@/core/data";
 export default function Footer() {
   return (
     <footer className="w-full border-t border-neutral-200 dark:border-neutral-800 text-xs font-mono text-neutral-500 dark:text-neutral-400 py-12">
-      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6">
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div>
             <div className="text-neutral-900 dark:text-neutral-100 font-medium text-sm">

@@ -46,7 +46,7 @@ export default function Projects({
           <h2 className="text-2xl sm:text-3xl font-serif font-normal tracking-tight text-foreground">
             Featured Engineering Projects
           </h2>
-          <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+          <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
             Retrieval-augmented generation pipelines, multi-agent validation loops, and resilient edge systems engineered with strict data integrity.
           </p>
         </div>

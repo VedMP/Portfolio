@@ -23,7 +23,7 @@ export default function Hero() {
         </div>
 
         {/* Narrative Bio */}
-        <div className="max-w-4xl space-y-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed">
+        <div className="max-w-5xl space-y-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed">
           <p>
             Honours Computer Science student at{" "}
             <a

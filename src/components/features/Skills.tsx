@@ -24,7 +24,7 @@ export default function Skills() {
         <h2 className="text-2xl sm:text-3xl font-serif font-normal text-neutral-900 dark:text-neutral-100 tracking-tight">
           Capabilities &amp; Tooling Matrix
         </h2>
-        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-2xl leading-relaxed">
+        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
           Languages, machine learning libraries, vector databases, and systems environments applied across production projects and academic labs. Click any skill to trace its application.
         </p>
       </div>

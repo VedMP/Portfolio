@@ -37,6 +37,40 @@
   --code-bg: #f6f8fa;
   --code-fg: #1f2328;
   --code-border: #d0d7de;
+
+  color-scheme: light;
+}
+
+/* Instant browser theme default: if user's OS is in dark mode and light isn't explicitly forced */
+@media (prefers-color-scheme: dark) {
+  :root:not(.light) {
+    --background: #111111;
+    --foreground: #ededed;
+
+    /* Surfaces & Borders */
+    --surface: #171717;
+    --surface-subtle: #1c1c1c;
+    --surface-hover: #222222;
+    --border: #262626;
+    --border-subtle: #1e1e1e;
+
+    /* Typography */
+    --text-primary: #ededed;
+    --text-secondary: #a3a3a3;
+    --text-muted: #737373;
+
+    /* Restrained Accents */
+    --accent: #ffffff;
+    --accent-link: #58a6ff;
+    --success: #22c55e;
+
+    /* Code Blocks */
+    --code-bg: #161616;
+    --code-fg: #e6edf3;
+    --code-border: #2b2b2b;
+
+    color-scheme: dark;
+  }
 }
 
 .dark {
@@ -64,27 +98,18 @@
   --code-bg: #161616;
   --code-fg: #e6edf3;
   --code-border: #2b2b2b;
+
+  color-scheme: dark;
 }
 
-/* High-Contrast Mode Override (WCAG AAA non-destructive) */
-[data-contrast="high"] {
-  --background: #000000 !important;
-  --foreground: #ffffff !important;
-  --surface: #0a0a0a !important;
-  --surface-subtle: #141414 !important;
-  --surface-hover: #1f1f1f !important;
-  --border: #ffffff !important;
-  --border-subtle: #ffffff !important;
-  --text-primary: #ffffff !important;
-  --text-secondary: #e5e5e5 !important;
-  --text-muted: #cccccc !important;
-  --code-bg: #000000 !important;
-  --code-fg: #ffffff !important;
-  --code-border: #ffffff !important;
-}
-
-[data-vision="achromatopsia"] {
-  filter: grayscale(100%);
+/* Native OS high contrast accessibility support */
+@media (prefers-contrast: more) {
+  :root {
+    --border: #000000;
+  }
+  .dark {
+    --border: #ffffff;
+  }
 }
 
 /* ============================================

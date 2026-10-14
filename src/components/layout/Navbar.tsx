@@ -4,7 +4,6 @@ import { useState, useEffect, useSyncExternalStore } from "react";
 import Link from "next/link";
 import { Sun, Moon, Menu, X } from "lucide-react";
 import { useTheme } from "next-themes";
-import AccessibilityDropdown from "@/components/ui/AccessibilityDropdown";
 import { PERSONAL_INFO } from "@/core/data";
 
 const emptySubscribe = () => () => {};
@@ -28,8 +27,13 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
   const mounted = useMounted();
+  const isDark = mounted ? resolvedTheme === "dark" : false;
+
+  const toggleTheme = () => {
+    setTheme(isDark ? "light" : "dark");
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,7 +51,7 @@ export default function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Brand Name */}
         <Link
           href="/"
@@ -79,17 +83,18 @@ export default function Navbar() {
 
         {/* Actions */}
         <div className="flex items-center gap-1.5">
-          {mounted && (
+          {mounted ? (
             <button
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              onClick={toggleTheme}
               className="p-1.5 rounded text-neutral-500 dark:text-neutral-400 hover:text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-800 transition-colors cursor-pointer"
-              aria-label="Toggle theme"
+              aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
+              title={isDark ? "Switch to light mode" : "Switch to dark mode"}
             >
-              {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
             </button>
+          ) : (
+            <div className="w-7 h-7" aria-hidden="true" />
           )}
-
-          <AccessibilityDropdown />
 
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

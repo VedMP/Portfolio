@@ -43,7 +43,7 @@ export default function ClientShell({ children }: { children: ReactNode }) {
       <div className="min-h-screen flex flex-col justify-between">
         <Navbar />
 
-        <main id="main-content" className="flex-1 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-24">
+        <main id="main-content" className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-24">
           {isValidElement(children)
             ? cloneElement(children as React.ReactElement<{
                 onOpenCommandMenu?: () => void;

@@ -8,7 +8,6 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
-import { AccessibilityProvider } from "@/components/providers/AccessibilityProvider";
 import ClientShell from "@/components/layout/ClientShell";
 import { generatePersonSchema, generateWebSiteSchema, generateProjectsSchema } from "@/lib/seo";
 
@@ -36,6 +35,16 @@ export const metadata: Metadata = {
   publisher: "Ved Patel",
   alternates: {
     canonical: "https://vedmpatel.me",
+  },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: ["/icon.svg"],
   },
   keywords: [
     "Ved Patel",
@@ -104,6 +113,29 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+        <link rel="alternate icon" href="/icon.png" type="image/png" />
+        <link rel="apple-touch-icon" href="/apple-icon.png" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var stored = localStorage.getItem('theme');
+                  var mql = window.matchMedia('(prefers-color-scheme: dark)');
+                  var useDark = stored === 'dark' || ((!stored || stored === 'system') && mql.matches);
+                  if (useDark) {
+                    document.documentElement.classList.add('dark');
+                    document.documentElement.style.colorScheme = 'dark';
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                    document.documentElement.style.colorScheme = 'light';
+                  }
+                } catch (e) {}
+              })();
+            `,
+          }}
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personSchema) }}
@@ -126,16 +158,14 @@ export default function RootLayout({
         >
           Skip to content
         </a>
-        <AccessibilityProvider>
-          <ThemeProvider
-            attribute="class"
-            defaultTheme="system"
-            enableSystem
-            disableTransitionOnChange
-          >
-            <ClientShell>{children}</ClientShell>
-          </ThemeProvider>
-        </AccessibilityProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ClientShell>{children}</ClientShell>
+        </ThemeProvider>
       </body>
     </html>
   );
