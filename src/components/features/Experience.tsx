@@ -1,79 +1,80 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
-import { EXPERIENCES, PERSONAL_INFO } from "@/core/data";
+import { ArrowUpRight, Award } from "lucide-react";
+import { EXPERIENCES, CERTIFICATES } from "@/core/data";
 
 export default function Experience() {
   return (
-    <section id="experience" className="py-16 sm:py-20 border-b border-border">
-      <div className="space-y-12">
-        {/* Section Header */}
+    <section
+      id="experience"
+      className="py-12 sm:py-14 border-b border-border scroll-mt-8"
+    >
+      <div className="space-y-8">
         <div>
-          <div className="font-mono text-xs uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-2">
-            03 / Education &amp; Milestones
+          <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent font-semibold mb-1.5">
+            Education, Hackathons &amp; Simulations
           </div>
-          <h2 className="text-2xl sm:text-3xl font-serif font-normal tracking-tight text-foreground">
-            Academic Foundation &amp; Experience
+          <h2 className="font-serif text-3xl sm:text-[2.45rem] leading-[1.08] font-normal text-foreground">
+            Academics &amp; Engineering Milestones
           </h2>
-          <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
-            Continuous academic excellence at Ontario Tech University and rapid multi-agent system architecture sprints.
-          </p>
         </div>
 
-        {/* 2-Column Editorial Timeline */}
-        <div className="space-y-12">
+        {/* Experience Timeline */}
+        <div className="space-y-5">
           {EXPERIENCES.map((item) => (
             <div
               key={item.id}
-              className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-10 pb-10 border-b border-neutral-200/80 dark:border-neutral-800/80 last:border-b-0 last:pb-0 items-start"
+              className="p-5 sm:p-6 rounded-2xl bg-surface border border-border grid grid-cols-1 md:grid-cols-12 gap-5 items-start"
             >
-              {/* Left Column: Metadata & Metrics */}
+              {/* Left Meta */}
               <div className="md:col-span-4 space-y-2">
                 <a
                   href={item.institutionUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-medium text-base text-foreground hover:underline inline-flex items-center gap-1"
+                  className="font-semibold text-sm sm:text-base text-foreground hover:text-accent transition-colors inline-flex items-center gap-1"
                 >
                   <span>{item.institution}</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-neutral-400" />
+                  <ArrowUpRight className="w-3.5 h-3.5 text-subtle" />
                 </a>
 
-                <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400">
-                  {item.period}
-                </div>
-
-                <div className="text-xs font-mono text-neutral-400">
+                <div className="font-mono text-xs text-muted">{item.period}</div>
+                <div className="font-mono text-[11px] text-subtle">
                   {item.location}
                 </div>
 
                 {item.metrics && (
-                  <div className="inline-block mt-1 px-2.5 py-1 rounded bg-neutral-100 dark:bg-neutral-800 border border-neutral-200 dark:border-neutral-700 text-xs font-mono font-medium text-foreground">
-                    {item.metrics} {item.type === "education" ? `• ${PERSONAL_INFO.academicStanding}` : ""}
+                  <div className="inline-block mt-1 px-2.5 py-1 rounded-md bg-surface-subtle border border-border font-mono text-[11px] font-medium text-foreground">
+                    {item.metrics}
                   </div>
                 )}
               </div>
 
-              {/* Right Column: Title & Highlights */}
+              {/* Right Details */}
               <div className="md:col-span-8 space-y-3">
-                <h3 className="text-lg font-medium text-foreground tracking-tight">
+                <h3 className="font-serif text-xl sm:text-2xl font-normal text-foreground leading-tight">
                   {item.title}
                 </h3>
 
-                <ul className="space-y-2 text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                  {item.highlights.map((highlight, idx) => (
+                <ul className="space-y-2 text-sm text-muted leading-relaxed">
+                  {item.highlights.map((h, idx) => (
                     <li key={idx} className="flex items-start gap-2.5">
-                      <span className="text-neutral-400 select-none mt-1 text-xs">•</span>
-                      <span>{highlight}</span>
+                      <span
+                        className="text-accent font-mono text-xs mt-1 shrink-0"
+                        aria-hidden="true"
+                      >
+                        —
+                      </span>
+                      <span>{h}</span>
                     </li>
                   ))}
                 </ul>
 
-                <div className="pt-2 flex flex-wrap gap-1.5">
+                <div className="pt-1 flex flex-wrap gap-1.5">
                   {item.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="px-2 py-0.5 rounded text-[11px] font-mono bg-neutral-100/80 dark:bg-neutral-900 text-neutral-600 dark:text-neutral-400 border border-neutral-200/60 dark:border-neutral-800"
+                      className="px-2 py-0.5 rounded-md text-[11px] font-mono bg-background text-muted border border-border"
                     >
                       {skill}
                     </span>
@@ -82,6 +83,37 @@ export default function Experience() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Verified Professional Certificate Strip */}
+        <div className="p-5 rounded-xl bg-surface border border-border border-l-[3px] border-l-accent flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div className="flex items-start sm:items-center gap-3">
+            <div className="p-2 rounded-lg bg-surface-subtle border border-border text-accent shrink-0">
+              <Award className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-semibold">
+                Verified Certificate
+              </div>
+              {CERTIFICATES.map((cert) => (
+                <div
+                  key={cert.title}
+                  className="text-sm font-semibold text-foreground mt-0.5"
+                >
+                  {cert.title}{" "}
+                  <span className="font-mono text-xs font-normal text-muted">
+                    ({cert.issuer} · {cert.year})
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <a
+            href="#project-smart-document-assistant"
+            className="font-mono text-xs human-link text-foreground shrink-0"
+          >
+            View Capstone Build ↓
+          </a>
         </div>
       </div>
     </section>

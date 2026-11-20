@@ -5,7 +5,6 @@ import PipelineVisualizer from "@/components/architecture/PipelineVisualizer";
 import Projects from "@/components/features/Projects";
 import Experience from "@/components/features/Experience";
 import Skills from "@/components/features/Skills";
-import About from "@/components/features/About";
 import Contact from "@/components/features/Contact";
 
 export default function HomePage({
@@ -26,7 +25,6 @@ export default function HomePage({
       />
       <Experience />
       <Skills />
-      <About />
       <Contact />
     </div>
   );

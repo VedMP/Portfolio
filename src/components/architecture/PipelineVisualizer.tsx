@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
-type ArchMode = "rag" | "multi-agent";
+type ArchMode = "rag" | "multi-agent" | "cpp-memory";
 
 interface PipelineStage {
   id: string;
+  step: string;
   name: string;
   component: string;
   contract: string;
@@ -13,168 +15,258 @@ interface PipelineStage {
   decisionNote: string;
 }
 
-const RAG_STAGES: PipelineStage[] = [
-  {
-    id: "chunk",
-    name: "Semantic Chunking",
-    component: "LangChain Recursive Splitter",
-    contract: "PDF / Markdown → 500-token chunks with 50-token overlap",
-    description: "Splits enterprise documentation along natural paragraph and sentence boundaries to avoid amputating technical definitions mid-clause.",
-    decisionNote: "Overlap ensures that cross-sentence concepts remain semantically coherent during dense vector lookup.",
+const TRACKS: Record<
+  ArchMode,
+  { label: string; context: string; stages: PipelineStage[] }
+> = {
+  rag: {
+    label: "IBM RAG Pipeline",
+    context: "Smart Document Assistant · IBM Capstone (2026)",
+    stages: [
+      {
+        id: "chunk",
+        step: "01",
+        name: "PDF Ingestion",
+        component: "LangChain Splitter",
+        contract: "Raw PDF → 1000-character chunks (100-character overlap)",
+        description:
+          "Extracts raw text from uploaded technical PDFs and splits along natural sentence boundaries so dense definitions remain intact.",
+        decisionNote:
+          "100-character sliding overlap preserves context across chunk boundaries without inflating prompt token counts.",
+      },
+      {
+        id: "embed",
+        step: "02",
+        name: "Dense Embeddings",
+        component: "IBM Slate-125m",
+        contract: "Text chunk → Dense semantic embedding vector",
+        description:
+          "Encodes document chunks into dense vectors using IBM's Slate-125m English retrieval model via watsonx.ai.",
+        decisionNote:
+          "Calibrated for technical English documentation and aligns tightly with IBM watsonx Granite instruction models.",
+      },
+      {
+        id: "vectorstore",
+        step: "03",
+        name: "Local Vector Index",
+        component: "ChromaDB (On-Disk)",
+        contract: "Query vector → Top-k cosine-similar source chunks",
+        description:
+          "Persists embeddings locally in ChromaDB and retrieves the most semantically relevant passages at query time.",
+        decisionNote:
+          "Local on-disk storage avoids cloud vector DB egress fees and ensures private PDFs never leave the local workspace.",
+      },
+      {
+        id: "inference",
+        step: "04",
+        name: "Grounded Inference",
+        component: "Granite-3.2-8b-instruct",
+        contract: "Retrieved chunks + user question → Context-grounded answer",
+        description:
+          "Injects retrieved source passages into a constrained LangChain prompt template and renders answers interactively via Gradio.",
+        decisionNote:
+          "Constraining Granite-3.2-8b-instruct to cite retrieved passages prevents fabricated answers when a fact is missing from the PDF.",
+      },
+    ],
   },
-  {
-    id: "embed",
-    name: "Dense Embedding",
-    component: "IBM Slate-125m-English",
-    contract: "Chunk Text → 768-dimensional float32 vector tensor",
-    description: "Transforms text into dense embedding vectors calibrated specifically for English technical documentation and technical query matching.",
-    decisionNote: "Chosen for its dense indexing efficiency and tight alignment with watsonx Granite models.",
+  "multi-agent": {
+    label: "Multi-Agent Loop",
+    context: "Polyglot Tutor · HackHive 2026 (36-Hour Sprint)",
+    stages: [
+      {
+        id: "gateway",
+        step: "01",
+        name: "Flask REST Gateway",
+        component: "Python / Flask",
+        contract: "HTTP POST → Validated language (1 of 18) & learner level",
+        description:
+          "Sanitizes client requests from the React interface and routes lesson parameters into the multi-agent backend.",
+        decisionNote:
+          "Lightweight Flask routing kept iteration cycles fast so the team could ship a working 18-language MVP inside 36 hours.",
+      },
+      {
+        id: "abc",
+        step: "02",
+        name: "Provider ABC",
+        component: "Python abc.ABC",
+        contract: "BaseLLMProvider → OpenAI / Gemini concrete drivers",
+        description:
+          "Encapsulates vendor SDK initialization behind an Abstract Base Class so downstream prompt chains stay provider-agnostic.",
+        decisionNote:
+          "Enabled hot-swapping between OpenAI and Gemini mid-hackathon when API quotas spiked, with zero route rewrites.",
+      },
+      {
+        id: "teacher",
+        step: "03",
+        name: "Teacher Agent",
+        component: "LangChain Generator",
+        contract: "Language + level + topic → Draft curriculum payload",
+        description:
+          "Generates tailored conversational dialogue, grammar explanations, and vocabulary drills across 18 supported languages.",
+        decisionNote:
+          "Isolating generation lets the Teacher agent optimize for natural phrasing while leaving strict auditing to a second pass.",
+      },
+      {
+        id: "ta",
+        step: "04",
+        name: "TA Auditor Loop",
+        component: "Verification Agent",
+        contract: "Draft lesson → Grammar & level check → Revise or Emit",
+        description:
+          "Independently evaluates the Teacher's draft for grammatical accuracy and proficiency fit before emitting JSON to the client.",
+        decisionNote:
+          "Separating generation from verification counters single-pass confirmation bias and catches subtle translation drift.",
+      },
+    ],
   },
-  {
-    id: "vectorstore",
-    name: "Local Vector Retrieval",
-    component: "ChromaDB (Local Cosine Index)",
-    contract: "Query Vector → Top-k (k=4) relevant passages",
-    description: "Persistent on-disk vector database performing nearest-neighbor cosine similarity search directly inside the application process.",
-    decisionNote: "Local persistence eliminates cloud egress latency, eliminates monthly vector DB SaaS costs, and protects sensitive documents.",
+  "cpp-memory": {
+    label: "C++ Memory & UML",
+    context: "EA Sports College Football Simulation · Forage (Oct 2025)",
+    stages: [
+      {
+        id: "spec",
+        step: "01",
+        name: "Feature Proposal",
+        component: "Technical Design Doc",
+        contract: "Subsystem requirements → Concrete object behavior spec",
+        description:
+          "Scoped gameplay feature requirements and documented interfaces before modifying the existing C++ simulation codebase.",
+        decisionNote:
+          "Writing explicit contracts upfront prevented mismatched assumptions across interacting game objects.",
+      },
+      {
+        id: "uml",
+        step: "02",
+        name: "UML Architecture",
+        component: "Class & Ownership Map",
+        contract: "Domain entities → Inheritance & composition diagram",
+        description:
+          "Modeled class hierarchies, associations, and ownership boundaries using technical UML diagrams.",
+        decisionNote:
+          "Favoring clean composition over deep inheritance trees kept entity behaviors modular and testable.",
+      },
+      {
+        id: "audit",
+        step: "03",
+        name: "Memory Audit",
+        component: "Allocation & Layout Review",
+        contract: "Legacy collections → Identified fragmentation hotspots",
+        description:
+          "Inspected object storage patterns for unnecessary dynamic allocations, padding bloat, and pointer chasing.",
+        decisionNote:
+          "Eliminating hidden reallocations matters directly in real-time game loops where frame-time spikes degrade responsiveness.",
+      },
+      {
+        id: "refactor",
+        step: "04",
+        name: "Contiguous Refactor",
+        component: "C++ std::vector / Structs",
+        contract: "Packed structs + reserve() → Cache-friendly traversal",
+        description:
+          "Replaced inefficient containers with contiguous value-type layouts and pre-reserved buffer capacities.",
+        decisionNote:
+          "Tighter memory layout improves CPU cache locality and lowers peak heap overhead without sacrificing readability.",
+      },
+    ],
   },
-  {
-    id: "grounding",
-    name: "Grounded Prompt Assembly",
-    component: "LangChain PromptTemplate",
-    contract: "Top-4 Chunks + User Question → Strict Grounding Context",
-    description: "Assembles context into a constrained instruction prompt. The prompt strictly instructs the LLM to only cite facts present in the retrieved passages.",
-    decisionNote: "If the requested fact is absent from the retrieved chunks, the model is constrained to reply 'Information not found in context' rather than guessing.",
-  },
-  {
-    id: "inference",
-    name: "Model Inference",
-    component: "watsonx.ai Granite-3-2-8b-instruct",
-    contract: "Constrained Prompt → Verified Answer with Citations",
-    description: "Instruction-tuned enterprise LLM generates concise, factually grounded answers with line-level source provenance.",
-    decisionNote: "Granite 8B provides low inference latency with zero hallucination escape under strict citation constraints.",
-  },
-];
-
-const MULTI_AGENT_STAGES: PipelineStage[] = [
-  {
-    id: "gateway",
-    name: "Flask REST Gateway",
-    component: "Python Flask / REST Dispatcher",
-    contract: "HTTP Client Request → Sanitized CEFR Level Parameters",
-    description: "Ingests client learning requests, validates proficiency levels (A1 to C2), and routes to the agent orchestration pipeline.",
-    decisionNote: "Lightweight microservice architecture built for low overhead during peak 48-hour hackathon concurrency.",
-  },
-  {
-    id: "abc",
-    name: "Provider Abstraction",
-    component: "Python Abstract Base Class (abc.ABC)",
-    contract: "BaseLLMProvider Interface → OpenAI / Gemini Drivers",
-    description: "Decouples pedagogical prompt logic from vendor SDKs, wrapping model initialization inside a unified class interface.",
-    decisionNote: "Permits seamless runtime failover between OpenAI and Google Gemini APIs without touching downstream agent prompt chains.",
-  },
-  {
-    id: "teacher",
-    name: "Primary Instructor Agent",
-    component: "LangChain Curriculum Generator",
-    contract: "Level & Topic Specs → Draft Learning Module",
-    description: "Generates tailored conversational scenarios, cultural notes, and targeted vocabulary drills for the student's target language.",
-    decisionNote: "Focuses entirely on creative, natural pedagogy and conversational cadence.",
-  },
-  {
-    id: "ta",
-    name: "TA Auditor Agent",
-    component: "LangChain Quality Barrier",
-    contract: "Draft Module → Grammar & Level Compliance Audit",
-    description: "A secondary automated Teaching Assistant agent independently reviews the drafted lesson for grammatical precision and grade-level vocabulary fit.",
-    decisionNote: "Eliminates single-pass LLM confirmation bias by subjecting generated lessons to autonomous adversarial audit.",
-  },
-  {
-    id: "delivery",
-    name: "Verified Delivery",
-    component: "JSON Response Contract",
-    contract: "Audited Payload → React Client Delivery",
-    description: "Delivers only multi-agent verified curriculum to the student with audit confidence tags.",
-    decisionNote: "If the TA catches an error, the module is routed back to the teacher for automated repair before ever reaching the user.",
-  },
-];
+};
 
 export default function PipelineVisualizer() {
   const [mode, setMode] = useState<ArchMode>("rag");
   const [selectedStageIndex, setSelectedStageIndex] = useState(0);
 
-  const stages = mode === "rag" ? RAG_STAGES : MULTI_AGENT_STAGES;
-  const activeStage = stages[selectedStageIndex] || stages[0];
+  const track = TRACKS[mode];
+  const activeStage = track.stages[selectedStageIndex] || track.stages[0];
+
+  const handleModeChange = (nextMode: ArchMode) => {
+    setMode(nextMode);
+    setSelectedStageIndex(0);
+  };
 
   return (
-    <section id="architecture" className="py-16 sm:py-20 border-b border-border">
-      <div className="space-y-8">
-        {/* Section Header */}
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+    <section
+      id="architecture"
+      className="py-12 sm:py-14 border-b border-border scroll-mt-8"
+    >
+      <div className="p-5 sm:p-7 rounded-2xl bg-surface border border-border space-y-6">
+        {/* Header + Track Switcher */}
+        <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-4">
           <div>
-            <div className="font-mono text-xs uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-2">
-              01 / Architecture
+            <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent font-semibold mb-1.5">
+              Interactive System Traces
             </div>
-            <h2 className="text-2xl sm:text-3xl font-serif font-normal tracking-tight text-foreground">
-              Systems Architecture Decomposition
+            <h2 className="font-serif text-3xl sm:text-[2.35rem] leading-[1.08] font-normal text-foreground">
+              How the pipelines actually work
             </h2>
-            <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
-              Interactive data contract traces of my core generative AI and multi-agent systems. Click any stage to inspect the technical specification.
+            <p className="mt-1.5 text-xs font-mono text-subtle">
+              {track.context} — click any stage to inspect data contracts &amp; engineering trade-offs.
             </p>
           </div>
 
-          {/* Mode Switcher */}
-          <div className="inline-flex rounded-lg border border-border p-1 text-xs font-mono shrink-0 bg-neutral-100/50 dark:bg-neutral-900/50">
-            <button
-              onClick={() => {
-                setMode("rag");
-                setSelectedStageIndex(0);
-              }}
-              className={`px-3 py-1.5 rounded transition-colors ${
-                mode === "rag"
-                  ? "bg-foreground text-background font-medium shadow-xs"
-                  : "text-neutral-500 hover:text-foreground"
-              }`}
-            >
-              Dense Vector RAG
-            </button>
-            <button
-              onClick={() => {
-                setMode("multi-agent");
-                setSelectedStageIndex(0);
-              }}
-              className={`px-3 py-1.5 rounded transition-colors ${
-                mode === "multi-agent"
-                  ? "bg-foreground text-background font-medium shadow-xs"
-                  : "text-neutral-500 hover:text-foreground"
-              }`}
-            >
-              Multi-Agent Loop
-            </button>
+          <div
+            role="tablist"
+            aria-label="System architecture tracks"
+            className="inline-flex flex-wrap gap-1 p-1 rounded-xl bg-surface-subtle border border-border shrink-0"
+          >
+            {(Object.keys(TRACKS) as ArchMode[]).map((key) => {
+              const isSelected = mode === key;
+              return (
+                <button
+                  key={key}
+                  type="button"
+                  role="tab"
+                  aria-selected={isSelected}
+                  onClick={() => handleModeChange(key)}
+                  className={`relative px-3 py-1.5 rounded-lg text-xs font-mono transition-colors cursor-pointer ${
+                    isSelected
+                      ? "text-accent-foreground font-semibold"
+                      : "text-muted hover:text-foreground"
+                  }`}
+                >
+                  {isSelected && (
+                    <motion.span
+                      layoutId="arch-active-tab"
+                      transition={{ type: "spring", stiffness: 450, damping: 34 }}
+                      className="absolute inset-0 rounded-lg bg-accent"
+                    />
+                  )}
+                  <span className="relative z-10">{TRACKS[key].label}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
 
-        {/* Pipeline Step Selector */}
-        <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
-          {stages.map((stage, idx) => {
+        {/* Interactive 4-Stage Sequencer */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-2.5">
+          {track.stages.map((stage, idx) => {
             const isSelected = idx === selectedStageIndex;
             return (
               <button
-                key={stage.id}
+                key={`${mode}-${stage.id}`}
+                type="button"
+                aria-pressed={isSelected}
                 onClick={() => setSelectedStageIndex(idx)}
-                className={`p-3.5 sm:p-4 rounded-lg text-left transition-all border ${
+                className={`relative p-4 rounded-xl text-left transition-all border cursor-pointer ${
                   isSelected
-                    ? "border-foreground bg-neutral-100 dark:bg-neutral-900 font-medium ring-1 ring-foreground/20"
-                    : "border-border hover:border-neutral-400 dark:hover:border-neutral-600 bg-background"
+                    ? "border-accent bg-surface-subtle shadow-[inset_0_2px_0_var(--accent)]"
+                    : "border-border bg-background hover:border-border-strong"
                 }`}
               >
-                <div className="text-[11px] font-mono text-neutral-400 dark:text-neutral-500 mb-1.5">
-                  0{idx + 1}
+                <div className="flex items-center justify-between mb-1.5">
+                  <span className="font-mono text-[11px] font-semibold text-accent">
+                    {stage.step}
+                  </span>
+                  {isSelected && (
+                    <span className="font-mono text-[10px] uppercase tracking-wider text-accent">
+                      Active
+                    </span>
+                  )}
                 </div>
-                <div className="text-xs sm:text-sm text-foreground font-medium tracking-tight">
+                <div className="text-sm font-semibold text-foreground tracking-tight">
                   {stage.name}
                 </div>
-                <div className="text-[11px] font-mono text-neutral-500 dark:text-neutral-400 mt-1 truncate">
+                <div className="text-[11px] font-mono text-subtle mt-1 truncate">
                   {stage.component}
                 </div>
               </button>
@@ -182,57 +274,54 @@ export default function PipelineVisualizer() {
           })}
         </div>
 
-        {/* Selected Stage Detail Card */}
-        <div className="p-6 sm:p-8 rounded-xl border border-border bg-neutral-50 dark:bg-neutral-900/40 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-2 border-b border-border pb-4">
-            <div>
-              <span className="text-[11px] font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-wider">
-                Stage 0{selectedStageIndex + 1} Specification
-              </span>
-              <h3 className="text-lg sm:text-xl font-medium text-foreground mt-0.5">
-                {activeStage.name}
-              </h3>
-            </div>
-            <div className="text-xs font-mono text-neutral-600 dark:text-neutral-300 px-2.5 py-1 rounded bg-neutral-200/60 dark:bg-neutral-800">
-              {activeStage.component}
-            </div>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 text-sm">
-            {/* Col 1: Contract & Role */}
-            <div className="md:col-span-6 space-y-4">
-              <div>
-                <span className="font-mono text-neutral-400 dark:text-neutral-500 text-xs uppercase tracking-wide block mb-1">
-                  Data Contract
+        {/* Stage Specification Inspector */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={`${mode}-${activeStage.id}`}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -4 }}
+            transition={{ duration: 0.16 }}
+            className="p-5 sm:p-6 rounded-xl bg-background border border-border space-y-4"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-2 pb-3 border-b border-border">
+              <div className="flex items-baseline gap-2.5">
+                <span className="font-mono text-xs text-accent font-semibold">
+                  STAGE {activeStage.step}
                 </span>
-                <div className="font-mono text-xs text-foreground bg-background p-3 rounded-lg border border-border overflow-x-auto leading-relaxed">
-                  {activeStage.contract}
-                </div>
+                <h3 className="text-base sm:text-lg font-semibold text-foreground">
+                  {activeStage.name}
+                </h3>
               </div>
+              <span className="font-mono text-[11px] px-2.5 py-1 rounded-md bg-surface-subtle border border-border text-foreground">
+                {activeStage.component}
+              </span>
+            </div>
 
-              <div>
-                <span className="font-mono text-neutral-400 dark:text-neutral-500 text-xs uppercase tracking-wide block mb-1">
-                  Functional Role
-                </span>
-                <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed text-sm">
+            <div className="p-3.5 rounded-lg bg-surface border border-border border-l-[3px] border-l-accent font-mono text-xs text-foreground overflow-x-auto">
+              {activeStage.contract}
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+              <div className="space-y-1">
+                <div className="font-mono text-[10px] uppercase tracking-wider text-subtle">
+                  What Happens Here
+                </div>
+                <p className="text-muted leading-relaxed text-[13.5px]">
                   {activeStage.description}
                 </p>
               </div>
-            </div>
-
-            {/* Col 2: Architectural Rationale */}
-            <div className="md:col-span-6 space-y-4">
-              <div>
-                <span className="font-mono text-neutral-400 dark:text-neutral-500 text-xs uppercase tracking-wide block mb-1">
-                  Architectural Trade-Off &amp; Rationale
-                </span>
-                <div className="p-4 rounded-lg bg-background border border-border text-neutral-700 dark:text-neutral-300 leading-relaxed text-sm">
-                  {activeStage.decisionNote}
+              <div className="space-y-1">
+                <div className="font-mono text-[10px] uppercase tracking-wider text-subtle">
+                  Engineering Trade-Off
                 </div>
+                <p className="text-muted leading-relaxed text-[13.5px]">
+                  {activeStage.decisionNote}
+                </p>
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );

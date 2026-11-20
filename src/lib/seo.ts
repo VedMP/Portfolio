@@ -1,7 +1,6 @@
 /**
  * @file seo.ts
- * @description Generates structured JSON-LD Schema.org data for high search engine discoverability.
- * Complies strictly with Google Search Central guidelines for Person, WebSite, and SoftwareSourceCode schemas.
+ * @description Generates structured JSON-LD Schema.org data for search engine discovery.
  */
 
 import { PERSONAL_INFO, PROJECTS } from "@/core/data";
@@ -13,7 +12,7 @@ export function generatePersonSchema() {
     "@id": "https://vedmpatel.me/#person",
     name: PERSONAL_INFO.name,
     url: "https://vedmpatel.me",
-    jobTitle: "AI Systems & Software Engineer",
+    jobTitle: "Computer Science Student & Applied AI Systems Engineer",
     description: PERSONAL_INFO.subheadline,
     email: PERSONAL_INFO.email,
     telephone: PERSONAL_INFO.phone,
@@ -25,13 +24,15 @@ export function generatePersonSchema() {
     knowsAbout: [
       "Retrieval-Augmented Generation (RAG)",
       "Multi-Agent Systems",
-      "Vector Databases",
+      "Systems Programming",
+      "C++",
+      "Python",
       "LangChain",
       "ChromaDB",
       "IBM watsonx.ai",
       "Next.js",
       "TypeScript",
-      "Python",
+      "Software Quality Assurance",
     ],
     sameAs: [
       PERSONAL_INFO.socials.github,
@@ -47,12 +48,12 @@ export function generateWebSiteSchema() {
     "@type": "WebSite",
     "@id": "https://vedmpatel.me/#website",
     url: "https://vedmpatel.me",
-    name: "Ved Patel | AI Systems & Generative Engineering",
+    name: "Ved Patel — Computer Science & Applied AI Systems",
     description: PERSONAL_INFO.subheadline,
     author: {
       "@id": "https://vedmpatel.me/#person",
     },
-    inLanguage: "en-US",
+    inLanguage: "en-CA",
   };
 }
 

@@ -1,10 +1,10 @@
 /**
  * @file types.ts
  * @description Core TypeScript contracts and schemas for Ved Patel's portfolio.
- * Strictly adheres to verified ground-truth data structures.
+ * Strictly adheres to verified ground-truth academic and project records.
  */
 
-export type ProjectCategory = "AI & Systems" | "Full Stack" | "Systems & Infrastructure";
+export type ProjectCategory = "AI & Systems" | "Systems & C++" | "Full Stack & Edge";
 
 export interface ProjectArchitectureSpec {
   pipeline: string[];
@@ -36,6 +36,8 @@ export interface ProjectMetric {
 export interface Project {
   id: string;
   slug: string;
+  number: string;
+  year: string;
   title: string;
   subtitle: string;
   context: string;
@@ -47,13 +49,14 @@ export interface Project {
   githubUrl?: string;
   liveUrl?: string;
   featured: boolean;
-  image: string;
+  image?: string;
+  visualType?: "image" | "cpp-memory" | "edge-topology";
   codeSnippet?: ProjectCodeSnippet;
   tradeoffs?: ProjectTradeoff[];
   metrics?: ProjectMetric[];
 }
 
-export type ExperienceType = "education" | "hackathon" | "work";
+export type ExperienceType = "education" | "hackathon" | "simulation" | "work";
 
 export interface ExperienceItem {
   id: string;
@@ -66,6 +69,20 @@ export interface ExperienceItem {
   highlights: string[];
   skills: string[];
   metrics?: string;
+}
+
+export interface CourseItem {
+  code: string;
+  name: string;
+  grade: string;
+  term: string;
+  highlight?: boolean;
+}
+
+export interface CertificateItem {
+  title: string;
+  issuer: string;
+  year: string;
 }
 
 export interface SkillGroup {

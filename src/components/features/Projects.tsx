@@ -2,9 +2,122 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { ArrowUpRight, ChevronDown, ChevronUp, Github, ExternalLink, Copy, Check } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  ArrowUpRight,
+  ChevronDown,
+  ChevronUp,
+  ExternalLink,
+  Copy,
+  Check,
+  Terminal,
+} from "lucide-react";
+import { GithubIcon } from "@/components/ui/SocialIcons";
 import { PROJECTS } from "@/core/data";
-import { Project } from "@/core/types";
+import { Project, ProjectCategory } from "@/core/types";
+import { useToast } from "@/components/ui/Toast";
+
+type FilterOption = "All" | ProjectCategory;
+
+const FILTERS: FilterOption[] = [
+  "All",
+  "AI & Systems",
+  "Systems & C++",
+  "Full Stack & Edge",
+];
+
+function ProjectVisual({ project }: { project: Project }) {
+  if (project.visualType === "cpp-memory") {
+    return (
+      <div
+        className="w-full aspect-16/10 rounded-xl border border-border bg-surface-subtle p-5 flex flex-col justify-between"
+        aria-label="C++ contiguous memory layout diagram"
+      >
+        <div className="flex items-center justify-between gap-2 font-mono text-[10px] uppercase tracking-wider">
+          <span className="text-accent font-semibold">C++ Memory Layout</span>
+          <span className="text-subtle">16B Aligned · Contiguous</span>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2 my-3">
+          {["Player[0]", "Player[1]", "Player[2]"].map((slot, idx) => (
+            <div
+              key={slot}
+              className="p-2.5 rounded-lg bg-surface border border-border text-center space-y-1"
+            >
+              <div className="font-mono text-[11px] font-semibold text-foreground">
+                {slot}
+              </div>
+              <div className="font-mono text-[10px] text-subtle">
+                0x{((idx + 1) * 16).toString(16).toUpperCase().padStart(2, "0")}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="font-mono text-[11px] text-muted border-t border-border pt-2.5 flex items-center justify-between gap-2">
+          <span className="truncate">UML Hierarchy → std::vector::reserve()</span>
+          <span className="text-accent shrink-0">Cache-Local</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (project.visualType === "edge-topology") {
+    return (
+      <div
+        className="w-full aspect-16/10 rounded-xl border border-border bg-surface-subtle p-5 flex flex-col justify-between"
+        aria-label="Cloudflare Pages edge delivery topology"
+      >
+        <div className="flex items-center justify-between gap-2 font-mono text-[10px] uppercase tracking-wider">
+          <span className="text-accent font-semibold">Edge Topology · vedmpatel.me</span>
+          <span className="text-subtle">Static + V8 Isolate</span>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2 my-3">
+          <div className="p-2.5 rounded-lg bg-surface border border-border text-center space-y-1">
+            <div className="font-mono text-[11px] font-semibold text-foreground">
+              Next.js 16
+            </div>
+            <div className="font-mono text-[10px] text-subtle">output: export</div>
+          </div>
+          <div className="p-2.5 rounded-lg bg-surface border border-accent/60 text-center space-y-1">
+            <div className="font-mono text-[11px] font-semibold text-accent">
+              Cloudflare
+            </div>
+            <div className="font-mono text-[10px] text-subtle">Anycast CDN</div>
+          </div>
+          <div className="p-2.5 rounded-lg bg-surface border border-border text-center space-y-1">
+            <div className="font-mono text-[11px] font-semibold text-foreground">
+              /api/contact
+            </div>
+            <div className="font-mono text-[10px] text-subtle">V8 Edge Fn</div>
+          </div>
+        </div>
+
+        <div className="font-mono text-[11px] text-muted border-t border-border pt-2.5 flex items-center justify-between gap-2">
+          <span className="truncate">HSTS · Strict CSP · COOP/COEP</span>
+          <span className="text-accent shrink-0">0 Trackers</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (project.image) {
+    return (
+      <div className="relative aspect-16/10 w-full rounded-xl overflow-hidden border border-border bg-surface-subtle">
+        <Image
+          src={project.image}
+          alt={`${project.title} interface screenshot`}
+          fill
+          sizes="(max-width: 1024px) 100vw, 420px"
+          className="object-cover object-top"
+        />
+      </div>
+    );
+  }
+
+  return null;
+}
 
 export default function Projects({
   selectedProjectId,
@@ -12,11 +125,20 @@ export default function Projects({
   selectedProjectId?: string | null;
   onClearSelectedProject?: () => void;
 }) {
+  const [filter, setFilter] = useState<FilterOption>("All");
   const [toggledProjectId, setToggledProjectId] = useState<string | null>(null);
   const [copiedSnippetId, setCopiedSnippetId] = useState<string | null>(null);
+  const { toast } = useToast();
 
   const expandedProjectId =
-    toggledProjectId === "" ? null : (toggledProjectId ?? selectedProjectId ?? null);
+    toggledProjectId === ""
+      ? null
+      : (toggledProjectId ?? selectedProjectId ?? null);
+
+  const visibleProjects =
+    filter === "All"
+      ? PROJECTS
+      : PROJECTS.filter((p) => p.category === filter);
 
   const toggleExpand = (id: string) => {
     setToggledProjectId((prev) => {
@@ -29,80 +151,131 @@ export default function Projects({
     try {
       await navigator.clipboard.writeText(code);
       setCopiedSnippetId(id);
-      setTimeout(() => setCopiedSnippetId(null), 2000);
+      toast("Code snippet copied");
+      setTimeout(() => setCopiedSnippetId(null), 1800);
     } catch {
-      // Ignored
+      toast("Could not copy snippet", "error");
     }
   };
 
   return (
-    <section id="projects" className="py-16 sm:py-20 border-b border-border">
-      <div className="space-y-12">
-        {/* Section Header */}
-        <div>
-          <div className="font-mono text-xs uppercase tracking-wider text-neutral-400 dark:text-neutral-500 mb-2">
-            02 / Systems &amp; Case Studies
+    <section
+      id="projects"
+      className="py-12 sm:py-14 border-b border-border scroll-mt-8"
+    >
+      <div className="space-y-8">
+        {/* Section Header & Filter */}
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4">
+          <div>
+            <div className="font-mono text-[11px] uppercase tracking-[0.1em] text-accent font-semibold mb-1.5">
+              Selected Engineering Work
+            </div>
+            <h2 className="font-serif text-3xl sm:text-[2.45rem] leading-[1.08] font-normal text-foreground">
+              Projects &amp; Simulations
+            </h2>
           </div>
-          <h2 className="text-2xl sm:text-3xl font-serif font-normal tracking-tight text-foreground">
-            Featured Engineering Projects
-          </h2>
-          <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400 max-w-3xl leading-relaxed">
-            Retrieval-augmented generation pipelines, multi-agent validation loops, and resilient edge systems engineered with strict data integrity.
-          </p>
+
+          <div
+            role="group"
+            aria-label="Filter projects by domain"
+            className="flex flex-wrap gap-1.5"
+          >
+            {FILTERS.map((opt) => {
+              const active = filter === opt;
+              return (
+                <button
+                  key={opt}
+                  type="button"
+                  onClick={() => setFilter(opt)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-mono border transition-colors cursor-pointer ${
+                    active
+                      ? "bg-accent text-accent-foreground border-accent font-semibold"
+                      : "bg-surface text-muted border-border hover:border-border-strong hover:text-foreground"
+                  }`}
+                >
+                  {opt}
+                </button>
+              );
+            })}
+          </div>
         </div>
 
-        {/* Projects List */}
-        <div className="space-y-16">
-          {PROJECTS.map((project: Project) => {
+        {/* Project Cards */}
+        <div className="space-y-6">
+          {visibleProjects.map((project) => {
             const isExpanded = expandedProjectId === project.id;
             return (
               <article
                 key={project.id}
                 id={`project-${project.id}`}
-                className="space-y-6 pb-12 border-b border-neutral-200/80 dark:border-neutral-800/80 last:border-b-0 last:pb-0"
+                className="p-5 sm:p-7 rounded-2xl bg-surface border border-border transition-colors hover:border-border-strong space-y-5 scroll-mt-8"
               >
-                {/* 2-Column Responsive Card: Left Details, Right Image */}
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                  {/* Left Column: Narrative Details */}
-                  <div className="lg:col-span-7 space-y-4">
+                <div className="grid grid-cols-1 xl:grid-cols-12 gap-6 xl:gap-8 items-start">
+                  {/* Left: Story, Metrics & Controls */}
+                  <div className="xl:col-span-7 space-y-4">
                     <div>
-                      <h3 className="text-xl sm:text-2xl font-serif font-medium text-foreground tracking-tight">
+                      <div className="flex flex-wrap items-center gap-2 font-mono text-[11px] text-subtle mb-1">
+                        <span className="text-accent font-semibold">
+                          {project.number}
+                        </span>
+                        <span>·</span>
+                        <span>{project.subtitle}</span>
+                        <span>·</span>
+                        <span>{project.year}</span>
+                      </div>
+                      <h3 className="font-serif text-2xl sm:text-[1.9rem] leading-[1.12] font-normal text-foreground">
                         {project.title}
                       </h3>
-                      <div className="text-xs font-mono text-neutral-500 dark:text-neutral-400 mt-1">
-                        {project.subtitle}
-                      </div>
                     </div>
 
-                    <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed">
+                    <p className="text-sm sm:text-[15px] text-muted leading-relaxed">
                       {project.solution}
                     </p>
 
-                    {/* Tech Stack Metadata */}
-                    <div className="flex flex-wrap gap-1.5 pt-1">
+                    {/* Key Metrics Row */}
+                    {project.metrics && (
+                      <div className="grid grid-cols-3 gap-2 pt-1">
+                        {project.metrics.map((m) => (
+                          <div
+                            key={m.label}
+                            className="px-3 py-2 rounded-lg bg-background border border-border"
+                          >
+                            <div className="font-mono text-[10px] uppercase tracking-wider text-subtle truncate">
+                              {m.label}
+                            </div>
+                            <div className="font-mono text-xs sm:text-[13px] font-semibold text-foreground mt-0.5 truncate">
+                              {m.value}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+
+                    {/* Stack Tags */}
+                    <div className="flex flex-wrap gap-1.5">
                       {project.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="px-2 py-0.5 rounded text-[11px] font-mono bg-neutral-100 dark:bg-neutral-800 text-neutral-700 dark:text-neutral-300 border border-neutral-200/60 dark:border-neutral-700/60"
+                          className="px-2.5 py-1 rounded-md text-[11px] font-mono bg-surface-subtle text-foreground border border-border"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
 
-                    {/* Action Links & Engineering Notes Toggle */}
-                    <div className="flex flex-wrap items-center justify-between gap-4 pt-3">
-                      <div className="flex items-center gap-4 text-xs font-mono">
+                    {/* Links & Deep-Dive Toggle */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
+                      <div className="flex flex-wrap items-center gap-4 text-xs font-mono">
                         {project.githubUrl && (
                           <a
                             href={project.githubUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="human-link text-foreground inline-flex items-center gap-1 font-medium"
+                            className="human-link text-foreground inline-flex items-center gap-1.5 font-medium"
                           >
-                            <Github className="w-3.5 h-3.5" />
+                            <GithubIcon className="w-3.5 h-3.5" />
                             <span>Source Code</span>
-                            <ArrowUpRight className="w-3 h-3 text-neutral-400" />
+                            <ArrowUpRight className="w-3 h-3 text-subtle" />
                           </a>
                         )}
                         {project.liveUrl && (
@@ -110,126 +283,145 @@ export default function Projects({
                             href={project.liveUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="human-link text-foreground inline-flex items-center gap-1 font-medium"
+                            className="human-link text-foreground inline-flex items-center gap-1.5 font-medium"
                           >
                             <ExternalLink className="w-3.5 h-3.5" />
-                            <span>Live Deployment</span>
-                            <ArrowUpRight className="w-3 h-3 text-neutral-400" />
+                            <span>Live Site</span>
+                            <ArrowUpRight className="w-3 h-3 text-subtle" />
                           </a>
                         )}
                       </div>
 
                       <button
+                        type="button"
                         onClick={() => toggleExpand(project.id)}
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded text-xs font-mono text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-neutral-800 hover:bg-neutral-200 dark:hover:bg-neutral-700 transition-colors"
+                        aria-expanded={isExpanded}
+                        aria-controls={`spec-${project.id}`}
+                        className="btn-tactile px-3 py-1.5 text-xs font-mono"
                       >
-                        <span>{isExpanded ? "Collapse Specs" : "Engineering Specs & Code"}</span>
+                        <Terminal className="w-3.5 h-3.5 text-accent" />
+                        <span>
+                          {isExpanded ? "Hide Specs & Code" : "Specs & Code"}
+                        </span>
                         {isExpanded ? (
-                          <ChevronUp className="w-3.5 h-3.5" />
+                          <ChevronUp className="w-3.5 h-3.5 text-subtle" />
                         ) : (
-                          <ChevronDown className="w-3.5 h-3.5" />
+                          <ChevronDown className="w-3.5 h-3.5 text-subtle" />
                         )}
                       </button>
                     </div>
                   </div>
 
-                  {/* Right Column: Visual Preview */}
-                  <div className="lg:col-span-5">
-                    <div className="relative aspect-16/10 w-full rounded-xl overflow-hidden border border-border shadow-xs bg-neutral-100 dark:bg-neutral-900">
-                      <Image
-                        src={project.image}
-                        alt={project.title}
-                        fill
-                        sizes="(max-width: 1024px) 100vw, 420px"
-                        className="object-cover object-top"
-                      />
-                    </div>
+                  {/* Right: Visual Screenshot or Architectural Diagram */}
+                  <div className="xl:col-span-5">
+                    <ProjectVisual project={project} />
                   </div>
                 </div>
 
-                {/* Collapsible Deep Engineering Insights */}
-                {isExpanded && (
-                  <div className="p-6 sm:p-8 rounded-xl border border-border bg-neutral-50 dark:bg-neutral-900/40 space-y-6 animate-in fade-in duration-150">
-                    <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
-                      {/* Problem Statement */}
-                      <div className="md:col-span-6 space-y-2">
-                        <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-                          Problem Statement
-                        </h4>
-                        <p className="text-xs sm:text-sm text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                          {project.problem}
-                        </p>
-                      </div>
+                {/* Expandable Deep Engineering Spec Drawer */}
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      id={`spec-${project.id}`}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.22, ease: "easeOut" }}
+                      className="overflow-hidden"
+                    >
+                      <div className="pt-5 border-t border-border space-y-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+                          <div className="space-y-1.5">
+                            <h4 className="font-mono text-[11px] uppercase tracking-wider text-accent font-semibold">
+                              Problem Context
+                            </h4>
+                            <p className="text-xs sm:text-sm text-muted leading-relaxed">
+                              {project.problem}
+                            </p>
+                          </div>
 
-                      {/* Pipeline Stages */}
-                      <div className="md:col-span-6 space-y-2">
-                        <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-                          Pipeline Architecture
-                        </h4>
-                        <ol className="list-decimal list-inside space-y-1 text-xs font-mono text-neutral-700 dark:text-neutral-300 leading-relaxed">
-                          {project.architecture.pipeline.map((step, idx) => (
-                            <li key={idx}>{step}</li>
-                          ))}
-                        </ol>
-                      </div>
-                    </div>
-
-                    {/* Key Technical Decisions & Trade-offs */}
-                    {project.tradeoffs && project.tradeoffs.length > 0 && (
-                      <div className="pt-4 border-t border-border space-y-3">
-                        <h4 className="text-xs font-mono uppercase tracking-wider text-neutral-400 dark:text-neutral-500">
-                          Key Architectural Trade-Offs &amp; Rationale
-                        </h4>
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                          {project.tradeoffs.map((t, idx) => (
-                            <div key={idx} className="p-4 rounded-lg bg-background border border-border space-y-1">
-                              <div className="font-medium text-xs text-foreground">
-                                {t.decision}
-                              </div>
-                              <div className="text-xs text-neutral-600 dark:text-neutral-400 leading-relaxed">
-                                {t.rationale}
-                              </div>
-                              <div className="text-[11px] font-mono text-neutral-400 dark:text-neutral-500 pt-1">
-                                Alternative: {t.alternativeConsidered}
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    )}
-
-                    {/* Code Snippet Contract */}
-                    {project.codeSnippet && (
-                      <div className="pt-4 border-t border-border space-y-2">
-                        <div className="flex items-center justify-between text-xs font-mono text-neutral-500 dark:text-neutral-400">
-                          <span>{project.codeSnippet.title}</span>
-                          <div className="flex items-center gap-3">
-                            <span className="uppercase text-[10px]">{project.codeSnippet.language}</span>
-                            <button
-                              onClick={() => copySnippet(project.id, project.codeSnippet?.code || "")}
-                              className="inline-flex items-center gap-1 hover:text-foreground transition-colors cursor-pointer"
-                              title="Copy code"
-                            >
-                              {copiedSnippetId === project.id ? (
-                                <Check className="w-3.5 h-3.5 text-foreground" />
-                              ) : (
-                                <Copy className="w-3.5 h-3.5" />
-                              )}
-                              <span className="text-[11px]">
-                                {copiedSnippetId === project.id ? "Copied" : "Copy"}
-                              </span>
-                            </button>
+                          <div className="space-y-1.5">
+                            <h4 className="font-mono text-[11px] uppercase tracking-wider text-accent font-semibold">
+                              Execution Flow
+                            </h4>
+                            <ol className="list-decimal list-inside space-y-1 text-xs font-mono text-muted leading-relaxed">
+                              {project.architecture.pipeline.map((step, i) => (
+                                <li key={i}>{step}</li>
+                              ))}
+                            </ol>
                           </div>
                         </div>
-                        <div className="p-4 rounded-lg bg-neutral-900 text-neutral-100 dark:bg-black dark:text-neutral-200 border border-neutral-800 font-mono text-xs overflow-x-auto">
-                          <pre className="text-[11px] sm:text-xs leading-relaxed">
-                            <code>{project.codeSnippet.code}</code>
-                          </pre>
-                        </div>
+
+                        {project.tradeoffs && project.tradeoffs.length > 0 && (
+                          <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                            {project.tradeoffs.map((t, i) => (
+                              <div
+                                key={i}
+                                className="p-4 rounded-xl bg-background border border-border space-y-1.5"
+                              >
+                                <div className="text-xs font-semibold text-foreground">
+                                  {t.decision}
+                                </div>
+                                <div className="text-xs text-muted leading-relaxed">
+                                  {t.rationale}
+                                </div>
+                                <div className="font-mono text-[11px] text-subtle pt-1">
+                                  Alternative: {t.alternativeConsidered}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+
+                        {project.codeSnippet && (
+                          <div className="space-y-2">
+                            <div className="flex flex-wrap items-center justify-between gap-2 text-xs font-mono text-muted">
+                              <span>{project.codeSnippet.title}</span>
+                              <div className="flex items-center gap-3">
+                                <span className="uppercase text-[10px] text-subtle">
+                                  {project.codeSnippet.language}
+                                </span>
+                                <button
+                                  type="button"
+                                  onClick={() =>
+                                    copySnippet(
+                                      project.id,
+                                      project.codeSnippet?.code || ""
+                                    )
+                                  }
+                                  className="inline-flex items-center gap-1 hover:text-foreground transition-colors cursor-pointer"
+                                >
+                                  {copiedSnippetId === project.id ? (
+                                    <Check className="w-3.5 h-3.5 text-accent" />
+                                  ) : (
+                                    <Copy className="w-3.5 h-3.5" />
+                                  )}
+                                  <span>
+                                    {copiedSnippetId === project.id
+                                      ? "Copied"
+                                      : "Copy"}
+                                  </span>
+                                </button>
+                              </div>
+                            </div>
+                            <div
+                              className="p-4 rounded-xl border font-mono text-xs overflow-x-auto"
+                              style={{
+                                backgroundColor: "var(--code-bg)",
+                                color: "var(--code-fg)",
+                                borderColor: "var(--code-border)",
+                              }}
+                            >
+                              <pre className="text-[11px] sm:text-xs leading-relaxed">
+                                <code>{project.codeSnippet.code}</code>
+                              </pre>
+                            </div>
+                          </div>
+                        )}
                       </div>
-                    )}
-                  </div>
-                )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </article>
             );
           })}

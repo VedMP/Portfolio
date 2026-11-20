@@ -1,138 +1,204 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowUpRight, Sparkles, ChevronDown, ChevronUp, FileText } from "lucide-react";
 import { PERSONAL_INFO } from "@/core/data";
 
 export default function Hero() {
+  const [briefOpen, setBriefOpen] = useState(false);
+
   return (
-    <section className="pt-6 sm:pt-10 pb-16 border-b border-border">
-      <div className="space-y-8">
-        {/* Name and Academic Header */}
-        <div>
-          <div className="flex flex-wrap items-baseline justify-between gap-3 mb-2">
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-medium tracking-tight text-foreground">
-              {PERSONAL_INFO.name}
-            </h1>
-            <span className="text-xs sm:text-sm font-mono text-neutral-500 dark:text-neutral-400">
-              Oshawa / Toronto, ON
+    <section
+      id="overview"
+      className="pb-12 sm:pb-14 border-b border-border scroll-mt-8"
+    >
+      <motion.div
+        initial={{ opacity: 0, y: 12 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        className="space-y-6"
+      >
+        {/* Eyebrow */}
+        <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[11px] uppercase tracking-[0.11em] text-accent font-semibold">
+          <span>{PERSONAL_INFO.institution} · Honours CS</span>
+          <span className="text-border-strong" aria-hidden="true">/</span>
+          <span className="text-muted font-medium">Class of {PERSONAL_INFO.graduation}</span>
+        </div>
+
+        {/* Editorial Headline */}
+        <h1 className="font-serif text-[2.45rem] sm:text-[3.25rem] xl:text-[3.75rem] leading-[1.03] tracking-[-0.015em] text-foreground max-w-[21ch] font-normal">
+          Grounded AI pipelines, multi-agent verification, and{" "}
+          <em className="italic text-muted">systems rigor.</em>
+        </h1>
+
+        {/* Concise Human Engineering Bio */}
+        <p className="text-[15px] sm:text-base text-muted leading-relaxed max-w-[64ch]">
+          {PERSONAL_INFO.bioDetail}
+        </p>
+
+        {/* Action Strip (30-Second Recruiter Brief + Quick Mobile Links) */}
+        <div className="flex flex-wrap items-center gap-2.5 pt-1">
+          <button
+            type="button"
+            onClick={() => setBriefOpen((prev) => !prev)}
+            aria-expanded={briefOpen}
+            aria-controls="recruiter-brief-drawer"
+            className="btn-tactile px-3.5 py-2 text-xs font-mono"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-accent" />
+            <span>
+              {briefOpen ? "Hide 30-Second Recruiter Brief" : "30-Second Recruiter Brief"}
             </span>
-          </div>
-          <div className="text-sm sm:text-base font-mono text-neutral-500 dark:text-neutral-400">
-            {PERSONAL_INFO.headline}
-          </div>
-        </div>
+            {briefOpen ? (
+              <ChevronUp className="w-3.5 h-3.5 text-subtle" />
+            ) : (
+              <ChevronDown className="w-3.5 h-3.5 text-subtle" />
+            )}
+          </button>
 
-        {/* Narrative Bio */}
-        <div className="max-w-5xl space-y-4 text-base sm:text-lg text-neutral-700 dark:text-neutral-300 leading-relaxed">
-          <p>
-            Honours Computer Science student at{" "}
-            <a
-              href="https://ontariotechu.ca"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="human-link text-foreground font-medium"
-            >
-              Ontario Tech University
-            </a>{" "}
-            with a <span className="font-semibold text-foreground">3.97 / 4.0 GPA</span> across 4 consecutive President&apos;s / Dean&apos;s List semesters.
-          </p>
-
-          <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-400">
-            I build machine intelligence systems with a focus on{" "}
-            <span className="text-foreground font-medium">dense vector retrieval (RAG)</span>,{" "}
-            <span className="text-foreground font-medium">autonomous multi-agent validation loops</span>, and
-            resilient backend infrastructure. My work emphasizes grounding language models in verifiable evidence rather than letting them hallucinate.
-          </p>
-        </div>
-
-        {/* Factual Highlight Strip */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-2">
-          <div className="p-3.5 rounded-lg bg-neutral-100/60 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800">
-            <div className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider">Cumulative GPA</div>
-            <div className="text-sm font-mono font-semibold text-foreground mt-0.5">{PERSONAL_INFO.gpa}</div>
-            <div className="text-[11px] text-neutral-500 mt-0.5 truncate">4x Dean&apos;s List</div>
-          </div>
-
-          <div className="p-3.5 rounded-lg bg-neutral-100/60 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800">
-            <div className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider">Engineering Focus</div>
-            <div className="text-sm font-mono font-semibold text-foreground mt-0.5">RAG &amp; Agents</div>
-            <div className="text-[11px] text-neutral-500 mt-0.5 truncate">ChromaDB · LangChain</div>
-          </div>
-
-          <div className="p-3.5 rounded-lg bg-neutral-100/60 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800">
-            <div className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider">Institution</div>
-            <div className="text-sm font-mono font-semibold text-foreground mt-0.5">Ontario Tech</div>
-            <div className="text-[11px] text-neutral-500 mt-0.5 truncate">Honours B.Sc. CS</div>
-          </div>
-
-          <div className="p-3.5 rounded-lg bg-neutral-100/60 dark:bg-neutral-900/60 border border-neutral-200 dark:border-neutral-800">
-            <div className="text-[11px] font-mono text-neutral-400 uppercase tracking-wider">Availability</div>
-            <div className="text-sm font-mono font-semibold text-foreground mt-0.5">Summer 2026/27</div>
-            <div className="text-[11px] text-neutral-500 mt-0.5 truncate">Internship / Co-op</div>
-          </div>
-        </div>
-
-        {/* Human Links Row */}
-        <div className="flex flex-wrap items-center gap-x-6 gap-y-2 pt-2 text-xs font-mono text-neutral-500 dark:text-neutral-400">
           <a
             href={PERSONAL_INFO.resumePath}
             target="_blank"
             rel="noopener noreferrer"
-            className="human-link text-foreground inline-flex items-center gap-0.5 font-medium"
+            className="lg:hidden btn-tactile-accent px-3.5 py-2 text-xs font-mono"
           >
-            <span>Resume (PDF)</span>
-            <ArrowUpRight className="w-3 h-3" />
+            <span>Resume PDF</span>
+            <ArrowUpRight className="w-3.5 h-3.5" />
           </a>
 
           <a
             href={PERSONAL_INFO.transcriptPath}
             target="_blank"
             rel="noopener noreferrer"
-            className="human-link inline-flex items-center gap-0.5"
+            className="lg:hidden btn-tactile px-3.5 py-2 text-xs font-mono"
           >
-            <span>Transcript (3.97 GPA)</span>
-            <ArrowUpRight className="w-3 h-3" />
+            <FileText className="w-3.5 h-3.5 text-subtle" />
+            <span>Transcript</span>
           </a>
 
           <a
-            href={PERSONAL_INFO.socials.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="human-link inline-flex items-center gap-0.5"
+            href="#projects"
+            className="px-3 py-2 text-xs font-mono text-muted hover:text-foreground transition-colors inline-flex items-center gap-1"
           >
-            <span>GitHub</span>
-            <ArrowUpRight className="w-3 h-3" />
-          </a>
-
-          <a
-            href={PERSONAL_INFO.socials.githubAcademic}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="human-link inline-flex items-center gap-0.5"
-          >
-            <span>GitHub (Academic)</span>
-            <ArrowUpRight className="w-3 h-3" />
-          </a>
-
-          <a
-            href={PERSONAL_INFO.socials.linkedin}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="human-link inline-flex items-center gap-0.5"
-          >
-            <span>LinkedIn</span>
-            <ArrowUpRight className="w-3 h-3" />
-          </a>
-
-          <a
-            href={`mailto:${PERSONAL_INFO.email}`}
-            className="human-link inline-flex items-center gap-0.5"
-          >
-            <span>{PERSONAL_INFO.email}</span>
-            <ArrowUpRight className="w-3 h-3" />
+            <span>Explore 4 builds ↓</span>
           </a>
         </div>
-      </div>
+
+        {/* Collapsible 30-Second Recruiter Brief (from Tournament D4) */}
+        <AnimatePresence initial={false}>
+          {briefOpen && (
+            <motion.div
+              id="recruiter-brief-drawer"
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              exit={{ opacity: 0, height: 0 }}
+              transition={{ duration: 0.22, ease: "easeOut" }}
+              className="overflow-hidden"
+            >
+              <div className="p-5 rounded-xl bg-surface border border-border-strong border-l-[3px] border-l-accent grid grid-cols-1 sm:grid-cols-3 gap-5 text-xs">
+                <div className="space-y-1.5">
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-semibold">
+                    Target Roles &amp; Timing
+                  </div>
+                  <p className="text-foreground font-medium leading-relaxed">
+                    2026–2027 Software Engineering, Backend, Systems, or Applied AI Internships / Co-op.
+                  </p>
+                  <p className="font-mono text-[11px] text-subtle">
+                    {PERSONAL_INFO.shortLocation} · Hybrid / Remote
+                  </p>
+                </div>
+
+                <div className="space-y-1.5">
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-semibold">
+                    Verified Academic Signal
+                  </div>
+                  <p className="text-foreground font-medium leading-relaxed">
+                    {PERSONAL_INFO.gpa} GPA across 75 credits. A+ in Systems Programming, Data Structures, Computer Architecture &amp; Software Design.
+                  </p>
+                  <p className="font-mono text-[11px] text-subtle">
+                    IBM Generative AI Engineering Cert. (2026)
+                  </p>
+                </div>
+
+                <div className="space-y-2">
+                  <div className="font-mono text-[10px] uppercase tracking-wider text-accent font-semibold">
+                    Fastest Verification Links
+                  </div>
+                  <div className="flex flex-col gap-1.5 font-mono text-[11px]">
+                    <a
+                      href={PERSONAL_INFO.resumePath}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="human-link text-foreground inline-flex items-center gap-1 w-fit"
+                    >
+                      <span>Official Resume (PDF)</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                    <a
+                      href={PERSONAL_INFO.transcriptPath}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="human-link text-foreground inline-flex items-center gap-1 w-fit"
+                    >
+                      <span>Unofficial Transcript ({PERSONAL_INFO.gpa})</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                    <a
+                      href={PERSONAL_INFO.socials.github}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="human-link text-foreground inline-flex items-center gap-1 w-fit"
+                    >
+                      <span>github.com/VedMP</span>
+                      <ArrowUpRight className="w-3 h-3" />
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Grounded 3-Column Proof Bar */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+          <div className="p-4 rounded-xl bg-surface border border-border flex flex-col gap-1">
+            <span className="font-mono text-[10px] uppercase tracking-[0.09em] text-accent font-semibold">
+              Academic Standing
+            </span>
+            <span className="font-serif text-[1.6rem] leading-tight text-foreground">
+              {PERSONAL_INFO.gpa} GPA
+            </span>
+            <span className="text-xs text-muted">
+              4× President&apos;s List · A+ Systems Prog. &amp; Arch.
+            </span>
+          </div>
+
+          <div className="p-4 rounded-xl bg-surface border border-border flex flex-col gap-1">
+            <span className="font-mono text-[10px] uppercase tracking-[0.09em] text-accent font-semibold">
+              Applied AI Builds
+            </span>
+            <span className="font-serif text-[1.6rem] leading-tight text-foreground">
+              IBM RAG · 18-Lang
+            </span>
+            <span className="text-xs text-muted">
+              watsonx Granite + HackHive 36h Multi-Agent
+            </span>
+          </div>
+
+          <div className="p-4 rounded-xl bg-surface border border-border flex flex-col gap-1">
+            <span className="font-mono text-[10px] uppercase tracking-[0.09em] text-accent font-semibold">
+              Low-Level &amp; Edge
+            </span>
+            <span className="font-serif text-[1.6rem] leading-tight text-foreground">
+              C++ &amp; Cloudflare
+            </span>
+            <span className="text-xs text-muted">
+              EA Sports Memory Opt. · V8 Edge Functions
+            </span>
+          </div>
+        </div>
+      </motion.div>
     </section>
   );
 }

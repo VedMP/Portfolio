@@ -1,6 +1,13 @@
 "use client";
 
-import { ReactNode, useState, useEffect, cloneElement, isValidElement } from "react";
+import {
+  ReactNode,
+  useState,
+  useEffect,
+  cloneElement,
+  isValidElement,
+} from "react";
+import { MotionConfig } from "framer-motion";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
 import CommandPalette from "@/components/cmdk/CommandPalette";
@@ -34,39 +41,51 @@ export default function ClientShell({ children }: { children: ReactNode }) {
 
   const handleSelectProject = (projectId: string) => {
     setSelectedProjectId(projectId);
-    const el = document.getElementById(`project-${projectId}`) || document.getElementById("projects");
+    const el =
+      document.getElementById(`project-${projectId}`) ||
+      document.getElementById("projects");
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <ToastProvider>
-      <div className="min-h-screen flex flex-col justify-between">
-        <Navbar />
+    <MotionConfig reducedMotion="user">
+      <ToastProvider>
+        <div className="min-h-screen w-full max-w-[1440px] mx-auto lg:flex lg:items-start">
+          <Navbar />
 
-        <main id="main-content" className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-24 sm:pt-28 pb-24">
-          {isValidElement(children)
-            ? cloneElement(children as React.ReactElement<{
-                onOpenCommandMenu?: () => void;
-                selectedProjectId?: string | null;
-                onClearSelectedProject?: () => void;
-              }>, {
-                onOpenCommandMenu: () => setIsCommandOpen(true),
-                selectedProjectId,
-                onClearSelectedProject: () => setSelectedProjectId(null),
-              })
-            : children}
-        </main>
+          <div className="flex-1 min-w-0 flex flex-col min-h-screen">
+            <main
+              id="main-content"
+              className="flex-1 w-full px-4 sm:px-7 lg:px-12 xl:px-14 pt-8 sm:pt-10 lg:pt-12 pb-16"
+            >
+              {isValidElement(children)
+                ? cloneElement(
+                    children as React.ReactElement<{
+                      onOpenCommandMenu?: () => void;
+                      selectedProjectId?: string | null;
+                      onClearSelectedProject?: () => void;
+                    }>,
+                    {
+                      onOpenCommandMenu: () => setIsCommandOpen(true),
+                      selectedProjectId,
+                      onClearSelectedProject: () => setSelectedProjectId(null),
+                    }
+                  )
+                : children}
+            </main>
 
-        <Footer />
+            <Footer />
+          </div>
 
-        <CommandPalette
-          isOpen={isCommandOpen}
-          onClose={() => setIsCommandOpen(false)}
-          onSelectProject={handleSelectProject}
-        />
+          <CommandPalette
+            isOpen={isCommandOpen}
+            onClose={() => setIsCommandOpen(false)}
+            onSelectProject={handleSelectProject}
+          />
 
-        <PrintResumeView />
-      </div>
-    </ToastProvider>
+          <PrintResumeView />
+        </div>
+      </ToastProvider>
+    </MotionConfig>
   );
 }

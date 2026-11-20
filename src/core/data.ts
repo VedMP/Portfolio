@@ -1,29 +1,43 @@
 /**
  * @file data.ts
  * @description Centralized, factually verified data repository for Ved Patel.
- * Strictly maintains 100% ground truth:
- * - 3.97 GPA, Honours Computer Science @ Ontario Tech University
- * - 4-time President's / Dean's list recipient
- * - Smart Document Assistant (IBM Capstone)
- * - Polyglot Tutor (HackHive 2026 Hackathon)
- * - Edge Systems Portfolio on Cloudflare Pages (Next.js 16 / React 19)
+ * 100% aligned with official Resume & Ontario Tech University Transcript:
+ * - Cumulative GPA: 3.97 / 4.3 (75 earned credit hours)
+ * - President's List (Fall 2023, Winter 2024, Fall 2024, Winter 2025) & Dean's List (Fall 2025)
+ * - Smart Document Assistant (IBM Capstone — 1000-char chunks, 100-char overlap)
+ * - Polyglot Tutor (HackHive 2026 — 18 languages, 36-hour sprint)
+ * - Electronic Arts Software Engineering Job Simulation (Forage, Oct 2025 — C++, UML, Memory Optimization)
+ * - vedmpatel.me Edge Architecture (Next.js 16 Static Export + Cloudflare Pages V8 Functions)
+ * - IBM Generative AI Engineering Professional Certificate (Coursera / IBM, 2026)
  */
 
-import { Project, ExperienceItem, SkillGroup } from "./types";
+import {
+  Project,
+  ExperienceItem,
+  SkillGroup,
+  CourseItem,
+  CertificateItem,
+} from "./types";
 
 export const PERSONAL_INFO = {
   name: "Ved Patel",
-  headline: "AI Systems & Generative Engineering | Honours CS @ Ontario Tech",
+  fullName: "Ved M. Patel",
+  role: "CS & Applied AI Systems",
+  headline: "Honours Computer Science @ Ontario Tech · Systems & Applied AI",
   subheadline:
-    "Honours Computer Science student (3.97 GPA, 4x Dean's List) specializing in Retrieval-Augmented Generation (RAG) pipelines, multi-agent verification workflows, and resilient edge systems.",
-  location: "Oshawa / Greater Toronto Area, ON, Canada",
+    "Honours Computer Science student at Ontario Tech University (3.97/4.3 GPA) building grounded retrieval systems, multi-agent backends, and memory-conscious C++ and web software.",
+  bioDetail:
+    "My coursework sits close to the metal—A+ marks in Systems Programming, Computer Architecture, Data Structures, and Software Design—and my builds apply that same discipline to generative AI: semantic PDF retrieval with IBM watsonx.ai & ChromaDB, an 18-language multi-agent tutor built in 36 hours, and C++ memory optimization for an EA Sports simulation.",
+  location: "Scarborough / Oshawa, ON, Canada",
+  shortLocation: "Scarborough / GTA, ON",
   institution: "Ontario Tech University",
   degree: "Honours Bachelor of Science in Computer Science",
-  gpa: "3.97 / 4.0",
-  academicStanding: "President's / Dean's List (4 Consecutive Semesters)",
+  gpa: "3.97 / 4.3",
+  academicStanding: "4× President's List (2023–25) · Dean's List (Fall 2025)",
+  availability: "Seeking 2026–27 SWE / AI Co-op",
   graduation: "April 2027",
   email: "vedmpatel2005@gmail.com",
-  phone: "+1 647-771-7973",
+  phone: "+1 (647) 771-7973",
   resumePath: "/Ved_Patel_Resume.pdf",
   transcriptPath: "/Ved_Patel_Transcript.pdf",
   socials: {
@@ -37,27 +51,28 @@ export const PROJECTS: Project[] = [
   {
     id: "smart-document-assistant",
     slug: "smart-document-assistant",
+    number: "01",
+    year: "2026",
     title: "Smart Document Assistant",
-    subtitle: "IBM Generative AI Engineering Capstone Project",
+    subtitle: "IBM Generative AI Engineering Capstone",
     context:
-      "Engineered as the capstone implementation for the IBM Generative AI Engineering Specialization.",
+      "Capstone engineering build for the IBM Generative AI Engineering Professional Certificate.",
     problem:
-      "Enterprise documents contain unstructured proprietary knowledge that off-the-shelf LLMs cannot accurately parse without hallucinating or referencing outdated external information.",
+      "Long technical PDFs contain dense, proprietary definitions that off-the-shelf LLMs routinely fabricate or misquote when queried directly without grounded document retrieval.",
     solution:
-      "Architected a dense vector Retrieval-Augmented Generation (RAG) assistant using LangChain and ChromaDB. Utilizes IBM watsonx.ai granite-3-2-8b-instruct LLM paired with slate-125m-english embedding model to perform context-grounded Q&A with zero hallucination escape.",
+      "Engineered a Retrieval-Augmented Generation (RAG) Q&A workbench using LangChain, IBM Slate-125m embeddings, local ChromaDB vector persistence, and watsonx.ai Granite-3.2-8b-instruct behind an interactive Gradio UI.",
     architecture: {
       pipeline: [
-        "Unstructured Document Chunking & Semantic Tokenization",
-        "Dense Embedding Generation via IBM Slate-125m",
-        "Vector Storage & Cosine Indexing in ChromaDB",
-        "Context Injection & Strict Grounding Prompts via LangChain",
-        "Granite-3-2-8b-instruct Inference & Source Provenance",
-        "Gradio UI Execution Interface",
+        "Real-time PDF upload and text extraction in Gradio",
+        "LangChain RecursiveCharacterTextSplitter (1000-character chunks, 100-character overlap)",
+        "Dense vector embedding via IBM Slate-125m-English",
+        "Local ChromaDB persistent vector indexing & semantic similarity search",
+        "Constrained grounding prompt injection with Granite-3.2-8b-instruct",
       ],
       keyDecisions: [
-        "ChromaDB local vector persistence for low-latency retrieval without third-party API vector egress",
-        "IBM slate-125m embeddings optimized for dense English technical documentation retrieval",
-        "LangChain prompt templates with explicit citation provenance constraints",
+        "1000-character chunking with 100-character overlap preserves cross-sentence definitions without diluting vector similarity",
+        "Local ChromaDB persistence keeps proprietary PDFs on-disk and eliminates third-party vector SaaS egress",
+        "Explicit grounding prompt templates constrain Granite-3.2-8b-instruct to answer strictly from retrieved passages",
       ],
       modelsOrEmbeddings: [
         "granite-3-2-8b-instruct (IBM watsonx.ai)",
@@ -68,214 +83,306 @@ export const PROJECTS: Project[] = [
     },
     tradeoffs: [
       {
-        decision: "Local ChromaDB persistence over cloud vector DB (Pinecone/Weaviate)",
-        rationale: "Eliminated vector egress costs and achieved sub-10ms nearest-neighbor cosine lookups with complete data privacy.",
-        alternativeConsidered: "Managed cloud vector service (Pinecone) with API latency overhead.",
+        decision: "Local ChromaDB persistence over managed cloud vector DBs",
+        rationale:
+          "Removes network egress overhead and API billing while keeping uploaded user documents strictly local during inference.",
+        alternativeConsidered:
+          "Hosted vector services (Pinecone / Weaviate) introducing external storage latency and vendor setup.",
       },
       {
-        decision: "Dense slate-125m embeddings paired with instruction-tuned Granite-3-2-8b",
-        rationale: "High token throughput and tight alignment for structured technical corpus parsing.",
-        alternativeConsidered: "Generic multi-lingual models with higher inference latency.",
+        decision: "1000-char chunks with 100-char overlap over fixed unpadded splits",
+        rationale:
+          "Prevents technical concepts and equations from getting severed mid-sentence at chunk boundaries.",
+        alternativeConsidered:
+          "Small 256-char splits (fragmented context) or whole-page chunks (noisy cosine matches).",
       },
     ],
     metrics: [
-      { label: "Vector Search Latency", value: "< 12ms", detail: "ChromaDB Cosine Nearest-Neighbor" },
-      { label: "Grounding Fidelity", value: "100%", detail: "Zero-hallucination constraint prompt" },
-      { label: "Embedding Dimensions", value: "768-d", detail: "IBM slate-125m dense representations" },
+      { label: "Chunk Window", value: "1000 / 100", detail: "Chars per chunk / overlap" },
+      { label: "LLM + Embedder", value: "Granite + Slate", detail: "IBM watsonx.ai stack" },
+      { label: "Vector Index", value: "ChromaDB", detail: "Local persistent store" },
     ],
     codeSnippet: {
-      title: "ChromaDB Persistence & Grounded Prompt Assembly",
+      title: "LangChain Chunking, Slate-125m Embeddings & ChromaDB Retrieval",
       language: "python",
-      description: "LangChain retrieval pipeline ensuring LLM answers strictly from retrieved source chunks with explicit citation provenance.",
-      code: `from langchain_community.vectorstores import Chroma
-from langchain_ibm import WatsonxLLM, WatsonxEmbeddings
-from langchain.chains import RetrievalQA
-from langchain.prompts import PromptTemplate
+      description:
+        "Document ingestion and grounded retrieval pipeline pairing IBM watsonx.ai Slate-125m embeddings with persistent ChromaDB storage.",
+      code: `from langchain.text_splitter import RecursiveCharacterTextSplitter
+from langchain_community.vectorstores import Chroma
+from langchain_ibm import WatsonxEmbeddings, WatsonxLLM
 
-# Initialize IBM slate-125m embedding model
+# Split PDF into 1000-char chunks with 100-char overlap for context retention
+splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1000,
+    chunk_overlap=100,
+)
+chunks = splitter.split_documents(pdf_documents)
+
+# IBM Slate-125m dense embeddings + local ChromaDB vector store
 embeddings = WatsonxEmbeddings(
     model_id="ibm/slate-125m-english-rtrvr",
     url="https://us-south.ml.cloud.ibm.com",
-    project_id=WATSONX_PROJECT_ID
+    project_id=WATSONX_PROJECT_ID,
 )
-
-# Persistent ChromaDB vector index
-vectorstore = Chroma(
+vectorstore = Chroma.from_documents(
+    documents=chunks,
+    embedding=embeddings,
     persist_directory="./chroma_db",
-    embedding_function=embeddings
-)
-
-PROMPT_TEMPLATE = """You are a technical document assistant.
-Answer strictly using the retrieved context. If the fact is not present,
-state 'Information not found in source'.
-Context: {context}
-Question: {question}
-Verified Answer with Source Citation:"""`,
+)`,
     },
-    tags: ["IBM watsonx.ai", "Python", "LangChain", "ChromaDB", "Gradio", "RAG"],
+    tags: ["Python", "LangChain", "IBM watsonx.ai", "ChromaDB", "Gradio", "RAG"],
     category: "AI & Systems",
     githubUrl:
       "https://github.com/VedMP/IBM-Generative-AI-Engineering-Capstone-Project-Ved-Patel",
     featured: true,
     image: "/projects/QA_bot.png",
+    visualType: "image",
   },
   {
     id: "polyglot-tutor",
     slug: "polyglot-tutor",
+    number: "02",
+    year: "Jan 2026",
     title: "Polyglot Tutor",
-    subtitle: "AI-Accelerated Hackathon Platform (HackHive 2026)",
+    subtitle: "HackHive 2026 · 36-Hour Hackathon MVP",
     context:
-      "Developed during the HackHive 2026 Hackathon hosted by the Ontario Tech University Computer Science Club.",
+      "Built during HackHive 2026 hosted by the Ontario Tech University Computer Science Club.",
     problem:
-      "Generative language learning assistants frequently produce unverified translations with grammatical hallucinations, while hardcoded provider integrations create brittle vendor lock-in.",
+      "Single-pass AI language tutors frequently drift in grammar accuracy or target proficiency level, while hardcoded SDK calls couple application routes tightly to one model vendor.",
     solution:
-      "Engineered a multilingual education platform powered by a Python Flask REST API and an automated Multi-Agent Verification Pipeline. Implemented a dual-agent Teacher-TA workflow where a primary instructor agent drafts learning modules and a secondary LangChain auditor validates grade-level accuracy before client transmission.",
+      "Architected the Python Flask backend and LLM orchestration layer for a language learning platform supporting 18 languages. Paired an Abstract Base Class provider layer with a two-stage Teacher–TA LangChain verification loop to audit lessons before client delivery.",
     architecture: {
       pipeline: [
-        "Client Request via Modular React Interface",
-        "Flask RESTful Route Dispatch & Parameter Sanitization",
-        "Abstract Base Class Provider Routing (OpenAI / Gemini)",
-        "Primary Instructor Agent Curriculum Generation",
-        "Secondary LangChain 'Teaching Assistant' Verification Loop",
-        "Validated Payload Delivery with Confidence Audit",
+        "React client submits target language (1 of 18), proficiency level, and topic",
+        "Flask REST API validates and sanitizes request parameters",
+        "Python ABC provider interface dispatches to OpenAI or Gemini drivers",
+        "Primary Teacher agent drafts structured drills and dialogue",
+        "Secondary LangChain TA auditor checks grammar and level alignment before emission",
       ],
       keyDecisions: [
-        "Abstract Base Classes to standardize model initialization and decouple prompt context from specific provider SDKs",
-        "Two-stage verification loop acting as an autonomous quality barrier for pedagogical correctness",
-        "Lightweight Flask microservice architecture ensuring fast request dispatch during peak hackathon concurrency",
+        "Python Abstract Base Classes decouple curriculum prompts from vendor-specific OpenAI and Gemini SDKs",
+        "Two-agent Teacher–TA verification loop catches grammar slips before responses reach the learner",
+        "Lightweight Flask REST routes enabled shipping a complete 18-language MVP inside a 36-hour hackathon sprint",
       ],
-      modelsOrEmbeddings: ["OpenAI API", "Gemini API", "LangChain Orchestrator"],
+      modelsOrEmbeddings: ["OpenAI API", "Gemini API", "LangChain Orchestration"],
       backendFramework: "Python / Flask",
     },
     tradeoffs: [
       {
-        decision: "Dual-Agent Teacher-TA verification loop over single-pass generation",
-        rationale: "Secondary auditor agent catches grammar and CEFR level drift before payload dispatch.",
-        alternativeConsidered: "Single LLM prompt with self-critique (prone to confirmation bias).",
+        decision: "Dual-agent Teacher–TA audit over single-prompt self-check",
+        rationale:
+          "Separating lesson generation from grammatical verification reduces confirmation bias and level drift.",
+        alternativeConsidered:
+          "Single-pass prompt generation (faster latency, but noticeably higher grammatical error rate).",
       },
       {
-        decision: "Abstract Base Class (ABC) provider layer",
-        rationale: "Seamless runtime failover between OpenAI and Google Gemini APIs with zero prompt refactoring.",
-        alternativeConsidered: "Vendor-specific SDK calls scattered across route handlers.",
+        decision: "Abstract Base Class (abc.ABC) provider layer",
+        rationale:
+          "Allowed hot-swapping between OpenAI and Gemini mid-hackathon when rate limits spiked without refactoring routes.",
+        alternativeConsidered:
+          "Direct vendor SDK calls embedded inside Flask endpoints.",
       },
     ],
     metrics: [
-      { label: "Sprint Duration", value: "48 Hours", detail: "HackHive 2026 Hackathon" },
-      { label: "Agent Pipeline", value: "2-Stage", detail: "Teacher Generator + TA Auditor" },
-      { label: "Provider Decoupling", value: "100%", detail: "Python ABC multi-model architecture" },
+      { label: "Languages", value: "18", detail: "LLM-orchestrated lesson tracks" },
+      { label: "Build Sprint", value: "36 Hours", detail: "HackHive 2026 MVP" },
+      { label: "Verification", value: "2-Agent", detail: "Teacher + TA audit loop" },
     ],
     codeSnippet: {
-      title: "Abstract Base Class Provider & TA Verification Loop",
+      title: "Provider ABC & Teacher–TA Verification Loop",
       language: "python",
-      description: "Decoupled model abstraction enabling zero-downtime hot swapping between OpenAI and Gemini with autonomous quality audits.",
+      description:
+        "Decoupled LLM provider contract enabling runtime failover alongside autonomous lesson verification.",
       code: `from abc import ABC, abstractmethod
 
 class BaseLLMProvider(ABC):
-    """Abstract interface decoupling curriculum prompts from vendor SDKs."""
+    """Unified interface decoupling prompts from vendor SDKs."""
     @abstractmethod
-    def generate_lesson(self, target_lang: str, level: str, topic: str) -> dict:
+    def generate_lesson(self, lang: str, level: str, topic: str) -> dict:
         pass
 
-class PolyglotVerificationLoop:
-    def __init__(self, teacher_model: BaseLLMProvider, ta_auditor_model: BaseLLMProvider):
-        self.teacher = teacher_model
-        self.ta_auditor = ta_auditor_model
+class VerificationLoop:
+    def __init__(self, teacher: BaseLLMProvider, ta_auditor: BaseLLMProvider):
+        self.teacher = teacher
+        self.ta_auditor = ta_auditor
 
-    def execute_and_verify(self, target_lang: str, level: str, topic: str) -> dict:
-        # Step 1: Primary Instructor Agent drafts module
-        draft = self.teacher.generate_lesson(target_lang, level, topic)
-        # Step 2: Teaching Assistant Agent validates CEFR compliance
-        audit = self.ta_auditor.audit_grammar_and_level(draft)
-        if not audit.get("is_valid"):
-            return self.teacher.repair_lesson(draft, audit.get("feedback"))
+    def run(self, lang: str, level: str, topic: str) -> dict:
+        draft = self.teacher.generate_lesson(lang, level, topic)
+        audit = self.ta_auditor.audit_grammar_and_level(draft, level)
+        if not audit.get("passed"):
+            return self.teacher.revise(draft, audit.get("feedback", ""))
         return draft`,
     },
     tags: [
       "Python",
       "Flask",
       "LangChain",
-      "Multi-Agent Systems",
       "OpenAI API",
       "Gemini API",
+      "REST APIs",
       "React",
     ],
     category: "AI & Systems",
     githubUrl: "https://github.com/PolygotTutor/PolyglotTutor/tree/develop",
     featured: true,
     image: "/projects/Polyglot_Tutor.png",
+    visualType: "image",
+  },
+  {
+    id: "ea-sports-simulation",
+    slug: "ea-sports-simulation",
+    number: "03",
+    year: "Oct 2025",
+    title: "EA Sports C++ Feature & Memory Optimization",
+    subtitle: "Electronic Arts Software Engineering Simulation (Forage)",
+    context:
+      "Completed the EA Sports College Football engineering job simulation focused on C++ architecture, UML modeling, and codebase memory efficiency.",
+    problem:
+      "Large game subsystems accumulate redundant heap allocations, fragmented object layouts, and unclear class inheritance boundaries that degrade frame stability and maintainability.",
+    solution:
+      "Authored a technical feature proposal and UML class diagram modeling entity relationships and inheritance hierarchies, then audited and refactored the C++ codebase to replace inefficient collections with tighter, cache-friendly data structures.",
+    architecture: {
+      pipeline: [
+        "Requirements analysis & technical feature specification for College Football subsystem",
+        "UML class diagram modeling inheritance, composition, and ownership boundaries",
+        "C++ feature implementation aligned with existing engine interfaces",
+        "Memory profiling to pinpoint redundant allocations and layout inefficiencies",
+        "Data structure refactoring with contiguous storage and explicit capacity reservation",
+      ],
+      keyDecisions: [
+        "Designed UML ownership contracts before writing C++ headers to avoid tangled inheritance trees",
+        "Replaced scattered heap allocations with contiguous structs and pre-reserved vectors to reduce memory churn",
+        "Validated changes with disciplined Git branching and incremental diff reviews",
+      ],
+      backendFramework: "C++ / UML / Git",
+    },
+    tradeoffs: [
+      {
+        decision: "Contiguous value-type storage over pointer-heavy linked structures",
+        rationale:
+          "Eliminates pointer chasing and improves CPU cache locality during per-frame roster and attribute traversals.",
+        alternativeConsidered:
+          "Dynamic pointer lists allowing O(1) mid-list splice at the expense of severe cache misses.",
+      },
+      {
+        decision: "Explicit composition over deep multi-level inheritance",
+        rationale:
+          "Keeps player and feature behaviors modular in UML without introducing fragile base-class coupling.",
+        alternativeConsidered:
+          "Monolithic base entity hierarchy combining unrelated game behaviors.",
+      },
+    ],
+    metrics: [
+      { label: "Language", value: "C++", detail: "Systems & OOP feature build" },
+      { label: "Design Spec", value: "UML", detail: "Class & inheritance modeling" },
+      { label: "Optimization", value: "Memory", detail: "Tighter data structures" },
+    ],
+    codeSnippet: {
+      title: "Contiguous C++ Entity Layout & Capacity Reservation",
+      language: "cpp",
+      description:
+        "Tightly packed struct layout and explicit vector reservation pattern minimizing heap fragmentation and mid-frame reallocations.",
+      code: `#include <cstdint>
+#include <vector>
+
+struct PlayerAttributeBlock {
+    uint32_t player_id;
+    float    speed_rating;
+    float    stamina_ratio;
+    uint16_t position_code;
+    uint16_t status_flags;
+};
+
+class RosterBuffer {
+public:
+    explicit RosterBuffer(std::size_t expected_players) {
+        entries_.reserve(expected_players); // Prevent repeated reallocations
+    }
+
+    void emplace_player(uint32_t id, float speed, float stamina, uint16_t pos) {
+        entries_.push_back(PlayerAttributeBlock{id, speed, stamina, pos, 0});
+    }
+
+private:
+    std::vector<PlayerAttributeBlock> entries_;
+};`,
+    },
+    tags: ["C++", "UML", "Data Structures", "OOP", "Git"],
+    category: "Systems & C++",
+    githubUrl: "https://github.com/VedMP",
+    featured: true,
+    visualType: "cpp-memory",
   },
   {
     id: "portfolio-edge-architecture",
     slug: "portfolio-edge-architecture",
-    title: "Edge-Delivered Systems Portfolio",
-    subtitle: "Cloudflare Pages & Next.js 16 High-Performance Architecture",
+    number: "04",
+    year: "2026",
+    title: "vedmpatel.me Edge Architecture",
+    subtitle: "Cloudflare Pages · Next.js 16 Static Export & V8 Functions",
     context:
-      "Architected as a production-grade, durable personal engineering system deployed to vedmpatel.me.",
+      "Production personal engineering site engineered for fast global delivery, strict browser security policies, and zero third-party tracking bloat.",
     problem:
-      "Standard portfolio templates rely on heavy client-side SPAs with high bundle weight, zero security hardening, and no serverless edge API capabilities.",
+      "Typical student portfolios ship bloated client bundles with broken mobile layouts, unhardened headers, and third-party form widgets that leak recruiter data.",
     solution:
-      "Engineered a high-performance, statically exported Next.js 16 and React 19 application coupled with Cloudflare Pages Functions for serverless contact intake, strict Content Security Policies (CSP), and zero-layout-shift design tokens.",
+      "Built a statically exported Next.js 16 + React 19 application deployed on Cloudflare Pages with a custom V8 Edge Function (/api/contact), hardened CSP/HSTS/COOP/COEP headers, self-hosted typography, and a print-optimized single-page ATS resume stylesheet.",
     architecture: {
       pipeline: [
-        "Next.js 16 Turbopack Static Export (output: export)",
-        "Cloudflare Edge Network Global Caching & Sub-50ms TTFB",
-        "Cloudflare Pages Functions (/functions/api/contact)",
-        "Hardened HTTP Headers (HSTS, CSP, COOP, CORP, Nosniff)",
-        "Semantic Feature Scopes & Strict TypeScript Data Contracts",
+        "Next.js 16 static export (output: export) with React Compiler optimizations",
+        "Self-hosted Google Fonts bundled cleanly under strict font-src 'self' CSP",
+        "Cloudflare Pages global CDN with hardened _headers (HSTS, CSP, COOP, COEP)",
+        "Serverless Cloudflare Pages Function (/functions/api/contact.ts) on V8 isolates",
+        "Origin allowlisting, 10 KB payload cap, control-char stripping, and honeypot filtering",
       ],
       keyDecisions: [
-        "Decoupled static frontend from edge functions to achieve 100/100 performance scores without server hosting overhead",
-        "Zero-stacking-context design tokens for GPU-smooth contrast and theme switching",
-        "Strict TypeScript schemas enforcing factual data integrity across all UI surfaces",
+        "Static export + Edge Function achieves near-instant CDN delivery without maintaining an always-on Node server",
+        "Zero-dependency honeypot + strict RFC input bounds stop automated spam without invasive CAPTCHA widgets",
+        "Dedicated @media print ATS stylesheet generates a clean black-and-white resume straight from the browser",
       ],
       backendFramework: "Cloudflare Pages Functions (V8 Edge Runtime)",
     },
     tradeoffs: [
       {
-        decision: "Static export (output: export) + Cloudflare Edge Functions",
-        rationale: "Instant global TTFB (<50ms) across 300+ edge data centers with zero server maintenance overhead.",
-        alternativeConsidered: "Full SSR node server requiring constant compute instances and cold starts.",
+        decision: "Static export + Cloudflare V8 Edge Function over full SSR",
+        rationale:
+          "Zero server maintenance, instant global caching, and isolated serverless intake strictly where dynamic POST handling is needed.",
+        alternativeConsidered:
+          "Always-on SSR server adding cold starts and hosting overhead for mostly static portfolio content.",
       },
       {
-        decision: "Zero-dependency honeypot spam protection",
-        rationale: "Blocks automated bots at the edge without third-party tracking scripts or recaptcha bloat.",
-        alternativeConsidered: "Google reCAPTCHA v3 with client privacy compromises and JS bundle weight.",
+        decision: "Honeypot + origin validation over third-party CAPTCHA scripts",
+        rationale:
+          "Preserves privacy, keeps strict CSP clean, and avoids third-party JS bloat on the contact page.",
+        alternativeConsidered:
+          "Embedded external CAPTCHA iframes degrading load speed and UX.",
       },
     ],
     metrics: [
-      { label: "Global Edge TTFB", value: "< 50ms", detail: "Cloudflare Anycast edge CDN" },
-      { label: "Static Pages", value: "100%", detail: "Next.js 16 Turbopack export" },
-      { label: "Security Headers", value: "A+", detail: "Strict CSP, HSTS, COOP, CORP" },
+      { label: "Delivery", value: "Static + V8", detail: "Cloudflare Pages Edge" },
+      { label: "Headers", value: "CSP + HSTS", detail: "COOP / COEP / Nosniff" },
+      { label: "Trackers", value: "Zero", detail: "Self-hosted fonts & honeypot" },
     ],
     codeSnippet: {
-      title: "Cloudflare Pages Functions Edge Intake",
+      title: "Hardened Cloudflare Pages Edge Intake (/api/contact)",
       language: "typescript",
-      description: "Serverless V8 isolate endpoint handling form submissions with honeypot bot rejection and strict validation.",
-      code: `// functions/api/contact.ts — Cloudflare Pages Functions
-export async function onRequestPost(context: { request: Request }): Promise<Response> {
+      description:
+        "V8 Edge Function enforcing origin allowlists, 10 KB payload bounds, control-character sanitization, and silent honeypot filtering.",
+      code: `export async function onRequestPost(context: { request: Request }) {
+  const origin = context.request.headers.get("origin");
+  if (origin && !isOriginAllowed(origin)) {
+    return new Response(JSON.stringify({ error: "Forbidden" }), { status: 403 });
+  }
+
+  const contentLength = parseInt(context.request.headers.get("content-length") || "0", 10);
+  if (contentLength > 10240) {
+    return new Response(JSON.stringify({ error: "Payload exceeds 10 KB" }), { status: 413 });
+  }
+
   const body = await context.request.json();
-
-  // Zero-cost anti-spam honeypot verification
-  if (body.honeypot && body.honeypot.trim() !== "") {
-    return new Response(JSON.stringify({ success: true, filtered: true }), {
-      status: 200,
-      headers: { "Content-Type": "application/json" }
-    });
+  if (body.honeypot?.trim()) {
+    return new Response(JSON.stringify({ success: true }), { status: 200 });
   }
-
-  // Strict field validation
-  const name = (body.name || "").trim();
-  const email = (body.email || "").trim();
-  const message = (body.message || "").trim();
-
-  if (name.length < 2 || !email.includes("@") || message.length < 10) {
-    return new Response(JSON.stringify({ error: "Validation failed" }), { status: 400 });
-  }
-
-  return new Response(JSON.stringify({ success: true, timestamp: new Date().toISOString() }), {
-    status: 200,
-    headers: { "Content-Type": "application/json", "X-Content-Type-Options": "nosniff" }
-  });
+  return validateAndAcknowledge(body, origin);
 }`,
     },
     tags: [
@@ -286,11 +393,12 @@ export async function onRequestPost(context: { request: Request }): Promise<Resp
       "Cloudflare Pages",
       "Edge Functions",
     ],
-    category: "Full Stack",
+    category: "Full Stack & Edge",
     githubUrl: "https://github.com/VedMP/Portfolio",
     liveUrl: "https://vedmpatel.me",
     featured: true,
     image: "/projects/Portfolio.png",
+    visualType: "edge-topology",
   },
 ];
 
@@ -303,71 +411,117 @@ export const EXPERIENCES: ExperienceItem[] = [
     institutionUrl: "https://ontariotechu.ca",
     location: "Oshawa, ON, Canada",
     period: "Sep 2023 – April 2027 (Expected)",
-    metrics: "3.97 GPA / 4.0",
+    metrics: "3.97 / 4.3 GPA · 4× President's List · Dean's List",
     highlights: [
-      "4-time President's / Dean's List recipient for continuous academic excellence across all completed semesters.",
-      "Rigorous coursework in Data Structures, Design & Analysis of Algorithms, Database Systems, Agile Methodologies, and Software Engineering Principles.",
-      "Active participant in departmental engineering initiatives, hackathons, and technical projects.",
+      "Earned President's List honours across four consecutive semesters (Fall 2023 – Winter 2025) and Dean's List standing in Fall 2025 across 75 earned credit hours.",
+      "Achieved A+ grades in Systems Programming, Data Structures, Computer Architecture I, Software Design & Analysis, Software Systems Dev. & Integration, and Scientific Data Analysis.",
+      "Completed upper-year studies in Analysis & Design of Algorithms (A-), Computer Graphics & Visualization (A), Database Systems, Software Quality Assurance, and Web Development.",
     ],
-    skills: ["Java", "Python", "C++", "SQL", "PostgreSQL", "Data Structures", "Algorithms", "Git"],
+    skills: [
+      "Python",
+      "C++",
+      "Java",
+      "SQL",
+      "Systems Programming",
+      "Data Structures",
+      "Algorithms",
+      "SQA",
+    ],
   },
   {
     id: "hackhive-2026",
     type: "hackathon",
-    title: "System Architect & Backend Engineer — HackHive 2026",
+    title: "Backend & AI Orchestration Engineer — HackHive 2026",
     institution: "Ontario Tech University CS Club",
     institutionUrl: "https://www.otucsclub.dev/",
     location: "Oshawa, ON, Canada",
-    period: "January 23 – 25, 2026",
-    metrics: "48-Hour Sprint",
+    period: "January 2026 · 36-Hour Sprint",
+    metrics: "18 Languages · 36-Hour MVP",
     highlights: [
-      "Architected the backend and AI orchestration layer for Polyglot Tutor, a multilingual educational platform built in 48 hours.",
-      "Engineered an automated Multi-Agent Verification Pipeline using LangChain to enforce grade-level validation before response delivery.",
-      "Utilized Abstract Base Classes in Python to decouple language learning prompts from underlying model APIs (OpenAI and Gemini).",
+      "Architected the Python Flask backend for Polyglot Tutor, generating interactive language lessons across 18 languages via structured LLM orchestration.",
+      "Implemented an Abstract Base Class provider interface and a two-agent Teacher–TA verification loop to decouple model vendors and catch grammatical drift.",
+      "Integrated external REST APIs for real-time learner feedback loops and shipped a working end-to-end MVP within 36 hours.",
     ],
-    skills: ["Python", "Flask", "LangChain", "OpenAI API", "Gemini API", "RESTful APIs", "Git"],
+    skills: ["Python", "Flask", "LangChain", "OpenAI API", "Gemini API", "REST APIs", "Git"],
+  },
+  {
+    id: "ea-simulation-2025",
+    type: "simulation",
+    title: "Software Engineering Job Simulation (EA Sports College Football)",
+    institution: "Electronic Arts (via Forage)",
+    institutionUrl: "https://www.theforage.com/",
+    location: "Remote · Technical Track",
+    period: "October 2025",
+    metrics: "C++ · UML · Memory Optimization",
+    highlights: [
+      "Authored a structured feature proposal and technical UML class diagram modeling game entity relationships, composition, and inheritance.",
+      "Implemented C++ feature extensions following object-oriented engineering guidelines established by the EA Sports College Football team.",
+      "Audited the codebase for memory inefficiencies and refactored underlying data structures to reduce unnecessary allocations.",
+    ],
+    skills: ["C++", "UML", "OOP", "Data Structures", "Memory Optimization", "Git"],
+  },
+];
+
+export const VERIFIED_COURSEWORK: CourseItem[] = [
+  { code: "CSCI 3310U", name: "Systems Programming", grade: "A+", term: "Fall 2025", highlight: true },
+  { code: "CSCI 2010U", name: "Data Structures", grade: "A+", term: "Fall 2024", highlight: true },
+  { code: "CSCI 2050U", name: "Computer Architecture I", grade: "A+", term: "Winter 2024", highlight: true },
+  { code: "CSCI 2040U", name: "Software Design & Analysis", grade: "A+", term: "Winter 2025", highlight: true },
+  { code: "CSCI 2020U", name: "Software Systems Dev. & Integration", grade: "A+", term: "Winter 2025", highlight: true },
+  { code: "CSCI 2000U", name: "Scientific Data Analysis", grade: "A+", term: "Fall 2024", highlight: true },
+  { code: "CSCI 3090U", name: "Computer Graphics & Visualization", grade: "A", term: "Fall 2025" },
+  { code: "CSCI 3070U", name: "Analysis & Design of Algorithms", grade: "A-", term: "Fall 2025" },
+  { code: "CSCI 3060U", name: "Software Quality Assurance", grade: "Winter 2026", term: "Winter 2026" },
+  { code: "CSCI 3230U", name: "Web Development", grade: "Winter 2026", term: "Winter 2026" },
+  { code: "CSCI 3030U", name: "Database Systems & Concepts", grade: "B", term: "Fall 2025" },
+];
+
+export const CERTIFICATES: CertificateItem[] = [
+  {
+    title: "IBM Generative AI Engineering Professional Certificate",
+    issuer: "IBM / Coursera",
+    year: "2026",
   },
 ];
 
 export const SKILL_GROUPS: SkillGroup[] = [
   {
     name: "Languages",
-    description: "Core programming languages used across systems, backend, and data pipelines.",
-    skills: ["Python", "Java", "C++", "SQL", "TypeScript", "JavaScript", "HTML5", "CSS3"],
+    description: "Systems, backend, querying, and strict frontend development.",
+    skills: ["Python", "C++", "Java", "TypeScript", "SQL", "JavaScript", "HTML/CSS"],
   },
   {
-    name: "AI & Generative Engineering",
-    description: "Orchestration, RAG architectures, model interfaces, and deep learning libraries.",
+    name: "AI & Data Engineering",
+    description: "RAG architectures, vector indexing, LLM orchestration, and scientific Python.",
     skills: [
       "LangChain",
-      "ChromaDB (Vector DB)",
       "IBM watsonx.ai",
+      "ChromaDB",
       "OpenAI API",
       "Gemini API",
-      "PyTorch",
-      "TensorFlow",
-      "Keras",
-      "Scikit-learn",
+      "RAG",
       "NumPy",
       "Pandas",
-    ],
-  },
-  {
-    name: "Systems, Tools & Infrastructure",
-    description: "Development environments, containerization, edge deployment, and version control.",
-    skills: [
-      "Linux",
-      "Docker",
-      "Git",
-      "GitHub",
-      "Cloudflare Pages",
-      "Cloudflare Functions",
-      "PostgreSQL",
+      "Scikit-learn",
     ],
   },
   {
     name: "Web & API Frameworks",
-    description: "Modern frameworks for building high-performance services and web interfaces.",
-    skills: ["Next.js 16", "React 19", "Flask", "Gradio", "Tailwind CSS v4"],
+    description: "Production React/Next.js frontends and lightweight Python REST services.",
+    skills: ["Next.js 16", "React 19", "Flask", "Gradio", "Tailwind CSS v4", "REST APIs"],
+  },
+  {
+    name: "Systems & Tooling",
+    description: "Version control, Linux workflows, modeling, and edge deployment.",
+    skills: [
+      "Linux",
+      "Git",
+      "GitHub",
+      "Cloudflare Pages",
+      "Edge Functions",
+      "UML",
+      "Docker",
+      "PostgreSQL",
+    ],
   },
 ];
